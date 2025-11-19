@@ -86,11 +86,19 @@ body {
 }
 
 .section.project-section {
-    padding: 3rem 0;
+    padding: 2rem 0;
 }
 
 .section.project-section:first-of-type {
     padding-top: 150px;
+}
+
+.section.project-section#documents {
+    padding-bottom: 2rem;
+}
+
+.section.project-section#documents + .section.contact {
+    padding-top: 2rem;
 }
 
 .section-header {
