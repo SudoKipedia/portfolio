@@ -43,22 +43,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 mouse.y = event.touches[0].clientY;
                 mouse.isMouseDown = true;
             }
-        });
+        }, { passive: true });
 
         window.addEventListener('touchmove', (event) => {
             if (event.touches.length > 0) {
                 mouse.x = event.touches[0].clientX;
                 mouse.y = event.touches[0].clientY;
+                // Ne pas empêcher le scroll, juste suivre le doigt
             }
-        });
+        }, { passive: true });
 
         window.addEventListener('touchend', () => {
             mouse.isMouseDown = false;
             mouse.isBlasting = true;
             setTimeout(() => {
                 mouse.isBlasting = false;
+                // Réinitialiser la position pour éviter les interactions persistantes
+                mouse.x = null;
+                mouse.y = null;
             }, 300);
-        });
+        }, { passive: true });
 
         class Particle {
             constructor(x, y, directionX, directionY, size, color) {
