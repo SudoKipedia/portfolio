@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ansible Automation - IPI Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+    
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="index_en.html" class="logo">
+                    <span class="logo-text">PORTFOLIO</span>
+                    <span class="logo-dot">.</span>
+                </a>
+                <div class="nav-current">
+                    <span class="nav-current-text">Overview</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="nav-menu">
+                    <a href="#overview" class="nav-link">Overview</a>
+                    <a href="#context" class="nav-link">Context</a>
+                    <a href="#technologies" class="nav-link">Technologies</a>
+                    <a href="#results" class="nav-link">Results</a>
+                    <a href="#documents" class="nav-link">Documents</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                    <a href="index_en.html#projects" class="nav-link">← Back to projects</a>
+                </div>
+                <div class="lang-switcher">
+                    <a href="project_ansible.html" class="lang-btn">FR</a>
+                    <a href="project_ansible_en.html" class="lang-btn active">EN</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section id="overview" class="section project-section" style="padding-top: 150px;">
+        <div class="container" style="max-width: 900px;">
+            <div class="projects-carousel-compact">
+                <div class="carousel-wrapper">
+                    <div class="carousel-track-compact" id="carouselTrack">
+                        <a href="project_infra_en.html" class="carousel-item-compact" data-position="0">
+                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600" alt="Cloud Infrastructure" class="carousel-item-compact-image">
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Cloud</span>
+                                    <span>Infrastructure</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">AWS Cloud Infrastructure Deployment</h4>
+                            </div>
+                        </a>
+                        <a href="project_ad_en.html" class="carousel-item-compact" data-position="2">
+                            <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?w=600" alt="Active Directory" class="carousel-item-compact-image">
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>System</span>
+                                    <span>Security</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">Active Directory Security Audit</h4>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="carousel-controls">
+                        <button class="carousel-btn-compact" onclick="navigateCarousel(-1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="carousel-btn-compact" onclick="navigateCarousel(1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <a href="index_en.html#projects" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Projects</span>
+                </a>
+            </div>
+
+            <div style="margin-bottom: 3rem;">
+                <div class="project-tags" style="margin-bottom: 1.5rem;">
+                    <span>Automation</span>
+                    <span>DevOps</span>
+                    <span>IaC</span>
+                </div>
+                <h1 class="section-title" style="margin-bottom: 1.5rem;">Ansible Automation</h1>
+                <p style="font-size: 1.125rem; color: var(--color-text-secondary); line-height: 1.7;">
+                    Automated server infrastructure deployment with Ansible to standardize 
+                    configurations and accelerate deployments.
+                </p>
+            </div>
+
+            <div style="margin-bottom: 3rem; border-radius: 16px; overflow: hidden; border: 1px solid var(--color-border);">
+                <img src="https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=1200" 
+                     alt="Ansible" 
+                     style="width: 100%; height: 400px; object-fit: cover;">
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <section id="context" class="section project-section">
+                <p style="color: var(--color-text-secondary); line-height: 1.8; margin-bottom: 1.5rem;">
+                    Implementation of an automation solution with Ansible for Linux server deployment and configuration. 
+                    The goal was to reduce provisioning time and ensure configuration consistency.
+                </p>
+                <p style="color: var(--color-text-secondary); line-height: 1.8;">
+                    The project includes creating playbooks for service installation, network configuration, 
+                    and security policy application.
+                </p>
+            </div>
+
+            <div style="background: var(--color-surface); padding: 3rem; border-radius: 16px; border: 1px solid var(--color-border); margin-bottom: 3rem;">
+                <h2 style="font-family: var(--font-display); font-size: 2rem; margin-bottom: 1.5rem;">Technologies used</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div class="tech-card">
+                        <i class="fas fa-cogs"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem;">Ansible</h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem;">Core & Tower</p>
+                    </div>
+                    <div class="tech-card">
+                        <i class="fab fa-linux"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem;">Linux</h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem;">Ubuntu & CentOS</p>
+                    </div>
+                    <div class="tech-card">
+                        <i class="fab fa-python"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem;">Python</h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem;">Custom modules</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: var(--color-surface); padding: 3rem; border-radius: 16px; border: 1px solid var(--color-border); margin-bottom: 3rem;">
+                <h2 style="font-family: var(--font-display); font-size: 2rem; margin-bottom: 1.5rem;">Results and benefits</h2>
+                <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 1rem;">
+                    <li class="result-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong style="color: var(--color-text); display: block; margin-bottom: 0.5rem;">Reduced deployment time</strong>
+                            <span style="color: var(--color-text-secondary)">From 2 hours to 15 minutes for a complete deployment</span>
+                        </div>
+                    </li>
+                    <li class="result-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong style="color: var(--color-text); display: block; margin-bottom: 0.5rem;">Configuration standardization</strong>
+                            <span style="color: var(--color-text-secondary)">Infrastructure as Code ensuring consistency</span>
+                        </div>
+                    </li>
+                    <li class="result-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong style="color: var(--color-text); display: block; margin-bottom: 0.5rem;">Centralized management</strong>
+                            <span style="color: var(--color-text-secondary)">Version control and easy rollback with Git</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="accordion-section">
+                <button class="accordion-toggle" data-accordion="docs-accordion">
+                    <div class="accordion-header">
+                        <i class="fas fa-file-alt accordion-icon"></i>
+                        <h2>Documents & Resources</h2>
+                    </div>
+                    <i class="fas fa-chevron-down accordion-arrow"></i>
+                </button>
+                <div class="accordion-content" id="docs-accordion">
+                    <div class="document-list">
+                        <a href="#" class="document-item">
+                            <div class="document-icon">
+                                <i class="fas fa-file-code"></i>
+                            </div>
+                            <div class="document-info">
+                                <h3>Ansible Playbooks</h3>
+                                <p>Complete collection of deployment playbooks</p>
+                                <span class="document-meta">ZIP • 245 KB</span>
+                            </div>
+                            <i class="fas fa-download document-download"></i>
+                        </a>
+                        <a href="#" class="document-item">
+                            <div class="document-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="document-info">
+                                <h3>Architecture Documentation</h3>
+                                <p>Detailed diagram of the automated infrastructure</p>
+                                <span class="document-meta">PDF • 1.8 MB</span>
+                            </div>
+                            <i class="fas fa-download document-download"></i>
+                        </a>
+                        <a href="#" class="document-item">
+                            <div class="document-icon">
+                                <i class="fas fa-file-word"></i>
+                            </div>
+                            <div class="document-info">
+                                <h3>User Guide</h3>
+                                <p>Manual for the operations team</p>
+                                <span class="document-meta">DOCX • 670 KB</span>
+                            </div>
+                            <i class="fas fa-download document-download"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Contact</span>
+                <h2 class="section-title">Let's work together</h2>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <p class="contact-intro">
+                        Do you have a project or an opportunity? Feel free to contact me. 
+                        I'm always open to new collaborations and technical challenges.
+                    </p>
+                    <div class="contact-methods">
+                        <a href="mailto:quentin.poisson23@gmail.com" class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <span class="contact-label">Email</span>
+                                <span class="contact-value">quentin.poisson23@gmail.com</span>
+                            </div>
+                        </a>
+                        <a href="https://www.linkedin.com/in/quentin-pssn" class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fab fa-linkedin"></i>
+                            </div>
+                            <div class="contact-details">
+                                <span class="contact-label">LinkedIn</span>
+                                <span class="contact-value">Quentin Poisson</span>
+                            </div>
+                        </a>
+                        <a href="https://github.com" target="_blank" class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div class="contact-details">
+                                <span class="contact-label">GitHub</span>
+                                <span class="contact-value">My repositories</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span>Send message</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Quentin Poisson Portfolio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
