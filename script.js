@@ -524,6 +524,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'about': { fr: 'À propos', en: 'About' },
             'skills': { fr: 'Compétences Techniques', en: 'Technical Skills' },
             'projects': { fr: 'Projets', en: 'Projects' },
+            'recommendations': { fr: 'Recommandations', en: 'Recommendations' },
             'contact': { fr: 'Contact', en: 'Contact' },
             'other-projects': { fr: 'Autres projets', en: 'Other projects' },
             'overview': { fr: 'Vue d\'ensemble', en: 'Overview' },
