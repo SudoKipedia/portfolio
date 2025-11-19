@@ -37,8 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Événements tactiles pour mobile
+        let isScrolling = false;
+        let scrollTimeout;
+
         window.addEventListener('touchstart', (event) => {
             if (event.touches.length > 0) {
+                isScrolling = false;
                 mouse.x = event.touches[0].clientX;
                 mouse.y = event.touches[0].clientY;
                 mouse.isMouseDown = true;
@@ -47,21 +51,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
         window.addEventListener('touchmove', (event) => {
             if (event.touches.length > 0) {
-                mouse.x = event.touches[0].clientX;
-                mouse.y = event.touches[0].clientY;
-                // Ne pas empêcher le scroll, juste suivre le doigt
+                // Détecte si c'est un scroll vertical rapide
+                const touchSpeed = Math.abs(event.touches[0].clientY - mouse.y);
+                if (touchSpeed > 10) {
+                    isScrolling = true;
+                }
+                
+                // Ne mettre à jour la position que si ce n'est pas un scroll rapide
+                if (!isScrolling) {
+                    mouse.x = event.touches[0].clientX;
+                    mouse.y = event.touches[0].clientY;
+                } else {
+                    // Si c'est un scroll, désactiver l'interaction
+                    mouse.isMouseDown = false;
+                    mouse.x = null;
+                    mouse.y = null;
+                }
             }
         }, { passive: true });
 
         window.addEventListener('touchend', () => {
-            mouse.isMouseDown = false;
-            mouse.isBlasting = true;
-            setTimeout(() => {
-                mouse.isBlasting = false;
-                // Réinitialiser la position pour éviter les interactions persistantes
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                isScrolling = false;
+            }, 100);
+            
+            if (!isScrolling) {
+                mouse.isMouseDown = false;
+                mouse.isBlasting = true;
+                setTimeout(() => {
+                    mouse.isBlasting = false;
+                    mouse.x = null;
+                    mouse.y = null;
+                }, 300);
+            } else {
+                mouse.isMouseDown = false;
                 mouse.x = null;
                 mouse.y = null;
-            }, 300);
+            }
         }, { passive: true });
 
         class Particle {
