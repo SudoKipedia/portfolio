@@ -1473,12 +1473,12 @@ body {
     .projects-carousel-compact {
         flex-direction: column;
         align-items: stretch;
+        gap: 3rem;
     }
     
     .carousel-wrapper {
         max-width: 100%;
         height: 200px;
-        margin-bottom: 50px;
     }
     
     .carousel-item-compact {
