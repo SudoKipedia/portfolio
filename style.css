@@ -949,18 +949,19 @@ body {
 /* ===================================
    CONTACT SECTION
    =================================== */
-.contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: 5rem;
-    align-items: start;
-}
-
 .contact-intro {
     font-size: 1.125rem;
     line-height: 1.7;
     color: var(--color-text-secondary);
     margin-bottom: 3rem;
+    max-width: 100%;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 5rem;
+    align-items: start;
 }
 
 .contact-methods {
@@ -973,7 +974,7 @@ body {
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    padding: 1.5rem;
+    padding: 1rem 1.5rem;
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 12px;
@@ -1684,5 +1685,87 @@ body {
     
     .carousel-item-content {
         padding: 1rem;
+    }
+}
+
+/* ===================================
+   RATE LIMIT NOTIFICATION
+   =================================== */
+.rate-limit-notification {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100%);
+    z-index: 10000;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 4px 20px rgba(239, 68, 68, 0.3);
+    transition: transform 0.3s ease;
+    min-width: 400px;
+    max-width: 90vw;
+}
+
+.rate-limit-notification.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+.rate-limit-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.rate-limit-content i.fa-clock {
+    font-size: 1.5rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.rate-limit-content span {
+    flex: 1;
+    font-size: 0.95rem;
+}
+
+.rate-limit-content strong {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 1.1rem;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+}
+
+.rate-limit-close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.rate-limit-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+    .rate-limit-notification {
+        min-width: unset;
+        width: 90vw;
+        padding: 0.875rem 1.25rem;
+    }
+    
+    .rate-limit-content span {
+        font-size: 0.875rem;
     }
 }

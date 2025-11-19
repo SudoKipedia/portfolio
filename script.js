@@ -405,33 +405,141 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ===================================
+    // NOTIFICATION RATE LIMIT
+    // ===================================
+    function showRateLimitNotification(remainingMinutes) {
+        // Supprimer toute notification existante
+        const existingNotif = document.querySelector('.rate-limit-notification');
+        if (existingNotif) existingNotif.remove();
+
+        // Détecter la langue de la page
+        const isEnglish = document.documentElement.lang === 'en';
+        const message = isEnglish 
+            ? 'Please wait <strong id="countdown">{time}</strong> before sending a new message'
+            : 'Veuillez patienter <strong id="countdown">{time}</strong> avant d\'envoyer un nouveau message';
+
+        // Créer la notification
+        const notification = document.createElement('div');
+        notification.className = 'rate-limit-notification';
+        
+        const remainingSeconds = remainingMinutes * 60;
+        let secondsLeft = Math.ceil(remainingSeconds);
+        
+        const formatTime = (seconds) => {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        };
+        
+        notification.innerHTML = `
+            <div class="rate-limit-content">
+                <i class="fas fa-clock"></i>
+                <span>${message.replace('{time}', formatTime(secondsLeft))}</span>
+                <button class="rate-limit-close"><i class="fas fa-times"></i></button>
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Animer l'apparition
+        setTimeout(() => notification.classList.add('show'), 10);
+        
+        // Mettre à jour le compte à rebours
+        const countdownEl = notification.querySelector('#countdown');
+        const interval = setInterval(() => {
+            secondsLeft--;
+            if (secondsLeft <= 0) {
+                clearInterval(interval);
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            } else {
+                countdownEl.textContent = formatTime(secondsLeft);
+            }
+        }, 1000);
+        
+        // Bouton de fermeture
+        notification.querySelector('.rate-limit-close').addEventListener('click', () => {
+            clearInterval(interval);
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        });
+    }
+
+    // ===================================
     // FORM SUBMISSION
     // ===================================
     const contactForm = document.querySelector('.contact-form');
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // Simulate form submission
             const btn = contactForm.querySelector('.btn');
             const originalText = btn.innerHTML;
+            
+            // Récupérer les données du formulaire
+            const formData = {
+                name: contactForm.querySelector('#name').value,
+                email: contactForm.querySelector('#email').value,
+                message: contactForm.querySelector('#message').value
+            };
             
             btn.innerHTML = '<span>Envoi en cours...</span>';
             btn.style.opacity = '0.7';
             btn.style.pointerEvents = 'none';
 
-            setTimeout(() => {
-                btn.innerHTML = '<span>Message envoyé !</span><i class="fas fa-check"></i>';
-                btn.style.background = '#10b981';
+            try {
+                // URL du serveur backend sur Oracle Cloud
+                const response = await fetch('http://170.9.255.69:3000/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    btn.innerHTML = '<span>Message envoyé !</span><i class="fas fa-check"></i>';
+                    btn.style.background = '#10b981';
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.style.opacity = '1';
+                        btn.style.pointerEvents = 'all';
+                        btn.style.background = '';
+                        contactForm.reset();
+                        // Réinitialiser le compteur de caractères
+                        const charCount = document.getElementById('char-count');
+                        if (charCount) charCount.textContent = '0';
+                    }, 2000);
+                } else {
+                    // Vérifier si c'est une erreur de rate limit
+                    if (response.status === 429) {
+                        // Extraire le nombre de minutes du message d'erreur
+                        const match = result.error.match(/(\d+)\s+minute/);
+                        const remainingMinutes = match ? parseInt(match[1]) : 10;
+                        showRateLimitNotification(remainingMinutes);
+                        
+                        btn.innerHTML = originalText;
+                        btn.style.opacity = '1';
+                        btn.style.pointerEvents = 'all';
+                    } else {
+                        throw new Error(result.error || 'Erreur lors de l\'envoi');
+                    }
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                btn.innerHTML = '<span>Erreur d\'envoi</span><i class="fas fa-times"></i>';
+                btn.style.background = '#dc2626';
                 
                 setTimeout(() => {
                     btn.innerHTML = originalText;
                     btn.style.opacity = '1';
                     btn.style.pointerEvents = 'all';
                     btn.style.background = '';
-                    contactForm.reset();
-                }, 2000);
-            }, 1500);
+                }, 3000);
+            }
         });
     }
 
