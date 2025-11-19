@@ -36,6 +36,30 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 300);
         });
 
+        // Événements tactiles pour mobile
+        window.addEventListener('touchstart', (event) => {
+            if (event.touches.length > 0) {
+                mouse.x = event.touches[0].clientX;
+                mouse.y = event.touches[0].clientY;
+                mouse.isMouseDown = true;
+            }
+        });
+
+        window.addEventListener('touchmove', (event) => {
+            if (event.touches.length > 0) {
+                mouse.x = event.touches[0].clientX;
+                mouse.y = event.touches[0].clientY;
+            }
+        });
+
+        window.addEventListener('touchend', () => {
+            mouse.isMouseDown = false;
+            mouse.isBlasting = true;
+            setTimeout(() => {
+                mouse.isBlasting = false;
+            }, 300);
+        });
+
         class Particle {
             constructor(x, y, directionX, directionY, size, color) {
                 this.x = x;
@@ -214,8 +238,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Faire disparaître les stats progressivement avec transition fluide
         if (heroStats) {
-            const fadeStart = 150;
-            const fadeEnd = 500;
+            const viewportHeight = window.innerHeight;
+            const fadeStart = viewportHeight * 0.55;
+            const fadeEnd = viewportHeight * 1;
             
             if (currentScroll <= fadeStart) {
                 heroStats.style.setProperty('opacity', '1', 'important');
@@ -614,8 +639,9 @@ function initializeScrollState() {
     
     // Initialiser les stats avec transition progressive
     if (heroStats) {
-        const fadeStart = 150;
-        const fadeEnd = 500;
+        const viewportHeight = window.innerHeight;
+        const fadeStart = viewportHeight * 0.55;
+        const fadeEnd = viewportHeight * 1;
         
         if (currentScroll <= fadeStart) {
             heroStats.style.setProperty('opacity', '1', 'important');
