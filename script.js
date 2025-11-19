@@ -184,29 +184,80 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ===================================
-    // HEADER SCROLL EFFECT
+    // HEADER SCROLL EFFECT & SCROLL INDICATOR
     // ===================================
     const header = document.querySelector('.header');
     const scrollIndicator = document.querySelector('.scroll-indicator');
+    const heroStats = document.querySelector('.hero-stats');
     let lastScroll = 0;
+    
+    console.log('heroStats trouvé:', heroStats);
+
+    function updateScrollIndicator() {
+        const currentScroll = window.scrollY || window.pageYOffset;
+        
+        if (scrollIndicator) {
+            const firstSection = document.querySelector('section:first-of-type');
+            if (firstSection) {
+                const firstSectionHeight = firstSection.offsetHeight;
+                
+                // L'indicateur est visible uniquement dans la première section
+                if (currentScroll < firstSectionHeight - 100) {
+                    scrollIndicator.classList.add('visible');
+                    scrollIndicator.classList.remove('hidden');
+                } else {
+                    scrollIndicator.classList.remove('visible');
+                    scrollIndicator.classList.add('hidden');
+                }
+            }
+        }
+        
+        // Faire disparaître les stats progressivement avec transition fluide
+        if (heroStats) {
+            const fadeStart = 150;
+            const fadeEnd = 500;
+            
+            if (currentScroll <= fadeStart) {
+                heroStats.style.setProperty('opacity', '1', 'important');
+                heroStats.style.setProperty('transform', 'translateY(0)', 'important');
+            } else if (currentScroll >= fadeEnd) {
+                heroStats.style.setProperty('opacity', '0', 'important');
+                heroStats.style.setProperty('transform', 'translateY(-30px)', 'important');
+            } else {
+                // Transition progressive entre fadeStart et fadeEnd
+                const progress = (currentScroll - fadeStart) / (fadeEnd - fadeStart);
+                const opacity = 1 - progress;
+                const translateY = -30 * progress;
+                heroStats.style.setProperty('opacity', opacity.toString(), 'important');
+                heroStats.style.setProperty('transform', `translateY(${translateY}px)`, 'important');
+            }
+        }
+    }
 
     window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
+        const currentScroll = window.scrollY || window.pageYOffset;
 
         if (currentScroll > 50) {
             header.classList.add('scrolled');
-            if (scrollIndicator) {
-                scrollIndicator.classList.add('hidden');
-            }
         } else {
             header.classList.remove('scrolled');
-            if (scrollIndicator) {
-                scrollIndicator.classList.remove('hidden');
-            }
         }
-
+        
+        updateScrollIndicator();
         lastScroll = currentScroll;
     });
+
+    // Initialisation de l'état au chargement - ne s'exécute qu'une fois
+    const initOnce = () => {
+        // Attendre que la restauration du scroll soit terminée
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                initializeScrollState();
+            });
+        });
+    };
+    
+    initOnce();
 
     // ===================================
     // ACTIVE NAV LINK
@@ -418,6 +469,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'skills': { fr: 'Compétences Techniques', en: 'Technical Skills' },
             'projects': { fr: 'Projets', en: 'Projects' },
             'contact': { fr: 'Contact', en: 'Contact' },
+            'other-projects': { fr: 'Autres projets', en: 'Other projects' },
             'overview': { fr: 'Vue d\'ensemble', en: 'Overview' },
             'context': { fr: 'Contexte', en: 'Context' },
             'technologies': { fr: 'Technologies', en: 'Technologies' },
@@ -513,8 +565,86 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
+    // Compteur de caractères pour le champ message
+    const messageTextarea = document.getElementById('message');
+    const charCount = document.getElementById('char-count');
+    
+    if (messageTextarea && charCount) {
+        messageTextarea.addEventListener('input', function() {
+            charCount.textContent = this.value.length;
+        });
+    }
 
     console.log('%c🚀 Portfolio IPI', 'font-size: 20px; font-weight: bold; color: #ef4444;');
     console.log('%cSystèmes, Réseaux & Sécurité', 'font-size: 14px; color: #a0a0a0;');
+});
+
+// Fonction pour changer de langue en conservant la position de scroll
+function switchLanguage(url) {
+    sessionStorage.setItem('scrollPosition', window.pageYOffset);
+    window.location.href = url;
+}
+
+// Fonction d'initialisation centralisée
+function initializeScrollState() {
+    const currentScroll = window.pageYOffset;
+    const header = document.querySelector('.header');
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    const heroStats = document.querySelector('.hero-stats');
+    
+    // Initialiser le header
+    if (header && currentScroll > 50) {
+        header.classList.add('scrolled');
+    }
+    
+    // Initialiser l'indicateur de scroll
+    if (scrollIndicator) {
+        const firstSection = document.querySelector('section:first-of-type');
+        if (firstSection) {
+            const firstSectionHeight = firstSection.offsetHeight;
+            if (currentScroll >= firstSectionHeight - 100) {
+                scrollIndicator.classList.remove('visible');
+                scrollIndicator.classList.add('hidden');
+            } else {
+                scrollIndicator.classList.add('visible');
+                scrollIndicator.classList.remove('hidden');
+            }
+        }
+    }
+    
+    // Initialiser les stats avec transition progressive
+    if (heroStats) {
+        const fadeStart = 150;
+        const fadeEnd = 500;
+        
+        if (currentScroll <= fadeStart) {
+            heroStats.style.setProperty('opacity', '1', 'important');
+            heroStats.style.setProperty('transform', 'translateY(0)', 'important');
+        } else if (currentScroll >= fadeEnd) {
+            heroStats.style.setProperty('opacity', '0', 'important');
+            heroStats.style.setProperty('transform', 'translateY(-30px)', 'important');
+        } else {
+            const progress = (currentScroll - fadeStart) / (fadeEnd - fadeStart);
+            const opacity = 1 - progress;
+            const translateY = -30 * progress;
+            heroStats.style.setProperty('opacity', opacity.toString(), 'important');
+            heroStats.style.setProperty('transform', `translateY(${translateY}px)`, 'important');
+        }
+    }
+}
+
+// Restauration de la position de scroll après changement de langue
+window.addEventListener('load', () => {
+    const savedPosition = sessionStorage.getItem('scrollPosition');
+    if (savedPosition) {
+        window.scrollTo(0, parseInt(savedPosition));
+        sessionStorage.removeItem('scrollPosition');
+        
+        // Réinitialiser l'état après restauration du scroll
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                initializeScrollState();
+            });
+        });
+    }
 });

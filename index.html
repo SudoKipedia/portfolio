@@ -32,8 +32,8 @@
                     <a href="#contact" class="nav-link">Contact</a>
                 </div>
                 <div class="lang-switcher">
-                    <a href="index.html" class="lang-btn active">FR</a>
-                    <a href="index_en.html" class="lang-btn">EN</a>
+                    <a href="#" class="lang-btn active" onclick="return false;">FR</a>
+                    <a href="#" class="lang-btn" onclick="switchLanguage('index_en.html'); return false;">EN</a>
                 </div>
             </nav>
         </div>
@@ -306,7 +306,8 @@
                     </div>
                     <div class="form-group">
                         <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
+                        <textarea id="message" name="message" rows="5" maxlength="1000" required></textarea>
+                        <span class="char-counter"><span id="char-count">0</span>/1000</span>
                     </div>
                     <button type="submit" class="btn btn-primary">
                         <span>Envoyer le message</span>

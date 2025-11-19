@@ -23,24 +23,27 @@
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="nav-menu">
+                    <a href="#other-projects" class="nav-link">Other projects</a>
                     <a href="#overview" class="nav-link">Overview</a>
                     <a href="#context" class="nav-link">Context</a>
                     <a href="#technologies" class="nav-link">Technologies</a>
                     <a href="#results" class="nav-link">Results</a>
                     <a href="#documents" class="nav-link">Documents</a>
                     <a href="#contact" class="nav-link">Contact</a>
-                    <a href="index_en.html#projects" class="nav-link">← Back to projects</a>
+                    <a href="index_en.html#projects" class="nav-link">← Back to Projects</a>
                 </div>
                 <div class="lang-switcher">
-                    <a href="project_infra.html" class="lang-btn">FR</a>
-                    <a href="project_infra_en.html" class="lang-btn active">EN</a>
+                    <a href="#" class="lang-btn" onclick="switchLanguage('project_infra.html'); return false;">FR</a>
+                    <a href="#" class="lang-btn active" onclick="return false;">EN</a>
                 </div>
             </nav>
         </div>
     </header>
 
-    <section id="overview" class="section project-section" style="padding-top: 150px;">
-        <div class="container" style="max-width: 900px;">
+    <section id="other-projects" class="section project-section" style="padding-top: 150px;">
+        <div class="container" style="max-width: 1200px;">
+            <span class="section-tag">Other projects</span>
+            <h2 class="section-title">Discover my other projects</h2>
             <div class="projects-carousel-compact">
                 <div class="carousel-wrapper">
                     <div class="carousel-track-compact" id="carouselTrack">
@@ -74,12 +77,12 @@
                         </button>
                     </div>
                 </div>
-                <a href="index_en.html#projects" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i>
-                    <span>Back to Projects</span>
-                </a>
             </div>
+        </div>
+    </section>
 
+    <section id="overview" class="section project-section">
+        <div class="container" style="max-width: 900px;">
             <div style="margin-bottom: 3rem;">
                 <div class="project-tags" style="margin-bottom: 1.5rem;">
                     <span>Network</span>
@@ -266,7 +269,8 @@
                     </div>
                     <div class="form-group">
                         <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
+                        <textarea id="message" name="message" rows="5" maxlength="1000" required></textarea>
+                        <span class="char-counter"><span id="char-count">0</span>/1000</span>
                     </div>
                     <button type="submit" class="btn btn-primary">
                         <span>Send message</span>
