@@ -101,6 +101,14 @@ body {
     padding-top: 2rem;
 }
 
+.section.project-section#recommendations {
+    padding-bottom: 2rem;
+}
+
+.section.project-section#recommendations + .section.contact {
+    padding-top: 2rem;
+}
+
 .section-header {
     text-align: center;
     margin-bottom: 5rem;
