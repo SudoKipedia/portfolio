@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let mouse = {
             x: null,
             y: null,
-            radius: (canvas.height / 100) * (canvas.width / 100),
+            radius: (canvas.height / 150) * (canvas.width / 150),
             isMouseDown: false,
             isBlasting: false
         }
@@ -415,7 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const sectionNames = {
             'home': { fr: 'Accueil', en: 'Home' },
             'about': { fr: 'À propos', en: 'About' },
-            'skills': { fr: 'Compétences', en: 'Skills' },
+            'skills': { fr: 'Compétences Techniques', en: 'Technical Skills' },
             'projects': { fr: 'Projets', en: 'Projects' },
             'contact': { fr: 'Contact', en: 'Contact' },
             'overview': { fr: 'Vue d\'ensemble', en: 'Overview' },
