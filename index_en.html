@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - IPI Blagnac Student | Systems, Networks & Security</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <canvas id="bg-canvas"></canvas>
+
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="#home" class="logo">
+                    <span class="logo-text">PORTFOLIO</span>
+                    <span class="logo-dot">.</span>
+                </a>
+                <div class="nav-current">
+                    <span class="nav-current-text">Home</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="nav-menu">
+                    <a href="#home" class="nav-link">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#skills" class="nav-link">Skills</a>
+                    <a href="#projects" class="nav-link">Projects</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </div>
+                <div class="lang-switcher">
+                    <a href="index.html" class="lang-btn">FR</a>
+                    <a href="index_en.html" class="lang-btn active">EN</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge animate-in">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>IPI Blagnac Student</span>
+                </div>
+                <h1 class="hero-title">
+                    <span class="line animate-in" style="--delay: 0.1s">Systems</span>
+                    <span class="line animate-in" style="--delay: 0.2s">Networks &</span>
+                    <span class="line highlight animate-in" style="--delay: 0.3s">Security</span>
+                </h1>
+                <p class="hero-subtitle animate-in" style="--delay: 0.4s">
+                    Passionate about IT infrastructure, cybersecurity and automation.<br>
+                    I design robust and secure technical solutions.
+                </p>
+                <div class="hero-cta animate-in" style="--delay: 0.5s">
+                    <a href="#projects" class="btn btn-primary">
+                        <span>View my projects</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <span>Contact me</span>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-stats animate-in" style="--delay: 0.6s">
+                <div class="stat-item">
+                    <span class="stat-number" data-target="3">0</span>
+                    <span class="stat-label">Years of study</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="15">0</span>
+                    <span class="stat-label">Projects completed</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="10">0</span>
+                    <span class="stat-label">Certifications</span>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <section id="about" class="section about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">About</span>
+                <h2 class="section-title">Who am I?</h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p class="lead">
+                        Currently studying at <strong>IPI Blagnac</strong> in Systems, Networks and Security, 
+                        I specialize in designing high-performance and secure IT infrastructures.
+                    </p>
+                    <p>
+                        My education has allowed me to develop strong skills in system administration, 
+                        network configuration, IT security and automation. I'm constantly looking for 
+                        new technical challenges.
+                    </p>
+                    <div class="about-highlights">
+                        <div class="highlight-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Windows Server & Linux administration</span>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Cisco network configuration & virtualization</span>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Security & infrastructure audits</span>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>PowerShell & Ansible automation</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-visual">
+                    <div class="visual-card">
+                        <div class="card-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h3>IPI Education</h3>
+                        <p>Systems, Networks & Security</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="section skills">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Skills</span>
+                <h2 class="section-title">Areas of expertise</h2>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3>System Administration</h3>
+                    <p>Linux server management (Debian, Ubuntu, CentOS) and Windows Server. Active Directory configuration, GPO, and virtualization (VMware, Hyper-V, Proxmox).</p>
+                    <div class="skill-tags">
+                        <span>Linux</span>
+                        <span>Windows Server</span>
+                        <span>Active Directory</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3>Network Infrastructure</h3>
+                    <p>Configuration and administration of Cisco equipment (CCNA). Implementation of VLANs, routing, VPN, and firewall management (pfSense, Fortinet).</p>
+                    <div class="skill-tags">
+                        <span>Cisco CCNA</span>
+                        <span>Routing & Switching</span>
+                        <span>Firewall</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Cybersecurity</h3>
+                    <p>Security audits, system hardening, vulnerability analysis, implementation of security policies and incident management.</p>
+                    <div class="skill-tags">
+                        <span>Pentesting</span>
+                        <span>Hardening</span>
+                        <span>SIEM</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Automation</h3>
+                    <p>PowerShell, Bash and Python scripts to automate tasks. Deployment with Ansible and infrastructure as code configuration management.</p>
+                    <div class="skill-tags">
+                        <span>PowerShell</span>
+                        <span>Ansible</span>
+                        <span>Python</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section projects">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Work</span>
+                <h2 class="section-title">My projects</h2>
+            </div>
+            <div class="projects-grid">
+                <a href="project_ad_en.html" class="project-card">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?w=800" alt="Active Directory">
+                        <div class="project-overlay">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags">
+                            <span>System</span>
+                            <span>Security</span>
+                        </div>
+                        <h3>Active Directory Audit</h3>
+                        <p>Complete security audit of an Active Directory infrastructure with hardening recommendations.</p>
+                    </div>
+                </a>
+                <a href="project_ansible_en.html" class="project-card">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800" alt="Ansible">
+                        <div class="project-overlay">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags">
+                            <span>Automation</span>
+                            <span>DevOps</span>
+                        </div>
+                        <h3>Ansible Automation</h3>
+                        <p>Automated infrastructure deployment with Ansible to standardize server configurations.</p>
+                    </div>
+                </a>
+                <a href="project_infra_en.html" class="project-card">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800" alt="Infrastructure">
+                        <div class="project-overlay">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags">
+                            <span>Network</span>
+                            <span>Architecture</span>
+                        </div>
+                        <h3>Network Infrastructure</h3>
+                        <p>Design and deployment of a complete network infrastructure with VLAN segmentation and high availability.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Contact</span>
+                <h2 class="section-title">Let's work together</h2>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <p class="contact-intro">
+                        Do you have a project or an opportunity? Feel free to contact me. 
+                        I'm always open to new collaborations and technical challenges.
+                    </p>
+                    <div class="contact-methods">
+                        <a href="mailto:quentin.poisson23@gmail.com" class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <span class="contact-label">Email</span>
+                                <span class="contact-value">quentin.poisson23@gmail.com</span>
+                            </div>
+                        </a>
+                        <a href="https://www.linkedin.com/in/quentin-pssn" class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fab fa-linkedin"></i>
+                            </div>
+                            <div class="contact-details">
+                                <span class="contact-label">LinkedIn</span>
+                                <span class="contact-value">Quentin Poisson</span>
+                            </div>
+                        </a>
+                        <a href="https://github.com" target="_blank" class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div class="contact-details">
+                                <span class="contact-label">GitHub</span>
+                                <span class="contact-value">My repositories</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span>Send message</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Quentin Poisson Portfolio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
