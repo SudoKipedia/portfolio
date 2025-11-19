@@ -23,6 +23,7 @@
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="nav-menu">
+                    <a href="#other-projects" class="nav-link">Autres projets</a>
                     <a href="#overview" class="nav-link">Vue d'ensemble</a>
                     <a href="#context" class="nav-link">Contexte</a>
                     <a href="#technologies" class="nav-link">Technologies</a>
@@ -32,15 +33,17 @@
                     <a href="index.html#projects" class="nav-link">← Retour aux projets</a>
                 </div>
                 <div class="lang-switcher">
-                    <a href="project_infra.html" class="lang-btn active">FR</a>
-                    <a href="project_infra_en.html" class="lang-btn">EN</a>
+                    <a href="#" class="lang-btn active" onclick="return false;">FR</a>
+                    <a href="#" class="lang-btn" onclick="switchLanguage('project_infra_en.html'); return false;">EN</a>
                 </div>
             </nav>
         </div>
     </header>
 
-    <section id="overview" class="section project-section" style="padding-top: 150px;">
-        <div class="container" style="max-width: 900px;">
+    <section id="other-projects" class="section project-section" style="padding-top: 150px;">
+        <div class="container" style="max-width: 1200px;">
+            <span class="section-tag">Autres projets</span>
+            <h2 class="section-title">Découvrez mes autres réalisations</h2>
             <div class="projects-carousel-compact">
                 <div class="carousel-wrapper">
                     <div class="carousel-track-compact" id="carouselTrack">
@@ -74,12 +77,12 @@
                         </button>
                     </div>
                 </div>
-                <a href="index.html#projects" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i>
-                    <span>Retour aux projets</span>
-                </a>
             </div>
+        </div>
+    </section>
 
+    <section id="overview" class="section project-section">
+        <div class="container" style="max-width: 900px;">
             <div style="margin-bottom: 3rem;">
                 <div class="project-tags" style="margin-bottom: 1.5rem;">
                     <span>Réseau</span>
@@ -266,7 +269,8 @@
                     </div>
                     <div class="form-group">
                         <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
+                        <textarea id="message" name="message" rows="5" maxlength="1000" required></textarea>
+                        <span class="char-counter"><span id="char-count">0</span>/1000</span>
                     </div>
                     <button type="submit" class="btn btn-primary">
                         <span>Envoyer le message</span>
