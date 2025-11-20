@@ -270,22 +270,55 @@ document.addEventListener('DOMContentLoaded', () => {
         // Faire disparaître les stats progressivement avec transition fluide
         if (heroStats) {
             const viewportHeight = window.innerHeight;
-            const fadeStart = viewportHeight * 0.55;
-            const fadeEnd = viewportHeight * 1;
+            const isMobile = window.innerWidth <= 768;
             
-            if (currentScroll <= fadeStart) {
-                heroStats.style.setProperty('opacity', '1', 'important');
-                heroStats.style.setProperty('transform', 'translateY(0)', 'important');
-            } else if (currentScroll >= fadeEnd) {
-                heroStats.style.setProperty('opacity', '0', 'important');
-                heroStats.style.setProperty('transform', 'translateY(-30px)', 'important');
+            if (isMobile) {
+                // Sur mobile : faire disparaître chaque stat individuellement au 1/3 de la page en partant du bas
+                const statItems = heroStats.querySelectorAll('.stat-item');
+                const triggerPoint = viewportHeight * (2/3); // 1/3 en partant du bas = 2/3 en partant du haut
+                
+                statItems.forEach((item, index) => {
+                    const itemRect = item.getBoundingClientRect();
+                    const itemTop = itemRect.top;
+                    
+                    const fadeRange = viewportHeight * 0.15; // Range de disparition
+                    
+                    if (itemTop > triggerPoint + fadeRange) {
+                        // Item pas encore arrivé au point de déclenchement
+                        item.style.setProperty('opacity', '1', 'important');
+                        item.style.setProperty('transform', 'translateY(0)', 'important');
+                    } else if (itemTop < triggerPoint - fadeRange) {
+                        // Item déjà passé le point de déclenchement
+                        item.style.setProperty('opacity', '0', 'important');
+                        item.style.setProperty('transform', 'translateY(-30px)', 'important');
+                    } else {
+                        // Transition progressive autour du point de déclenchement
+                        const progress = (triggerPoint - itemTop + fadeRange) / (fadeRange * 2);
+                        const opacity = 1 - Math.max(0, Math.min(1, progress));
+                        const translateY = -30 * Math.max(0, Math.min(1, progress));
+                        item.style.setProperty('opacity', opacity.toString(), 'important');
+                        item.style.setProperty('transform', `translateY(${translateY}px)`, 'important');
+                    }
+                });
             } else {
-                // Transition progressive entre fadeStart et fadeEnd
-                const progress = (currentScroll - fadeStart) / (fadeEnd - fadeStart);
-                const opacity = 1 - progress;
-                const translateY = -30 * progress;
-                heroStats.style.setProperty('opacity', opacity.toString(), 'important');
-                heroStats.style.setProperty('transform', `translateY(${translateY}px)`, 'important');
+                // Sur desktop : faire disparaître toutes les stats ensemble
+                const fadeStart = viewportHeight * 0.55;
+                const fadeEnd = viewportHeight * 1;
+                
+                if (currentScroll <= fadeStart) {
+                    heroStats.style.setProperty('opacity', '1', 'important');
+                    heroStats.style.setProperty('transform', 'translateY(0)', 'important');
+                } else if (currentScroll >= fadeEnd) {
+                    heroStats.style.setProperty('opacity', '0', 'important');
+                    heroStats.style.setProperty('transform', 'translateY(-30px)', 'important');
+                } else {
+                    // Transition progressive entre fadeStart et fadeEnd
+                    const progress = (currentScroll - fadeStart) / (fadeEnd - fadeStart);
+                    const opacity = 1 - progress;
+                    const translateY = -30 * progress;
+                    heroStats.style.setProperty('opacity', opacity.toString(), 'important');
+                    heroStats.style.setProperty('transform', `translateY(${translateY}px)`, 'important');
+                }
             }
         }
     }
