@@ -40,11 +40,34 @@ document.addEventListener('DOMContentLoaded', () => {
         let isScrolling = false;
         let scrollTimeout;
         let lastTouchY = null;
+        let touchStartY = null;
+        let initialViewportHeight = window.innerHeight;
+        let isViewportChanging = false;
+
+        // Détecter les changements de taille du viewport (UI du navigateur)
+        window.addEventListener('resize', () => {
+            const currentHeight = window.innerHeight;
+            if (Math.abs(currentHeight - initialViewportHeight) > 50) {
+                // L'UI du navigateur change
+                isViewportChanging = true;
+                mouse.isMouseDown = false;
+                mouse.x = null;
+                mouse.y = null;
+                
+                setTimeout(() => {
+                    isViewportChanging = false;
+                    initialViewportHeight = currentHeight;
+                }, 400);
+            }
+        });
 
         window.addEventListener('touchstart', (event) => {
-            if (event.touches.length > 0) {
+            if (event.touches.length > 0 && !isViewportChanging) {
                 isScrolling = false;
-                lastTouchY = event.touches[0].clientY;
+                touchStartY = event.touches[0].clientY;
+                lastTouchY = touchStartY;
+                
+                // Activer les interactions tactiles
                 mouse.x = event.touches[0].clientX;
                 mouse.y = event.touches[0].clientY;
                 mouse.isMouseDown = true;
@@ -55,18 +78,21 @@ document.addEventListener('DOMContentLoaded', () => {
             if (event.touches.length > 0) {
                 const currentTouchY = event.touches[0].clientY;
                 
-                // Détecte si c'est un scroll vertical
-                if (lastTouchY !== null) {
-                    const deltaY = Math.abs(currentTouchY - lastTouchY);
-                    if (deltaY > 5) {
+                // Détecte si c'est un scroll vertical (mouvement significatif depuis le départ)
+                if (touchStartY !== null) {
+                    const totalDeltaY = Math.abs(currentTouchY - touchStartY);
+                    const recentDeltaY = lastTouchY !== null ? Math.abs(currentTouchY - lastTouchY) : 0;
+                    
+                    // Considérer comme scroll si mouvement total > 15px OU mouvement récent > 5px
+                    if (totalDeltaY > 15 || recentDeltaY > 5) {
                         isScrolling = true;
                     }
                 }
                 
                 lastTouchY = currentTouchY;
                 
-                // Si c'est un scroll, désactiver complètement l'interaction
-                if (isScrolling) {
+                // Si c'est un scroll ou viewport change, désactiver l'interaction
+                if (isScrolling || isViewportChanging) {
                     mouse.isMouseDown = false;
                     mouse.x = null;
                     mouse.y = null;
@@ -75,13 +101,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
 
         window.addEventListener('touchend', () => {
+            touchStartY = null;
             lastTouchY = null;
             clearTimeout(scrollTimeout);
             scrollTimeout = setTimeout(() => {
                 isScrolling = false;
-            }, 150);
+            }, 200);
             
-            if (!isScrolling) {
+            if (!isScrolling && !isViewportChanging) {
                 mouse.isMouseDown = false;
                 mouse.isBlasting = true;
                 setTimeout(() => {
