@@ -273,27 +273,46 @@ document.addEventListener('DOMContentLoaded', () => {
             const isMobile = window.innerWidth <= 768;
             
             if (isMobile) {
-                // Sur mobile : faire disparaître chaque stat individuellement au 1/3 de la page en partant du bas
+                // Sur mobile : faire disparaître/réapparaître chaque stat individuellement
                 const statItems = heroStats.querySelectorAll('.stat-item');
-                const triggerPoint = viewportHeight * (2/3); // 1/3 en partant du bas = 2/3 en partant du haut
+                const disappearTrigger = viewportHeight * (2/3); // Disparition au 1/3 en partant du bas
+                const reappearTrigger = viewportHeight * (2/3); // Réapparition complète au 1/3 de la page
+                
+                // Configuration de la vitesse de disparition (plus c'est petit, plus c'est rapide)
+                const fadeSpeed = 0.05; // Ajustable : 0.1 (très rapide) à 0.5 (très lent)
+                const fadeRange = viewportHeight * fadeSpeed;
                 
                 statItems.forEach((item, index) => {
                     const itemRect = item.getBoundingClientRect();
-                    const itemTop = itemRect.top;
+                    const itemBottom = itemRect.bottom; // Position du bas de l'item
                     
-                    const fadeRange = viewportHeight * 0.15; // Range de disparition
-                    
-                    if (itemTop > triggerPoint + fadeRange) {
-                        // Item pas encore arrivé au point de déclenchement
+                    // Disparition (scroll vers le bas)
+                    if (itemBottom > disappearTrigger + fadeRange) {
+                        // Item complètement visible (en dessous du point de disparition)
                         item.style.setProperty('opacity', '1', 'important');
                         item.style.setProperty('transform', 'translateY(0)', 'important');
-                    } else if (itemTop < triggerPoint - fadeRange) {
-                        // Item déjà passé le point de déclenchement
-                        item.style.setProperty('opacity', '0', 'important');
-                        item.style.setProperty('transform', 'translateY(-30px)', 'important');
+                    } else if (itemBottom < disappearTrigger - fadeRange) {
+                        // Item a disparu, mais peut être en train de réapparaître
+                        // Vérifier si on est en train de remonter et réapparaître
+                        if (itemBottom < reappearTrigger + fadeRange && itemBottom > reappearTrigger - fadeRange) {
+                            // En train de réapparaître : le bas approche du 1/3 de la page
+                            const reappearProgress = (reappearTrigger - itemBottom + fadeRange) / (fadeRange * 2);
+                            const opacity = Math.max(0, Math.min(1, reappearProgress));
+                            const translateY = -30 * (1 - Math.max(0, Math.min(1, reappearProgress)));
+                            item.style.setProperty('opacity', opacity.toString(), 'important');
+                            item.style.setProperty('transform', `translateY(${translateY}px)`, 'important');
+                        } else if (itemBottom >= reappearTrigger + fadeRange) {
+                            // Complètement réapparu (le bas est au-dessus du 1/3)
+                            item.style.setProperty('opacity', '1', 'important');
+                            item.style.setProperty('transform', 'translateY(0)', 'important');
+                        } else {
+                            // Complètement invisible
+                            item.style.setProperty('opacity', '0', 'important');
+                            item.style.setProperty('transform', 'translateY(-30px)', 'important');
+                        }
                     } else {
-                        // Transition progressive autour du point de déclenchement
-                        const progress = (triggerPoint - itemTop + fadeRange) / (fadeRange * 2);
+                        // Transition de disparition progressive
+                        const progress = (disappearTrigger - itemBottom + fadeRange) / (fadeRange * 2);
                         const opacity = 1 - Math.max(0, Math.min(1, progress));
                         const translateY = -30 * Math.max(0, Math.min(1, progress));
                         item.style.setProperty('opacity', opacity.toString(), 'important');
