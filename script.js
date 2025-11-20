@@ -488,8 +488,8 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.style.pointerEvents = 'none';
 
             try {
-                // URL du serveur backend sur Oracle Cloud
-                const response = await fetch('http://170.9.255.69:3000/api/contact', {
+                // URL du serveur backend sur Oracle Cloud (HTTPS via Nginx + Let's Encrypt)
+                const response = await fetch('https://quentinpoisson.duckdns.org/api/contact', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
