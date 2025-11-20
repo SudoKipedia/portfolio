@@ -1278,6 +1278,17 @@ body {
    RESPONSIVE
    =================================== */
 @media (max-width: 900px) {
+    .logo {
+        position: relative;
+    }
+    
+    .logo-dot {
+        position: absolute;
+        right: -0.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    
     .nav-current {
         display: flex;
     }
