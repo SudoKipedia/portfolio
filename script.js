@@ -39,10 +39,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Événements tactiles pour mobile
         let isScrolling = false;
         let scrollTimeout;
+        let lastTouchY = null;
 
         window.addEventListener('touchstart', (event) => {
             if (event.touches.length > 0) {
                 isScrolling = false;
+                lastTouchY = event.touches[0].clientY;
                 mouse.x = event.touches[0].clientX;
                 mouse.y = event.touches[0].clientY;
                 mouse.isMouseDown = true;
@@ -51,18 +53,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         window.addEventListener('touchmove', (event) => {
             if (event.touches.length > 0) {
-                // Détecte si c'est un scroll vertical rapide
-                const touchSpeed = Math.abs(event.touches[0].clientY - mouse.y);
-                if (touchSpeed > 10) {
-                    isScrolling = true;
+                const currentTouchY = event.touches[0].clientY;
+                
+                // Détecte si c'est un scroll vertical
+                if (lastTouchY !== null) {
+                    const deltaY = Math.abs(currentTouchY - lastTouchY);
+                    if (deltaY > 5) {
+                        isScrolling = true;
+                    }
                 }
                 
-                // Ne mettre à jour la position que si ce n'est pas un scroll rapide
-                if (!isScrolling) {
-                    mouse.x = event.touches[0].clientX;
-                    mouse.y = event.touches[0].clientY;
-                } else {
-                    // Si c'est un scroll, désactiver l'interaction
+                lastTouchY = currentTouchY;
+                
+                // Si c'est un scroll, désactiver complètement l'interaction
+                if (isScrolling) {
                     mouse.isMouseDown = false;
                     mouse.x = null;
                     mouse.y = null;
@@ -71,10 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
 
         window.addEventListener('touchend', () => {
+            lastTouchY = null;
             clearTimeout(scrollTimeout);
             scrollTimeout = setTimeout(() => {
                 isScrolling = false;
-            }, 100);
+            }, 150);
             
             if (!isScrolling) {
                 mouse.isMouseDown = false;
