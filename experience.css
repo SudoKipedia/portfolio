@@ -639,6 +639,8 @@
     position: fixed;
     bottom: 2rem;
     right: 2rem;
+    left: auto;
+    transform: none;
     z-index: 100;
     padding: 1.75rem;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.04) 100%);

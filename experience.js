@@ -26,118 +26,41 @@ class AnimatedGradient {
         this.canvas.width = window.innerWidth;
         this.canvas.height = Math.max(document.body.scrollHeight, window.innerHeight);
 
-        // Créer 12 blobs de gradient : bordeaux foncé vers rouge pâle
-        // Répartis sur tout l'espace avec des vitesses variées pour éviter les regroupements
-        this.blobs = [
-            {
-                x: window.innerWidth * 0.1,
-                y: window.innerHeight * 0.15,
-                radius: 140,
-                color: 'rgba(127, 29, 29, 0.12)', // Bordeaux foncé
-                speedX: 0.6,
-                speedY: 0.4,
-                angle: 0
-            },
-            {
-                x: window.innerWidth * 0.85,
-                y: window.innerHeight * 0.25,
-                radius: 150,
-                color: 'rgba(185, 28, 28, 0.12)', // Rouge bordeaux
-                speedX: -0.8,
-                speedY: 0.5,
-                angle: Math.PI * 0.3
-            },
-            {
-                x: window.innerWidth * 0.45,
-                y: window.innerHeight * 0.9,
-                radius: 130,
-                color: 'rgba(220, 38, 38, 0.1)', // Rouge medium
-                speedX: 0.7,
-                speedY: -0.9,
-                angle: Math.PI * 1.7
-            },
-            {
-                x: window.innerWidth * 0.95,
-                y: window.innerHeight * 0.65,
-                radius: 120,
-                color: 'rgba(239, 68, 68, 0.08)', // Rouge standard
-                speedX: -1.0,
-                speedY: -0.6,
-                angle: Math.PI * 1.2
-            },
-            {
-                x: window.innerWidth * 0.2,
-                y: window.innerHeight * 0.5,
-                radius: 145,
-                color: 'rgba(252, 165, 165, 0.1)', // Rouge clair
-                speedX: 0.5,
-                speedY: 0.8,
-                angle: Math.PI * 0.8
-            },
-            {
-                x: window.innerWidth * 0.65,
-                y: window.innerHeight * 0.1,
-                radius: 135,
-                color: 'rgba(254, 202, 202, 0.1)', // Rouge pâle
-                speedX: -0.4,
-                speedY: 0.9,
-                angle: Math.PI * 0.1
-            },
-            {
-                x: window.innerWidth * 0.05,
-                y: window.innerHeight * 0.75,
-                radius: 140,
-                color: 'rgba(127, 29, 29, 0.09)', // Bordeaux foncé
-                speedX: 0.9,
-                speedY: -0.7,
-                angle: Math.PI * 1.4
-            },
-            {
-                x: window.innerWidth * 0.75,
-                y: window.innerHeight * 0.45,
-                radius: 125,
-                color: 'rgba(220, 38, 38, 0.11)', // Rouge medium
-                speedX: -0.6,
-                speedY: 0.7,
-                angle: Math.PI * 0.6
-            },
-            {
-                x: window.innerWidth * 0.35,
-                y: window.innerHeight * 0.3,
-                radius: 130,
-                color: 'rgba(239, 68, 68, 0.11)', // Rouge standard
-                speedX: 0.8,
-                speedY: 0.5,
-                angle: Math.PI * 0.4
-            },
-            {
-                x: window.innerWidth * 0.55,
-                y: window.innerHeight * 0.8,
-                radius: 135,
-                color: 'rgba(185, 28, 28, 0.1)', // Rouge bordeaux
-                speedX: -0.7,
-                speedY: -0.8,
-                angle: Math.PI * 1.6
-            },
-            {
-                x: window.innerWidth * 0.15,
-                y: window.innerHeight * 0.35,
-                radius: 145,
-                color: 'rgba(252, 165, 165, 0.1)', // Rouge clair
-                speedX: 0.4,
-                speedY: -0.6,
-                angle: Math.PI * 0.9
-            },
-            {
-                x: window.innerWidth * 0.9,
-                y: window.innerHeight * 0.05,
-                radius: 128,
-                color: 'rgba(254, 202, 202, 0.11)', // Rouge pâle
-                speedX: -0.5,
-                speedY: 1.0,
-                angle: Math.PI * 0.2
-            }
+        // Adapter la taille des blobs selon la taille de l'écran
+        const isMobile = window.innerWidth <= 768;
+        const baseRadius = 140; // Taille identique sur tous les écrans
+        const radiusVariation = isMobile ? 0.25 : 0.2; // Respiration adaptée
+
+        // Créer 16 blobs de gradient : bordeaux foncé vers rouge pâle
+        // Répartis aléatoirement sur toute la page
+        const colors = [
+            'rgba(127, 29, 29, 0.12)',   // Bordeaux foncé
+            'rgba(185, 28, 28, 0.12)',   // Rouge bordeaux
+            'rgba(220, 38, 38, 0.1)',    // Rouge medium
+            'rgba(239, 68, 68, 0.08)',   // Rouge standard
+            'rgba(252, 165, 165, 0.1)',  // Rouge clair
+            'rgba(254, 202, 202, 0.1)'   // Rouge pâle
         ];
+
+        this.blobs = [];
+        for (let i = 0; i < 16; i++) {
+            const randomRadius = baseRadius * (0.5 + Math.random() * 0.8); // Tailles variées: 50% à 130% de la base
+            this.blobs.push({
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * this.canvas.height,
+                radius: randomRadius,
+                baseRadius: randomRadius,
+                targetRadius: randomRadius * (0.8 + Math.random() * 0.4), // Taille cible variable
+                radiusSpeed: 0.002 + Math.random() * 0.003, // Vitesse de changement de taille
+                color: colors[Math.floor(Math.random() * colors.length)],
+                speedX: (Math.random() - 0.5) * 2,
+                speedY: (Math.random() - 0.5) * 2,
+                directionX: (Math.random() - 0.5) * 0.5,
+                directionY: (Math.random() - 0.5) * 0.5
+            });
+        }
+        
+        this.radiusVariation = radiusVariation;
     }
 
     animate() {
@@ -147,35 +70,52 @@ class AnimatedGradient {
 
         // Animer et dessiner chaque blob
         this.blobs.forEach((blob, index) => {
-            // Mouvement fluide en forme de lemniscate (infini)
-            const centerX = this.canvas.width / 2;
-            const centerY = this.canvas.height / 2;
-            const radiusX = this.canvas.width * 0.3;
-            const radiusY = this.canvas.height * 0.2;
+            // Mouvement aléatoire simple avec rebonds sur les bords
+            blob.x += blob.directionX;
+            blob.y += blob.directionY;
             
-            blob.angle += blob.speedX * 0.001;
+            // Rebondir sur les bords horizontaux
+            if (blob.x <= blob.radius || blob.x >= this.canvas.width - blob.radius) {
+                blob.directionX *= -1;
+            }
             
-            blob.x = centerX + Math.cos(blob.angle) * radiusX * (1 + Math.sin(blob.angle * 2) * 0.3);
-            blob.y = centerY + Math.sin(blob.angle) * radiusY * (1 + Math.cos(blob.angle * 1.5) * 0.3);
+            // Rebondir sur les bords verticaux
+            if (blob.y <= blob.radius || blob.y >= this.canvas.height - blob.radius) {
+                blob.directionY *= -1;
+            }
 
-            // Effet de respiration sur le rayon
-            const breathingRadius = blob.radius + Math.sin(this.time + index) * 50;
+            // Variation de taille aléatoire et continue
+            blob.radius += (blob.targetRadius - blob.radius) * blob.radiusSpeed;
+            
+            // Changer la taille cible aléatoirement
+            if (Math.abs(blob.radius - blob.targetRadius) < 2) {
+                blob.targetRadius = blob.baseRadius * (0.7 + Math.random() * 0.6);
+            }
 
-            // Créer le gradient radial
+            // Effet de respiration sur le rayon (adapté au mobile)
+            const breathingAmplitude = this.radiusVariation * blob.baseRadius;
+            const breathingRadius = blob.radius + Math.sin(this.time + index) * breathingAmplitude;
+
+            // Dessiner le blob en forme de cercle (pas d'ellipse)
+            this.ctx.save();
+            this.ctx.translate(blob.x, blob.y);
+            
+            // Créer le gradient radial circulaire
             const gradient = this.ctx.createRadialGradient(
-                blob.x, blob.y, 0,
-                blob.x, blob.y, breathingRadius
+                0, 0, 0,
+                0, 0, breathingRadius
             );
 
             gradient.addColorStop(0, blob.color);
             gradient.addColorStop(0.5, blob.color.replace(/[\d.]+\)$/, '0.05)'));
             gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
-            // Dessiner le blob
+            // Dessiner un cercle parfait
             this.ctx.fillStyle = gradient;
             this.ctx.beginPath();
-            this.ctx.arc(blob.x, blob.y, breathingRadius, 0, Math.PI * 2);
+            this.ctx.arc(0, 0, breathingRadius, 0, Math.PI * 2);
             this.ctx.fill();
+            this.ctx.restore();
         });
 
         this.animationId = requestAnimationFrame(() => this.animate());
@@ -493,6 +433,21 @@ class CardExpander {
     
     setupMobileClick() {
         // Sur mobile : déploiement au clic
+        let scrollTimeout;
+        let isScrolling = false;
+        
+        // Détecter le scroll pour désactiver l'interaction
+        const handleScroll = () => {
+            isScrolling = true;
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                isScrolling = false;
+            }, 150);
+        };
+        
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        this._scrollHandler = handleScroll;
+        
         this.cards.forEach(card => {
             // Retirer l'ancien listener s'il existe
             if (card._clickHandler) {
@@ -500,7 +455,13 @@ class CardExpander {
             }
             
             // Créer le nouveau handler
-            card._clickHandler = () => {
+            card._clickHandler = (e) => {
+                // Ignorer le clic si on est en train de scroller
+                if (isScrolling) {
+                    e.preventDefault();
+                    return;
+                }
+                
                 const isExpanded = card.classList.contains('expanded');
                 
                 if (isExpanded) {
@@ -523,6 +484,12 @@ class CardExpander {
     }
     
     cleanupMobileClick() {
+        // Retirer le listener de scroll
+        if (this._scrollHandler) {
+            window.removeEventListener('scroll', this._scrollHandler);
+            this._scrollHandler = null;
+        }
+        
         // Retirer les listeners de clic et classes sur desktop
         this.cards.forEach(card => {
             if (card._clickHandler) {
@@ -684,6 +651,15 @@ function initExperiencePage() {
     // Restaurer la position de scroll si changement de langue
     restoreScrollPosition();
 
+    // Forcer la position du menu sur mobile AVANT toute initialisation
+    const legend = document.getElementById('skillsLegend');
+    const isMobile = window.innerWidth <= 768;
+    if (legend && isMobile) {
+        legend.style.left = '50%';
+        legend.style.right = 'auto';
+        legend.style.transform = 'translateX(-50%)';
+    }
+    
     // Initialiser tous les modules
     const animatedGradient = new AnimatedGradient();
     const scrollAnimations = new ScrollAnimations();
@@ -696,7 +672,6 @@ function initExperiencePage() {
     initLegendHover();
     
     // Initialiser le container avec la classe appropriée
-    const legend = document.getElementById('skillsLegend');
     const container = document.querySelector('.neural-container');
     if (legend && container) {
         if (legend.classList.contains('collapsed')) {
