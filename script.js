@@ -706,6 +706,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 selectedFiles.splice(index, 1);
                 updateFileList();
                 updateFileInput();
+                saveFiles(); // Sauvegarder après suppression
             };
             
             fileItem.appendChild(fileInfo);
@@ -740,12 +741,11 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('email', contactForm.querySelector('#email').value);
             formData.append('message', contactForm.querySelector('#message').value);
             
-            // Ajouter les fichiers joints
-            const fileInput = contactForm.querySelector('#attachment');
-            if (fileInput && fileInput.files.length > 0) {
-                // Limiter à 5 fichiers
-                const filesToUpload = Array.from(fileInput.files).slice(0, 5);
-                filesToUpload.forEach((file, index) => {
+            // Ajouter les fichiers depuis selectedFiles (et non depuis l'input)
+            if (selectedFiles.length > 0) {
+                console.log(`Envoi de ${selectedFiles.length} fichier(s)`);
+                selectedFiles.forEach((file, index) => {
+                    console.log(`  ${index + 1}. ${file.name} (${(file.size / 1024).toFixed(1)} KB)`);
                     formData.append('attachments', file);
                 });
             }
@@ -1082,32 +1082,4 @@ window.addEventListener('load', () => {
             });
         });
     }
-    
-    // ===================================
-    // CLEAR FORM DATA ON PAGE NAVIGATION
-    // ===================================
-    // Effacer les données du formulaire uniquement lors d'une navigation vers une autre page
-    // (pas lors d'un changement de langue index.html ↔ index_en.html)
-    window.addEventListener('beforeunload', (e) => {
-        // Récupérer le lien sur lequel l'utilisateur clique
-        const activeElement = document.activeElement;
-        
-        // Si c'est un lien interne vers la page de langue ou un refresh, on garde les données
-        if (activeElement && activeElement.tagName === 'A') {
-            const href = activeElement.getAttribute('href');
-            const currentPage = window.location.pathname.split('/').pop();
-            
-            // Pages de langue (garder les données)
-            if ((currentPage === 'index.html' && href === 'index_en.html') ||
-                (currentPage === 'index_en.html' && href === 'index.html') ||
-                (currentPage === '' && (href === 'index.html' || href === 'index_en.html'))) {
-                return; // Garder les données
-            }
-            
-            // Navigation vers une autre page (projet, etc.) - effacer les données
-            if (href && !href.startsWith('#')) {
-                clearFormData();
-            }
-        }
-    });
 });
