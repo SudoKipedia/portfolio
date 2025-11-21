@@ -646,12 +646,19 @@
     border: 1px solid var(--glass-border);
     border-radius: var(--border-radius-card);
     max-width: fit-content;
+    transition: all 0.3s ease;
     box-shadow: 
         0 8px 32px var(--glass-shadow),
         inset 0 2px 4px rgba(255, 255, 255, 0.1),
         inset 0 -2px 4px rgba(0, 0, 0, 0.1);
     animation: fadeInUp 1s ease-out 0.3s backwards;
     transition: all 0.4s var(--transition-smooth);
+}
+
+/* Quand on arrive à la section contact, arrêter le fixed */
+.skills-legend.at-contact {
+    position: absolute;
+    bottom: auto;
 }
 
 .skills-legend.collapsed {
@@ -728,14 +735,16 @@
     gap: 0.875rem;
     max-height: 300px;
     opacity: 1;
-    overflow: visible;
+    overflow: hidden;
     transition: all 0.4s var(--transition-smooth);
+    pointer-events: auto;
 }
 
 .skills-legend.collapsed .legend-items {
     max-height: 0;
     opacity: 0;
     margin-top: 0;
+    pointer-events: none;
 }
 
 .legend-item {
@@ -745,20 +754,21 @@
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
+    padding: 0.25rem 0.5rem;
+    margin: -0.25rem -0.5rem;
+    border-radius: 8px;
 }
 
 .legend-item::before {
     content: '';
     position: absolute;
-    left: -0.5rem;
-    right: -0.5rem;
-    top: -0.25rem;
-    bottom: -0.25rem;
+    inset: 0;
     background: rgba(255, 255, 255, 0.03);
     border-radius: 8px;
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: -1;
+    pointer-events: none;
 }
 
 .legend-item:hover::before {
@@ -1051,12 +1061,19 @@
     .skills-legend {
         position: fixed;
         bottom: 1rem;
-        right: 1rem;
-        left: 1rem;
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
         margin: 0;
-        max-width: none;
+        max-width: calc(100vw - 2rem);
         padding: 1.25rem;
         border-radius: 25px;
+    }
+    
+    .skills-legend.at-contact {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     .skills-legend.collapsed {
@@ -1364,7 +1381,12 @@
 /* Mobile responsive */
 @media (max-width: 768px) {
     .neural-contact {
-        padding: 3rem 1.5rem;
+        padding: 3rem 1rem;
+    }
+    
+    .neural-contact .container {
+        max-width: 100% !important;
+        padding: 0 1rem;
     }
     
     .neural-contact .contact-grid {
@@ -1373,10 +1395,22 @@
     }
     
     .neural-contact .contact-form {
-        padding: 1.5rem;
+        padding: 1.5rem 1rem;
     }
     
     .neural-contact .contact-item {
-        padding: 1.25rem;
+        padding: 1rem;
+        gap: 1rem;
+    }
+    
+    .neural-contact .contact-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.25rem;
+    }
+    
+    .neural-contact .contact-value {
+        font-size: 1rem;
+        word-break: break-word;
     }
 }
