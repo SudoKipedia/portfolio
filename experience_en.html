@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional Experience - Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="experience.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="experience-page">
@@ -16,6 +17,14 @@
         <a href="index_en.html" class="btn-back-neural">
             <i class="fas fa-arrow-left"></i>
             <span>Back to Portfolio</span>
+        </a>
+    </div>
+
+    <!-- Language switch button -->
+    <div class="lang-switch">
+        <a href="experience.html" class="btn-lang">
+            <i class="fas fa-globe"></i>
+            <span>FR</span>
         </a>
     </div>
 
@@ -177,8 +186,16 @@
     </main>
 
     <!-- Transferable skills legend -->
-    <aside class="skills-legend">
-        <h3><i class="fas fa-link"></i> Transferable Skills</h3>
+    <aside class="skills-legend" id="skillsLegend">
+        <h3 onclick="toggleSkillsLegend()">
+            <span class="legend-title-left">
+                <i class="fas fa-link"></i>
+                <span>Transferable Skills</span>
+            </span>
+            <span class="toggle-legend">
+                <i class="fas fa-chevron-up"></i>
+            </span>
+        </h3>
         <div class="legend-items">
             <div class="legend-item" data-skill="cybersecurity">
                 <span class="legend-dot"></span>
@@ -211,12 +228,6 @@
         </div>
     </aside>
 
-    <!-- Interaction tooltip -->
-    <div class="interaction-hint">
-        <i class="fas fa-mouse-pointer"></i>
-        <span>Move your mouse to interact with the neural network</span>
-    </div>
-
-    <script src="script.js"></script>
+    <script src="experience.js"></script>
 </body>
 </html>
