@@ -2119,6 +2119,7 @@ body {
     .timeline-school,
     .timeline-desc {
         font-size: 0.85rem;
+        text-align: justify;
     }
 
     .timeline-date {
