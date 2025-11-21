@@ -637,17 +637,17 @@
 /* ===== LÉGENDE DES COMPÉTENCES ===== */
 .skills-legend {
     position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    left: auto;
-    transform: none;
+    bottom: 1rem !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
     z-index: 100;
-    padding: 1.75rem;
+    padding: 1.25rem;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.04) 100%);
     backdrop-filter: blur(10px) saturate(180%);
     border: 1px solid var(--glass-border);
-    border-radius: var(--border-radius-card);
-    max-width: fit-content;
+    border-radius: 25px;
+    max-width: calc(100vw - 2rem);
     transition: all 0.3s ease;
     box-shadow: 
         0 8px 32px var(--glass-shadow),
@@ -655,6 +655,19 @@
         inset 0 -2px 4px rgba(0, 0, 0, 0.1);
     animation: fadeInUp 1s ease-out 0.3s backwards;
     transition: all 0.4s var(--transition-smooth);
+}
+
+/* Style desktop */
+@media (min-width: 769px) {
+    .skills-legend {
+        bottom: 2rem !important;
+        right: 2rem !important;
+        left: auto !important;
+        transform: none !important;
+        padding: 1.75rem;
+        border-radius: var(--border-radius-card);
+        max-width: fit-content;
+    }
 }
 
 /* Quand on arrive à la section contact, arrêter le fixed */
@@ -1058,34 +1071,6 @@
     .node-details {
         max-height: none;
         opacity: 1;
-    }
-
-    .skills-legend {
-        position: fixed;
-        bottom: 1rem;
-        right: auto;
-        left: 50%;
-        transform: translateX(-50%);
-        margin: 0;
-        max-width: calc(100vw - 2rem);
-        padding: 1.25rem;
-        border-radius: 25px;
-    }
-    
-    .skills-legend.at-contact {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    .skills-legend.collapsed {
-        max-width: none;
-        padding: 1rem;
-        border-radius: 50px;
-    }
-    
-    .skills-legend h3 {
-        font-size: 0.9rem;
     }
 
     .legend-items {
