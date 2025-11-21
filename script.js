@@ -550,6 +550,180 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ===================================
+    // FORM DATA PERSISTENCE
+    // ===================================
+    const STORAGE_KEY = 'portfolio_contact_form';
+    const FILES_KEY = 'portfolio_contact_files';
+    
+    function saveFormData() {
+        const formData = {
+            name: document.getElementById('name')?.value || '',
+            email: document.getElementById('email')?.value || '',
+            message: document.getElementById('message')?.value || '',
+            timestamp: Date.now()
+        };
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+    }
+    
+    function saveFiles() {
+        // Sauvegarder les métadonnées des fichiers (pas le contenu binaire)
+        const filesMetadata = selectedFiles.map(file => ({
+            name: file.name,
+            size: file.size,
+            type: file.type
+        }));
+        sessionStorage.setItem(FILES_KEY, JSON.stringify(filesMetadata));
+    }
+    
+    function loadFormData() {
+        const saved = sessionStorage.getItem(STORAGE_KEY);
+        if (saved) {
+            const formData = JSON.parse(saved);
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const messageInput = document.getElementById('message');
+            const charCount = document.getElementById('char-count');
+            
+            if (nameInput) nameInput.value = formData.name;
+            if (emailInput) emailInput.value = formData.email;
+            if (messageInput) {
+                messageInput.value = formData.message;
+                if (charCount) charCount.textContent = formData.message.length;
+            }
+        }
+        
+        // Note: On ne peut pas restaurer les fichiers car sessionStorage ne peut pas stocker de données binaires
+        // L'utilisateur devra re-sélectionner les fichiers après un refresh
+    }
+    
+    function clearFormData() {
+        sessionStorage.removeItem(STORAGE_KEY);
+        sessionStorage.removeItem(FILES_KEY);
+    }
+    
+    // Charger les données au chargement de la page
+    loadFormData();
+    
+    // Sauvegarder les données à chaque modification
+    ['name', 'email', 'message'].forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+            input.addEventListener('input', saveFormData);
+        }
+    });
+
+    // ===================================
+    // FILE INPUT HANDLING
+    // ===================================
+    const fileInput = document.getElementById('attachment');
+    const fileListContainer = document.getElementById('file-list');
+    let selectedFiles = [];
+
+    if (fileInput && fileListContainer) {
+        fileInput.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            
+            // Limiter à 5 fichiers
+            if (selectedFiles.length + files.length > 5) {
+                alert('Maximum 5 fichiers autorisés');
+                return;
+            }
+            
+            // Vérifier la taille (8MB max)
+            const oversizedFiles = files.filter(f => f.size > 8 * 1024 * 1024);
+            if (oversizedFiles.length > 0) {
+                alert(`Fichier(s) trop volumineux : ${oversizedFiles.map(f => f.name).join(', ')}\nTaille maximale : 8MB`);
+                return;
+            }
+            
+            selectedFiles = [...selectedFiles, ...files];
+            updateFileList();
+            saveFiles(); // Sauvegarder les métadonnées
+        });
+    }
+
+    function updateFileList() {
+        if (!fileListContainer) return;
+        
+        fileListContainer.innerHTML = '';
+        
+        selectedFiles.forEach((file, index) => {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            
+            // Créer la miniature ou l'icône
+            const isImage = file.type.startsWith('image/');
+            
+            if (isImage) {
+                const preview = document.createElement('img');
+                preview.className = 'file-item-preview';
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+                
+                fileItem.appendChild(preview);
+            } else {
+                const icon = document.createElement('div');
+                icon.className = 'file-item-icon';
+                
+                // Icône selon le type de fichier
+                if (file.type.includes('pdf')) {
+                    icon.textContent = '📄';
+                } else if (file.type.includes('word') || file.type.includes('document')) {
+                    icon.textContent = '📝';
+                } else if (file.type.includes('text')) {
+                    icon.textContent = '📃';
+                } else {
+                    icon.textContent = '📎';
+                }
+                
+                fileItem.appendChild(icon);
+            }
+            
+            // Info du fichier
+            const fileInfo = document.createElement('div');
+            fileInfo.className = 'file-item-info';
+            
+            const fileName = document.createElement('span');
+            fileName.className = 'file-item-name';
+            fileName.textContent = file.name;
+            
+            const fileSize = document.createElement('span');
+            fileSize.className = 'file-item-size';
+            fileSize.textContent = `${(file.size / 1024).toFixed(1)} KB`;
+            
+            fileInfo.appendChild(fileName);
+            fileInfo.appendChild(fileSize);
+            
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'file-item-remove';
+            removeBtn.innerHTML = '×';
+            removeBtn.type = 'button';
+            removeBtn.onclick = () => {
+                selectedFiles.splice(index, 1);
+                updateFileList();
+                updateFileInput();
+            };
+            
+            fileItem.appendChild(fileInfo);
+            fileItem.appendChild(removeBtn);
+            fileListContainer.appendChild(fileItem);
+        });
+    }
+
+    function updateFileInput() {
+        if (!fileInput) return;
+        
+        // Créer un nouveau DataTransfer pour mettre à jour l'input
+        const dt = new DataTransfer();
+        selectedFiles.forEach(file => dt.items.add(file));
+        fileInput.files = dt.files;
+    }
+
+    // ===================================
     // FORM SUBMISSION
     // ===================================
     const contactForm = document.querySelector('.contact-form');
@@ -560,12 +734,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const btn = contactForm.querySelector('.btn');
             const originalText = btn.innerHTML;
             
-            // Récupérer les données du formulaire
-            const formData = {
-                name: contactForm.querySelector('#name').value,
-                email: contactForm.querySelector('#email').value,
-                message: contactForm.querySelector('#message').value
-            };
+            // Créer un FormData pour gérer les fichiers
+            const formData = new FormData();
+            formData.append('name', contactForm.querySelector('#name').value);
+            formData.append('email', contactForm.querySelector('#email').value);
+            formData.append('message', contactForm.querySelector('#message').value);
+            
+            // Ajouter les fichiers joints
+            const fileInput = contactForm.querySelector('#attachment');
+            if (fileInput && fileInput.files.length > 0) {
+                // Limiter à 5 fichiers
+                const filesToUpload = Array.from(fileInput.files).slice(0, 5);
+                filesToUpload.forEach((file, index) => {
+                    formData.append('attachments', file);
+                });
+            }
             
             btn.innerHTML = '<span>Envoi en cours...</span>';
             btn.style.opacity = '0.7';
@@ -575,10 +758,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // URL du serveur backend sur Oracle Cloud (HTTPS via Nginx + Let's Encrypt)
                 const response = await fetch('https://quentinpoisson.duckdns.org/api/contact', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
+                    body: formData
                 });
 
                 const result = await response.json();
@@ -596,6 +776,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         // Réinitialiser le compteur de caractères
                         const charCount = document.getElementById('char-count');
                         if (charCount) charCount.textContent = '0';
+                        // Réinitialiser la liste de fichiers
+                        selectedFiles = [];
+                        updateFileList();
+                        // Effacer les données sauvegardées
+                        clearFormData();
                     }, 2000);
                 } else {
                     // Vérifier si c'est une erreur de rate limit
@@ -897,4 +1082,32 @@ window.addEventListener('load', () => {
             });
         });
     }
+    
+    // ===================================
+    // CLEAR FORM DATA ON PAGE NAVIGATION
+    // ===================================
+    // Effacer les données du formulaire uniquement lors d'une navigation vers une autre page
+    // (pas lors d'un changement de langue index.html ↔ index_en.html)
+    window.addEventListener('beforeunload', (e) => {
+        // Récupérer le lien sur lequel l'utilisateur clique
+        const activeElement = document.activeElement;
+        
+        // Si c'est un lien interne vers la page de langue ou un refresh, on garde les données
+        if (activeElement && activeElement.tagName === 'A') {
+            const href = activeElement.getAttribute('href');
+            const currentPage = window.location.pathname.split('/').pop();
+            
+            // Pages de langue (garder les données)
+            if ((currentPage === 'index.html' && href === 'index_en.html') ||
+                (currentPage === 'index_en.html' && href === 'index.html') ||
+                (currentPage === '' && (href === 'index.html' || href === 'index_en.html'))) {
+                return; // Garder les données
+            }
+            
+            // Navigation vers une autre page (projet, etc.) - effacer les données
+            if (href && !href.startsWith('#')) {
+                clearFormData();
+            }
+        }
+    });
 });
