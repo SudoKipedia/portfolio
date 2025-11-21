@@ -650,15 +650,6 @@ function initExperiencePage() {
 
     // Restaurer la position de scroll si changement de langue
     restoreScrollPosition();
-
-    // Forcer la position du menu sur mobile AVANT toute initialisation
-    const legend = document.getElementById('skillsLegend');
-    const isMobile = window.innerWidth <= 768;
-    if (legend && isMobile) {
-        legend.style.left = '50%';
-        legend.style.right = 'auto';
-        legend.style.transform = 'translateX(-50%)';
-    }
     
     // Initialiser tous les modules
     const animatedGradient = new AnimatedGradient();
@@ -672,6 +663,7 @@ function initExperiencePage() {
     initLegendHover();
     
     // Initialiser le container avec la classe appropriée
+    const legend = document.getElementById('skillsLegend');
     const container = document.querySelector('.neural-container');
     if (legend && container) {
         if (legend.classList.contains('collapsed')) {
