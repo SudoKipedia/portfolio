@@ -366,8 +366,23 @@ function toggleSkillsLegend() {
     const legend = document.getElementById('skillsLegend');
     const container = document.querySelector('.neural-container');
     
-    if (legend && container) {
-        // Si déjà locked et déployé, on unlock seulement (ne pas réduire)
+    if (!legend || !container) return;
+    
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        // Sur mobile : simple toggle entre déployé et réduit
+        legend.classList.toggle('collapsed');
+        
+        if (legend.classList.contains('collapsed')) {
+            container.classList.remove('legend-expanded');
+            container.classList.add('legend-collapsed');
+        } else {
+            container.classList.remove('legend-collapsed');
+            container.classList.add('legend-expanded');
+        }
+    } else {
+        // Sur desktop : gestion du mode locked
         if (legend.classList.contains('locked') && !legend.classList.contains('collapsed')) {
             legend.classList.remove('locked');
             // Le menu reste déployé, il se réduira au mouseleave
@@ -390,19 +405,13 @@ function initLegendHover() {
     if (!legend || !toggleBtn) return;
     
     let isHoveringToggle = false;
+    let hoverHandlersActive = false;
     
-    // Survol du bouton toggle
-    toggleBtn.addEventListener('mouseenter', () => {
-        isHoveringToggle = true;
-    });
+    // Gestionnaires d'événements
+    const toggleEnterHandler = () => { isHoveringToggle = true; };
+    const toggleLeaveHandler = () => { isHoveringToggle = false; };
     
-    toggleBtn.addEventListener('mouseleave', () => {
-        isHoveringToggle = false;
-    });
-    
-    // Survol de la légende
-    legend.addEventListener('mouseenter', () => {
-        // Ne déployer que si pas locked et pas en train de survoler le toggle
+    const legendEnterHandler = () => {
         if (!legend.classList.contains('locked') && !isHoveringToggle) {
             legend.classList.remove('collapsed');
             if (container) {
@@ -410,10 +419,9 @@ function initLegendHover() {
                 container.classList.add('legend-expanded');
             }
         }
-    });
+    };
     
-    legend.addEventListener('mouseleave', () => {
-        // Réduire seulement si pas locked
+    const legendLeaveHandler = () => {
         if (!legend.classList.contains('locked')) {
             legend.classList.add('collapsed');
             if (container) {
@@ -421,50 +429,37 @@ function initLegendHover() {
                 container.classList.add('legend-collapsed');
             }
         }
-    });
-}
-
-// Gestionnaire de survol pour la légende
-function initLegendHover() {
-    const legend = document.getElementById('skillsLegend');
-    const toggleBtn = legend?.querySelector('.toggle-legend');
-    const container = document.querySelector('.neural-container');
+    };
     
-    if (!legend || !toggleBtn) return;
-    
-    let isHoveringToggle = false;
-    
-    // Survol du bouton toggle
-    toggleBtn.addEventListener('mouseenter', () => {
-        isHoveringToggle = true;
-    });
-    
-    toggleBtn.addEventListener('mouseleave', () => {
-        isHoveringToggle = false;
-    });
-    
-    // Survol de la légende
-    legend.addEventListener('mouseenter', () => {
-        // Ne déployer que si pas locked et pas en train de survoler le toggle
-        if (!legend.classList.contains('locked') && !isHoveringToggle) {
-            legend.classList.remove('collapsed');
-            if (container) {
-                container.classList.remove('legend-collapsed');
-                container.classList.add('legend-expanded');
-            }
+    // Fonction pour activer/désactiver les gestionnaires selon la taille d'écran
+    function updateHoverBehavior() {
+        const isMobile = window.innerWidth <= 768;
+        
+        if (isMobile && hoverHandlersActive) {
+            // Retirer les gestionnaires sur mobile
+            toggleBtn.removeEventListener('mouseenter', toggleEnterHandler);
+            toggleBtn.removeEventListener('mouseleave', toggleLeaveHandler);
+            legend.removeEventListener('mouseenter', legendEnterHandler);
+            legend.removeEventListener('mouseleave', legendLeaveHandler);
+            hoverHandlersActive = false;
+            
+            // Nettoyer le state locked sur mobile
+            legend.classList.remove('locked');
+        } else if (!isMobile && !hoverHandlersActive) {
+            // Ajouter les gestionnaires sur desktop
+            toggleBtn.addEventListener('mouseenter', toggleEnterHandler);
+            toggleBtn.addEventListener('mouseleave', toggleLeaveHandler);
+            legend.addEventListener('mouseenter', legendEnterHandler);
+            legend.addEventListener('mouseleave', legendLeaveHandler);
+            hoverHandlersActive = true;
         }
-    });
+    }
     
-    legend.addEventListener('mouseleave', () => {
-        // Réduire seulement si pas locked
-        if (!legend.classList.contains('locked')) {
-            legend.classList.add('collapsed');
-            if (container) {
-                container.classList.remove('legend-expanded');
-                container.classList.add('legend-collapsed');
-            }
-        }
-    });
+    // Initialiser
+    updateHoverBehavior();
+    
+    // Écouter les changements de taille d'écran
+    window.addEventListener('resize', updateHoverBehavior);
 }
 
 // =====================================================
