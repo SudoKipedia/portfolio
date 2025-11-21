@@ -321,6 +321,18 @@ function toggleSkillsLegend() {
             container.classList.remove('legend-collapsed');
             container.classList.add('legend-expanded');
         }
+        
+        // Recalculer la position du menu après l'animation
+        setTimeout(() => {
+            if (window.legendPositionManager) {
+                window.legendPositionManager.updatePosition();
+            }
+        }, 100);
+        setTimeout(() => {
+            if (window.legendPositionManager) {
+                window.legendPositionManager.updatePosition();
+            }
+        }, 400);
     } else {
         // Sur desktop : gestion du mode locked
         if (legend.classList.contains('locked') && !legend.classList.contains('collapsed')) {
@@ -436,6 +448,9 @@ class CardExpander {
         let scrollTimeout;
         let isScrolling = false;
         
+        // Référence au LegendPositionManager (sera définie plus tard)
+        const getLegendManager = () => window.legendPositionManager;
+        
         // Détecter le scroll pour désactiver l'interaction
         const handleScroll = () => {
             isScrolling = true;
@@ -473,6 +488,16 @@ class CardExpander {
                     card.classList.add('expanded');
                     card.classList.remove('collapsed');
                 }
+                
+                // Recalculer la position du menu après l'animation
+                setTimeout(() => {
+                    const manager = getLegendManager();
+                    if (manager) manager.updatePosition();
+                }, 100);
+                setTimeout(() => {
+                    const manager = getLegendManager();
+                    if (manager) manager.updatePosition();
+                }, 400);
             };
             
             card.addEventListener('click', card._clickHandler);
@@ -569,56 +594,73 @@ class LegendPositionManager {
         
         this.isFixed = true;
         this.initScrollListener();
+        this.observeCardSizes();
+    }
+    
+    observeCardSizes() {
+        // Utiliser ResizeObserver pour détecter les changements de taille des cartes
+        if ('ResizeObserver' in window) {
+            const resizeObserver = new ResizeObserver(() => {
+                // Recalculer plusieurs fois après les changements de taille
+                this.updatePosition();
+                setTimeout(() => this.updatePosition(), 50);
+                setTimeout(() => this.updatePosition(), 150);
+                setTimeout(() => this.updatePosition(), 300);
+                setTimeout(() => this.updatePosition(), 450);
+            });
+            
+            // Observer toutes les cartes d'expérience
+            this.experienceCards.forEach(card => {
+                resizeObserver.observe(card);
+            });
+            
+            // Observer aussi la légende elle-même
+            resizeObserver.observe(this.legend);
+        }
+    }
+    
+    updatePosition() {
+        // Récupérer la dernière carte d'expérience
+        const lastCard = this.experienceCards[this.experienceCards.length - 1];
+        const lastCardRect = lastCard.getBoundingClientRect();
+        const lastCardBottom = lastCardRect.bottom + window.scrollY;
+        
+        // Hauteur et position de la légende (toujours recalculer)
+        const legendHeight = this.legend.offsetHeight;
+        const isMobile = window.innerWidth <= 768;
+        const legendBottomMargin = isMobile ? 16 : 32;
+        const cardLegendGap = 64; // 4rem d'espace
+        
+        // Position où la légende devrait se fixer (sous la dernière carte)
+        const legendFixedPosition = lastCardBottom + cardLegendGap;
+        
+        // Position actuelle de la légende en fixed
+        const currentFixedBottom = window.scrollY + window.innerHeight - legendBottomMargin - legendHeight;
+        
+        // Si la position fixed dépasse la position calculée
+        if (currentFixedBottom >= legendFixedPosition) {
+            // Mode absolute
+            this.legend.classList.add('at-contact');
+            this.legend.style.top = `${legendFixedPosition}px`;
+            this.isFixed = false;
+        } else {
+            // Mode fixed
+            this.legend.classList.remove('at-contact');
+            this.legend.style.top = '';
+            this.isFixed = true;
+        }
     }
     
     initScrollListener() {
-        const handleScroll = () => {
-            // Récupérer la dernière carte d'expérience
-            const lastCard = this.experienceCards[this.experienceCards.length - 1];
-            const lastCardRect = lastCard.getBoundingClientRect();
-            const lastCardBottom = lastCardRect.bottom + window.scrollY;
-            
-            // Hauteur et position de la légende
-            const legendHeight = this.legend.offsetHeight;
-            const legendBottomMargin = 32; // 2rem depuis le bas en fixed
-            const cardLegendGap = 32; // Espace entre la dernière carte et la légende (2rem)
-            
-            // Position où la légende devrait se fixer (juste sous la dernière carte)
-            const legendFixedPosition = lastCardBottom + cardLegendGap;
-            
-            // Position actuelle de la légende en fixed (bas de l'écran - margin)
-            const currentFixedBottom = window.scrollY + window.innerHeight - legendBottomMargin - legendHeight;
-            
-            // Si la position fixed dépasse la position où elle doit se fixer
-            if (currentFixedBottom >= legendFixedPosition) {
-                if (this.isFixed) {
-                    // Passer en absolute et fixer à la position calculée
-                    this.legend.classList.add('at-contact');
-                    this.legend.style.top = `${legendFixedPosition}px`;
-                    this.isFixed = false;
-                }
-            } else {
-                if (!this.isFixed) {
-                    // Rester en fixed
-                    this.legend.classList.remove('at-contact');
-                    this.legend.style.top = '';
-                    this.isFixed = true;
-                }
-            }
-        };
-        
-        // Utiliser scroll event sans debounce pour une fluidité maximale
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        
-        // Vérifier au chargement et resize
-        setTimeout(handleScroll, 100);
+        window.addEventListener('scroll', () => this.updatePosition(), { passive: true });
+        setTimeout(() => this.updatePosition(), 100);
         
         let resizeTimeout;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(() => {
                 this.isFixed = !this.legend.classList.contains('at-contact');
-                handleScroll();
+                this.updatePosition();
             }, 100);
         });
     }
@@ -658,6 +700,9 @@ function initExperiencePage() {
     const smoothScroll = new SmoothScroll();
     const cardExpander = new CardExpander();
     const legendPositionManager = new LegendPositionManager();
+    
+    // Rendre le legendPositionManager accessible globalement
+    window.legendPositionManager = legendPositionManager;
     
     // Initialiser le système de survol de la légende
     initLegendHover();
