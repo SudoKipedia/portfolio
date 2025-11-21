@@ -4,18 +4,18 @@
 
 /* ===== VARIABLES & BASE ===== */
 :root {
-    --glass-bg: rgba(255, 255, 255, 0.02);
-    --glass-border: rgba(255, 255, 255, 0.12);
-    --glass-shadow: rgba(0, 0, 0, 0.37);
+    --glass-bg: rgba(0, 0, 0, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-shadow: rgba(0, 0, 0, 0.5);
     --red-dark: #7f1d1d;
     --red-medium: #b91c1c;
     --red-primary: #ef4444;
     --red-light: #fca5a5;
     --red-pale: #fecaca;
     --red-glow: rgba(127, 29, 29, 0.15);
-    --text-primary: #ffffff;
-    --text-secondary: #a0a0a0;
-    --text-muted: #666666;
+    --text-primary: #e5e5e5;
+    --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
     --spacing-card: 2.5rem;
     --border-radius-card: 20px;
     --border-radius-button: 25px;
@@ -24,7 +24,7 @@
 
 /* Page base */
 .experience-page {
-    background: linear-gradient(135deg, #0a0a0a 0%, #141414 50%, #1a1a1a 100%);
+    background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #050505 100%);
     color: var(--text-primary);
     min-height: 100vh;
     position: relative;
@@ -188,6 +188,8 @@
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 /* ===== CARTES GLASSMORPHISM ===== */
