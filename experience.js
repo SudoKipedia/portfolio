@@ -250,15 +250,7 @@ class SkillHighlighter {
 
     initListeners() {
         this.legendItems.forEach(item => {
-            // Hover pour filtrage immédiat
-            item.addEventListener('mouseenter', () => {
-                this.applyFilter(item);
-            });
-            item.addEventListener('mouseleave', () => {
-                this.removeHighlight();
-            });
-            
-            // Clic pour verrouiller le filtre
+            // Clic uniquement pour le filtrage
             item.addEventListener('click', () => this.toggleFilter(item));
         });
     }
@@ -370,8 +362,146 @@ class SkillHighlighter {
 
 function toggleSkillsLegend() {
     const legend = document.getElementById('skillsLegend');
-    if (legend) {
-        legend.classList.toggle('collapsed');
+    const container = document.querySelector('.neural-container');
+    
+    if (legend && container) {
+        // Si déjà locked et déployé, on unlock seulement (ne pas réduire)
+        if (legend.classList.contains('locked') && !legend.classList.contains('collapsed')) {
+            legend.classList.remove('locked');
+            // Le menu reste déployé, il se réduira au mouseleave
+        } else {
+            // Sinon, on déploie et on lock
+            legend.classList.add('locked');
+            legend.classList.remove('collapsed');
+            container.classList.remove('legend-collapsed');
+            container.classList.add('legend-expanded');
+        }
+    }
+}
+
+// Gestionnaire de survol pour la légende
+function initLegendHover() {
+    const legend = document.getElementById('skillsLegend');
+    const toggleBtn = legend?.querySelector('.toggle-legend');
+    const container = document.querySelector('.neural-container');
+    
+    if (!legend || !toggleBtn) return;
+    
+    let isHoveringToggle = false;
+    
+    // Survol du bouton toggle
+    toggleBtn.addEventListener('mouseenter', () => {
+        isHoveringToggle = true;
+    });
+    
+    toggleBtn.addEventListener('mouseleave', () => {
+        isHoveringToggle = false;
+    });
+    
+    // Survol de la légende
+    legend.addEventListener('mouseenter', () => {
+        // Ne déployer que si pas locked et pas en train de survoler le toggle
+        if (!legend.classList.contains('locked') && !isHoveringToggle) {
+            legend.classList.remove('collapsed');
+            if (container) {
+                container.classList.remove('legend-collapsed');
+                container.classList.add('legend-expanded');
+            }
+        }
+    });
+    
+    legend.addEventListener('mouseleave', () => {
+        // Réduire seulement si pas locked
+        if (!legend.classList.contains('locked')) {
+            legend.classList.add('collapsed');
+            if (container) {
+                container.classList.remove('legend-expanded');
+                container.classList.add('legend-collapsed');
+            }
+        }
+    });
+}
+
+// Gestionnaire de survol pour la légende
+function initLegendHover() {
+    const legend = document.getElementById('skillsLegend');
+    const toggleBtn = legend?.querySelector('.toggle-legend');
+    const container = document.querySelector('.neural-container');
+    
+    if (!legend || !toggleBtn) return;
+    
+    let isHoveringToggle = false;
+    
+    // Survol du bouton toggle
+    toggleBtn.addEventListener('mouseenter', () => {
+        isHoveringToggle = true;
+    });
+    
+    toggleBtn.addEventListener('mouseleave', () => {
+        isHoveringToggle = false;
+    });
+    
+    // Survol de la légende
+    legend.addEventListener('mouseenter', () => {
+        // Ne déployer que si pas locked et pas en train de survoler le toggle
+        if (!legend.classList.contains('locked') && !isHoveringToggle) {
+            legend.classList.remove('collapsed');
+            if (container) {
+                container.classList.remove('legend-collapsed');
+                container.classList.add('legend-expanded');
+            }
+        }
+    });
+    
+    legend.addEventListener('mouseleave', () => {
+        // Réduire seulement si pas locked
+        if (!legend.classList.contains('locked')) {
+            legend.classList.add('collapsed');
+            if (container) {
+                container.classList.remove('legend-expanded');
+                container.classList.add('legend-collapsed');
+            }
+        }
+    });
+}
+
+// =====================================================
+// SCROLL REVEAL FOR MOBILE
+// =====================================================
+
+class ScrollReveal {
+    constructor() {
+        this.cards = document.querySelectorAll('.neural-node');
+        this.initScrollReveal();
+    }
+
+    initScrollReveal() {
+        // Désactiver l'animation initiale pour mobile
+        if (window.innerWidth <= 768) {
+            this.cards.forEach(card => {
+                card.style.animation = 'none';
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+            });
+
+            // Observer pour l'animation au scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Quand la carte arrive au milieu de l'écran
+                        if (entry.intersectionRatio >= 0.5) {
+                            entry.target.style.animation = 'cardAppear 0.8s ease-out forwards';
+                            observer.unobserve(entry.target);
+                        }
+                    }
+                });
+            }, {
+                threshold: [0, 0.25, 0.5, 0.75, 1],
+                rootMargin: '-10% 0px -10% 0px'
+            });
+
+            this.cards.forEach(card => observer.observe(card));
+        }
     }
 }
 
@@ -404,6 +534,21 @@ function initExperiencePage() {
     const scrollAnimations = new ScrollAnimations();
     const skillHighlighter = new SkillHighlighter();
     const smoothScroll = new SmoothScroll();
+    const scrollReveal = new ScrollReveal();
+    
+    // Initialiser le système de survol de la légende
+    initLegendHover();
+    
+    // Initialiser le container avec la classe appropriée
+    const legend = document.getElementById('skillsLegend');
+    const container = document.querySelector('.neural-container');
+    if (legend && container) {
+        if (legend.classList.contains('collapsed')) {
+            container.classList.add('legend-collapsed');
+        } else {
+            container.classList.add('legend-expanded');
+        }
+    }
 
     console.log('✨ Experience page glassmorphism initialized');
 

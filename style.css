@@ -1687,6 +1687,20 @@ body {
         align-items: center;
     }
     
+    /* Ajuster le scroll-padding pour compenser la hauteur du header sur mobile */
+    html {
+        scroll-padding-top: 140px;
+    }
+    
+    /* Ajouter un padding-top aux sections pour éviter que le header cache le contenu */
+    .section:not(.hero) {
+        padding-top: calc(var(--section-padding) + 3rem);
+    }
+    
+    .section.project-section:first-of-type {
+        padding-top: 180px;
+    }
+    
     .logo {
         gap: 0.15rem;
         white-space: nowrap;
