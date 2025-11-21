@@ -96,7 +96,7 @@ body {
 }
 
 .section.project-section:first-of-type {
-    padding-top: 150px;
+    padding-top: 180px;
 }
 
 .section.project-section#documents {
@@ -325,7 +325,7 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
-    padding-top: 120px;
+    padding-top: 180px;
 }
 
 .hero .container {
@@ -1700,7 +1700,7 @@ body {
     }
     
     .section.project-section:first-of-type {
-        padding-top: 180px;
+        padding-top: 220px;
     }
     
     .logo {
@@ -1816,6 +1816,10 @@ body {
 @media (max-width: 768px) {
     :root {
         --section-padding: 4rem;
+    }
+    
+    .hero {
+        padding-top: 220px;
     }
     
     .hero-stats {
