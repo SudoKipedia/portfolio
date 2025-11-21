@@ -196,12 +196,12 @@
 
     <!-- Légende des compétences transversales -->
     <aside class="skills-legend collapsed" id="skillsLegend">
-        <h3>
+        <h3 onclick="if(window.innerWidth <= 768) toggleSkillsLegend()">
             <span class="legend-title-left">
                 <i class="fas fa-link"></i>
                 <span>Compétences Transversales</span>
             </span>
-            <button class="toggle-legend" onclick="toggleSkillsLegend()">
+            <button class="toggle-legend" onclick="event.stopPropagation(); toggleSkillsLegend()">
                 <i class="fas fa-chevron-up"></i>
             </button>
         </h3>
