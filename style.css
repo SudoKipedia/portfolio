@@ -2062,6 +2062,73 @@ body {
     .carousel-item-content {
         padding: 1rem;
     }
+
+    /* Timeline mobile styles */
+    .timeline {
+        padding: 1.5rem 1rem;
+    }
+
+    .timeline-title {
+        font-size: 1.25rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .timeline-items {
+        padding-left: 1.5rem;
+    }
+
+    .timeline-items::before {
+        left: 0;
+    }
+
+    .timeline-dot {
+        left: -2.05rem;
+        width: 16px;
+        height: 16px;
+        box-shadow: 0 0 0 3px var(--color-bg);
+    }
+
+    .timeline-dot::before {
+        width: 5px;
+        height: 5px;
+    }
+
+    .timeline-item:hover .timeline-dot::before {
+        width: 12px;
+        height: 12px;
+    }
+
+    .timeline-content {
+        padding: 1rem;
+    }
+
+    .timeline-item:hover .timeline-content {
+        transform: scale(1.02);
+        min-height: auto;
+    }
+
+    .timeline-content h4 {
+        font-size: 1.1rem;
+    }
+
+    .timeline-school,
+    .timeline-desc {
+        font-size: 0.85rem;
+    }
+
+    .timeline-date {
+        font-size: 0.75rem;
+        padding: 0.2rem 0.6rem;
+    }
+
+    .timeline-extra li {
+        font-size: 0.85rem;
+        padding: 0.4rem 0;
+    }
+
+    .timeline-item:hover .timeline-extra {
+        margin-top: 1rem;
+    }
 }
 
 /* ===================================
