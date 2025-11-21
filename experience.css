@@ -59,7 +59,7 @@
     align-items: center;
     gap: 0.75rem;
     padding: 0.875rem 1.75rem;
-    background: var(--glass-bg);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.04) 100%);
     backdrop-filter: blur(10px) saturate(180%);
     border: 1px solid var(--glass-border);
     border-radius: var(--border-radius-button);
@@ -68,7 +68,10 @@
     font-size: 0.95rem;
     font-weight: 500;
     transition: all 0.3s var(--transition-smooth);
-    box-shadow: 0 8px 32px var(--glass-shadow);
+    box-shadow: 
+        0 8px 32px var(--glass-shadow),
+        inset 0 2px 4px rgba(255, 255, 255, 0.1),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .btn-back-neural:hover {
@@ -100,11 +103,14 @@
     align-items: center;
     gap: 0;
     padding: 0.5rem;
-    background: var(--glass-bg);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.04) 100%);
     backdrop-filter: blur(10px) saturate(180%);
     border: 1px solid var(--glass-border);
     border-radius: 50px;
-    box-shadow: 0 8px 32px var(--glass-shadow);
+    box-shadow: 
+        0 8px 32px var(--glass-shadow),
+        inset 0 2px 4px rgba(255, 255, 255, 0.1),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.1);
     position: relative;
     cursor: pointer;
     user-select: none;
@@ -133,20 +139,21 @@
     left: 0.5rem;
     width: calc(50% - 0.5rem);
     height: calc(100% - 1rem);
-    background: rgba(127, 29, 29, 0.3);
+    background: linear-gradient(135deg, rgba(127, 29, 29, 0.4) 0%, rgba(185, 28, 28, 0.3) 100%);
     backdrop-filter: blur(10px) saturate(180%);
     border: 1px solid rgba(239, 68, 68, 0.6);
     border-radius: 40px;
     transition: all 0.3s var(--transition-smooth);
     box-shadow: 
-        0 4px 15px rgba(127, 29, 29, 0.4),
-        0 0 20px rgba(239, 68, 68, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        0 4px 15px rgba(127, 29, 29, 0.5),
+        0 0 25px rgba(239, 68, 68, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.15),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
 
 .lang-toggle[data-lang="en"] .lang-slider {
-    left: calc(50% + 0.5rem);
+    left: calc(50%);
 }
 
 /* ===== HEADER PRINCIPAL ===== */
@@ -220,11 +227,14 @@
 .neural-node {
     position: relative;
     padding: var(--spacing-card);
-    background: var(--glass-bg);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.04) 100%);
     backdrop-filter: blur(10px) saturate(180%);
     border: 1px solid var(--glass-border);
     border-radius: var(--border-radius-card);
-    box-shadow: 0 8px 32px var(--glass-shadow);
+    box-shadow: 
+        0 8px 32px var(--glass-shadow),
+        inset 0 2px 4px rgba(255, 255, 255, 0.1),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.1);
     transition: all 0.4s var(--transition-smooth);
     opacity: 0;
     transform: translateY(50px);
@@ -315,28 +325,40 @@
     font-size: 0.9rem;
     font-weight: 600;
     white-space: nowrap;
+    box-shadow: 
+        inset 0 1px 2px rgba(255, 255, 255, 0.1),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* Couleur différente par carte */
 .neural-node:nth-child(1) .node-period {
-    background: rgba(127, 29, 29, 0.15);
+    background: linear-gradient(135deg, rgba(127, 29, 29, 0.18) 0%, rgba(127, 29, 29, 0.12) 100%);
     border: 1px solid var(--red-dark);
     color: var(--red-dark);
-    box-shadow: 0 0 20px rgba(127, 29, 29, 0.2);
+    box-shadow: 
+        0 0 20px rgba(127, 29, 29, 0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.1),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .neural-node:nth-child(2) .node-period {
-    background: rgba(239, 68, 68, 0.15);
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.18) 0%, rgba(239, 68, 68, 0.12) 100%);
     border: 1px solid var(--red-primary);
     color: var(--red-primary);
-    box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+    box-shadow: 
+        0 0 20px rgba(239, 68, 68, 0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.1),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .neural-node:nth-child(3) .node-period {
-    background: rgba(252, 165, 165, 0.15);
+    background: linear-gradient(135deg, rgba(252, 165, 165, 0.18) 0%, rgba(252, 165, 165, 0.12) 100%);
     border: 1px solid var(--red-light);
     color: var(--red-light);
-    box-shadow: 0 0 20px rgba(252, 165, 165, 0.2);
+    box-shadow: 
+        0 0 20px rgba(252, 165, 165, 0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.1),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .node-company {
@@ -366,10 +388,13 @@
 .node-tech,
 .node-achievements {
     padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.03);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
     backdrop-filter: blur(5px);
     border-radius: 10px;
     transition: all 0.3s ease;
+    box-shadow: 
+        inset 0 1px 2px rgba(255, 255, 255, 0.05),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.05);
 }
 
 /* Bordure gauche avec couleur thématique par carte */
@@ -514,7 +539,7 @@
 
 .tech-tags .tag {
     padding: 0.5rem 1.1rem;
-    background: rgba(255, 255, 255, 0.08);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.07) 100%);
     backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 20px;
@@ -523,6 +548,9 @@
     font-weight: 500;
     transition: all 0.3s var(--transition-smooth);
     cursor: pointer;
+    box-shadow: 
+        inset 0 1px 2px rgba(255, 255, 255, 0.05),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .tech-tags .tag:hover {
@@ -564,12 +592,15 @@
     right: 2rem;
     z-index: 100;
     padding: 1.75rem;
-    background: var(--glass-bg);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.04) 100%);
     backdrop-filter: blur(10px) saturate(180%);
     border: 1px solid var(--glass-border);
     border-radius: var(--border-radius-card);
     max-width: 300px;
-    box-shadow: 0 8px 32px var(--glass-shadow);
+    box-shadow: 
+        0 8px 32px var(--glass-shadow),
+        inset 0 2px 4px rgba(255, 255, 255, 0.1),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.1);
     animation: fadeInUp 1s ease-out 1s backwards;
     transition: all 0.4s var(--transition-smooth);
 }
