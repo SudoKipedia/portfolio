@@ -40,7 +40,7 @@ app.use(express.json());
 
 // Système de limitation par IP (10 minutes entre chaque message)
 const ipLastMessage = new Map();
-const RATE_LIMIT_MINUTES = 0; // Désactivé temporairement
+const RATE_LIMIT_MINUTES = 10;
 
 function checkRateLimit(ip) {
     const now = Date.now();
@@ -122,6 +122,10 @@ app.post('/api/contact', upload.array('attachments', 5), async (req, res) => {
 
         // Ajouter info sur les pièces jointes si présentes
         if (req.files && req.files.length > 0) {
+            console.log(`📎 Nombre de fichiers reçus: ${req.files.length}`);
+            req.files.forEach((f, i) => {
+                console.log(`   Fichier ${i + 1}: ${f.originalname} (${(f.size / 1024).toFixed(1)} KB)`);
+            });
             const filesList = req.files.map(f => `📎 ${f.originalname} (${(f.size / 1024).toFixed(1)} KB)`).join('\n');
             embed.addFields({ name: '📁 Pièces jointes', value: filesList });
         }
@@ -135,9 +139,11 @@ app.post('/api/contact', upload.array('attachments', 5), async (req, res) => {
         
         // Ajouter les fichiers joints si présents
         if (req.files && req.files.length > 0) {
-            messageOptions.files = req.files.map(file => 
-                new AttachmentBuilder(file.buffer, { name: file.originalname })
-            );
+            console.log(`📤 Envoi de ${req.files.length} fichier(s)...`);
+            messageOptions.files = req.files.map(file => {
+                console.log(`   - Préparation: ${file.originalname}`);
+                return new AttachmentBuilder(file.buffer, { name: file.originalname });
+            });
         }
         
         await user.send(messageOptions);
