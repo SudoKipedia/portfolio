@@ -479,67 +479,56 @@ class CardExpander {
     }
 
     initExpander() {
-        // Comportement uniquement sur mobile
+        // Comportement différent selon mobile/desktop
         const isMobile = window.innerWidth <= 768;
         
-        if (!isMobile) {
-            // Sur desktop, pas de déploiement auto, juste le hover
-            this.cleanupScrollListener();
-            return;
+        if (isMobile) {
+            // Mobile : déploiement au clic
+            this.setupMobileClick();
+        } else {
+            // Desktop : comportement hover normal (géré par CSS)
+            this.cleanupMobileClick();
         }
-
-        // Sur mobile : toutes les cartes commencent repliées
+    }
+    
+    setupMobileClick() {
+        // Sur mobile : déploiement au clic
         this.cards.forEach(card => {
+            // Retirer l'ancien listener s'il existe
+            if (card._clickHandler) {
+                card.removeEventListener('click', card._clickHandler);
+            }
+            
+            // Créer le nouveau handler
+            card._clickHandler = () => {
+                const isExpanded = card.classList.contains('expanded');
+                
+                if (isExpanded) {
+                    // Replier
+                    card.classList.remove('expanded');
+                    card.classList.add('collapsed');
+                } else {
+                    // Déployer
+                    card.classList.add('expanded');
+                    card.classList.remove('collapsed');
+                }
+            };
+            
+            card.addEventListener('click', card._clickHandler);
+            
+            // Commencer repliées
             card.classList.add('collapsed');
             card.classList.remove('expanded');
         });
-
-        // Déployer la première carte au chargement
-        setTimeout(() => {
-            this.expandCard(0);
-        }, 300);
-
-        // Fonction pour gérer le déploiement intelligent
-        const handleScroll = () => {
-            if (this.isScrolling) return;
-            
-            const currentScrollY = window.scrollY;
-            const scrollDirection = currentScrollY > this.lastScrollY ? 'down' : 'up';
-            this.lastScrollY = currentScrollY;
-
-            const screenMiddle = window.innerHeight / 2;
-
-            // Vérifier quelle carte est au milieu de l'écran
-            this.cards.forEach((card, index) => {
-                const rect = card.getBoundingClientRect();
-                const cardTop = rect.top;
-                const cardBottom = rect.bottom;
-                const cardMiddle = (cardTop + cardBottom) / 2;
-
-                // Si le milieu de cette carte est proche du milieu de l'écran
-                if (Math.abs(cardMiddle - screenMiddle) < 100 && index !== this.currentCardIndex) {
-                    this.expandCard(index);
-                }
-            });
-        };
-
-        // Vérifier au scroll
-        let scrollTimeout;
-        this.scrollHandler = () => {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(handleScroll, 50);
-        };
-        window.addEventListener('scroll', this.scrollHandler);
     }
-
-    cleanupScrollListener() {
-        if (this.scrollHandler) {
-            window.removeEventListener('scroll', this.scrollHandler);
-            this.scrollHandler = null;
-        }
-        
-        // Sur desktop, retirer les classes collapsed/expanded
+    
+    cleanupMobileClick() {
+        // Retirer les listeners de clic et classes sur desktop
         this.cards.forEach(card => {
+            if (card._clickHandler) {
+                card.removeEventListener('click', card._clickHandler);
+                card._clickHandler = null;
+            }
             card.classList.remove('collapsed');
             card.classList.remove('expanded');
         });
@@ -586,6 +575,89 @@ class CardExpander {
 }
 
 // =====================================================
+// SCROLL POSITION RESTORATION
+// =====================================================
+
+function restoreScrollPosition() {
+    const savedPosition = sessionStorage.getItem('scrollPos');
+    if (savedPosition) {
+        setTimeout(() => {
+            window.scrollTo(0, parseInt(savedPosition));
+            sessionStorage.removeItem('scrollPos');
+        }, 100);
+    }
+}
+
+// =====================================================
+// LEGEND POSITION MANAGER
+// =====================================================
+
+class LegendPositionManager {
+    constructor() {
+        this.legend = document.getElementById('skillsLegend');
+        this.contactSection = document.querySelector('.neural-contact');
+        this.experienceCards = document.querySelectorAll('.neural-node');
+        
+        if (!this.legend || !this.contactSection || this.experienceCards.length === 0) return;
+        
+        this.isFixed = true;
+        this.initScrollListener();
+    }
+    
+    initScrollListener() {
+        const handleScroll = () => {
+            // Récupérer la dernière carte d'expérience
+            const lastCard = this.experienceCards[this.experienceCards.length - 1];
+            const lastCardRect = lastCard.getBoundingClientRect();
+            const lastCardBottom = lastCardRect.bottom + window.scrollY;
+            
+            // Hauteur et position de la légende
+            const legendHeight = this.legend.offsetHeight;
+            const legendBottomMargin = 32; // 2rem depuis le bas en fixed
+            const cardLegendGap = 32; // Espace entre la dernière carte et la légende (2rem)
+            
+            // Position où la légende devrait se fixer (juste sous la dernière carte)
+            const legendFixedPosition = lastCardBottom + cardLegendGap;
+            
+            // Position actuelle de la légende en fixed (bas de l'écran - margin)
+            const currentFixedBottom = window.scrollY + window.innerHeight - legendBottomMargin - legendHeight;
+            
+            // Si la position fixed dépasse la position où elle doit se fixer
+            if (currentFixedBottom >= legendFixedPosition) {
+                if (this.isFixed) {
+                    // Passer en absolute et fixer à la position calculée
+                    this.legend.classList.add('at-contact');
+                    this.legend.style.top = `${legendFixedPosition}px`;
+                    this.isFixed = false;
+                }
+            } else {
+                if (!this.isFixed) {
+                    // Rester en fixed
+                    this.legend.classList.remove('at-contact');
+                    this.legend.style.top = '';
+                    this.isFixed = true;
+                }
+            }
+        };
+        
+        // Utiliser scroll event sans debounce pour une fluidité maximale
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        
+        // Vérifier au chargement et resize
+        setTimeout(handleScroll, 100);
+        
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                this.isFixed = !this.legend.classList.contains('at-contact');
+                handleScroll();
+            }, 100);
+        });
+    }
+}
+
+// =====================================================
 // SMOOTH SCROLL
 // =====================================================
 
@@ -609,12 +681,16 @@ function initExperiencePage() {
         return;
     }
 
+    // Restaurer la position de scroll si changement de langue
+    restoreScrollPosition();
+
     // Initialiser tous les modules
     const animatedGradient = new AnimatedGradient();
     const scrollAnimations = new ScrollAnimations();
     const skillHighlighter = new SkillHighlighter();
     const smoothScroll = new SmoothScroll();
     const cardExpander = new CardExpander();
+    const legendPositionManager = new LegendPositionManager();
     
     // Initialiser le système de survol de la légende
     initLegendHover();
