@@ -1391,10 +1391,21 @@ body {
    RESPONSIVE
    =================================== */
 @media (max-width: 900px) {
+    .header {
+        padding: 1rem 0;
+    }
+    
+    .nav {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+    
     .logo {
-        gap: 0;
+        gap: 0.15rem;
         white-space: nowrap;
         font-size: 1.3rem;
+        order: -1;
     }
     
     .logo-text {
@@ -1402,7 +1413,24 @@ body {
     }
     
     .logo-dot {
-        margin-left: -0.05rem;
+        margin-left: 0;
+    }
+    
+    .lang-switcher {
+        transform: scale(0.85);
+    }
+    
+    .lang-btn {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.8rem;
+    }
+    
+    .nav-links {
+        order: 1;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0 1rem;
     }
     
     .nav-current {
