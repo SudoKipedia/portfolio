@@ -187,27 +187,33 @@
     font-weight: 700;
     margin: 0;
     line-height: 1.2;
-    color: var(--text-primary);
     letter-spacing: -0.02em;
-    text-shadow: 0 0 30px rgba(239, 68, 68, 0.3);
+    color: transparent;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
     animation: titleGlow 3s ease-in-out infinite;
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.4);
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5))
+            drop-shadow(0 2px 4px rgba(255, 255, 255, 0.2))
+            drop-shadow(0 -2px 4px rgba(0, 0, 0, 0.2))
+            drop-shadow(0 0 40px rgba(239, 68, 68, 0.9));
 }
 
 @keyframes titleGlow {
     0%, 100% {
-        text-shadow: 
-            0 0 30px rgba(127, 29, 29, 0.6), 
-            0 0 60px rgba(127, 29, 29, 0.3);
+        filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5))
+                drop-shadow(0 2px 4px rgba(255, 255, 255, 0.2))
+                drop-shadow(0 -2px 4px rgba(0, 0, 0, 0.2))
+                drop-shadow(0 0 30px rgba(239, 68, 68, 0.7));
     }
-    33% {
-        text-shadow: 
-            0 0 40px rgba(185, 28, 28, 0.7), 
-            0 0 70px rgba(185, 28, 28, 0.4);
-    }
-    66% {
-        text-shadow: 
-            0 0 50px rgba(239, 68, 68, 0.8), 
-            0 0 80px rgba(239, 68, 68, 0.5);
+    50% {
+        filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5))
+                drop-shadow(0 2px 4px rgba(255, 255, 255, 0.2))
+                drop-shadow(0 -2px 4px rgba(0, 0, 0, 0.2))
+                drop-shadow(0 0 50px rgba(239, 68, 68, 1));
     }
 }
 
