@@ -172,7 +172,7 @@
 .neural-header {
     position: relative;
     z-index: 10;
-    padding: 8rem 2rem 4rem;
+    padding: 10rem 2rem 4rem;
     text-align: center;
 }
 
@@ -952,7 +952,7 @@
     }
 
     .neural-header {
-        padding: 6rem 1.5rem 3rem;
+        padding: 9rem 1.5rem 3rem;
     }
 
     .neural-title {
