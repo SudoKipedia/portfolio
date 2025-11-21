@@ -1,10 +1,38 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
+const multer = require('multer');
+const { Client, GatewayIntentBits, EmbedBuilder, AttachmentBuilder } = require('discord.js');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Configuration de multer pour gérer les fichiers en mémoire
+const storage = multer.memoryStorage();
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 8 * 1024 * 1024, // 8MB max par fichier
+        files: 5 // Maximum 5 fichiers
+    },
+    fileFilter: (req, file, cb) => {
+        // Types MIME autorisés
+        const allowedMimes = [
+            'application/pdf',
+            'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'text/plain',
+            'image/jpeg',
+            'image/png'
+        ];
+        
+        if (allowedMimes.includes(file.mimetype)) {
+            cb(null, true);
+        } else {
+            cb(new Error('Type de fichier non autorisé'));
+        }
+    }
+});
 
 // Middleware
 app.use(cors());
@@ -12,7 +40,7 @@ app.use(express.json());
 
 // Système de limitation par IP (10 minutes entre chaque message)
 const ipLastMessage = new Map();
-const RATE_LIMIT_MINUTES = 10;
+const RATE_LIMIT_MINUTES = 0; // Désactivé temporairement
 
 function checkRateLimit(ip) {
     const now = Date.now();
@@ -47,9 +75,10 @@ client.once('ready', () => {
 client.login(process.env.DISCORD_BOT_TOKEN);
 
 // Route pour recevoir les messages du formulaire
-app.post('/api/contact', async (req, res) => {
+app.post('/api/contact', upload.array('attachments', 5), async (req, res) => {
     console.log('📨 Requête reçue sur /api/contact');
     console.log('Body:', req.body);
+    console.log('Files:', req.files ? req.files.length : 0);
     
     // Récupérer l'IP du client
     const clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
@@ -91,11 +120,27 @@ app.post('/api/contact', async (req, res) => {
             .setTimestamp()
             .setFooter({ text: 'Portfolio Contact Form' });
 
+        // Ajouter info sur les pièces jointes si présentes
+        if (req.files && req.files.length > 0) {
+            const filesList = req.files.map(f => `📎 ${f.originalname} (${(f.size / 1024).toFixed(1)} KB)`).join('\n');
+            embed.addFields({ name: '📁 Pièces jointes', value: filesList });
+        }
+
         console.log('📤 Envoi du MP Discord...');
         
-        // Envoyer le MP
+        // Envoyer le MP avec les fichiers joints
         const user = await client.users.fetch(process.env.DISCORD_USER_ID);
-        await user.send({ embeds: [embed] });
+        
+        const messageOptions = { embeds: [embed] };
+        
+        // Ajouter les fichiers joints si présents
+        if (req.files && req.files.length > 0) {
+            messageOptions.files = req.files.map(file => 
+                new AttachmentBuilder(file.buffer, { name: file.originalname })
+            );
+        }
+        
+        await user.send(messageOptions);
 
         console.log('✅ MP envoyé avec succès !');
 
