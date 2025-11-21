@@ -303,7 +303,9 @@ class SkillHighlighter {
                 card.style.borderColor = `rgba(${skillColor.rgb}, 0.8)`;
                 card.style.boxShadow = `
                     0 8px 32px rgba(${skillColor.rgb}, 0.5),
-                    0 0 80px rgba(${skillColor.rgb}, 0.3)
+                    0 0 80px rgba(${skillColor.rgb}, 0.3),
+                    inset 0 2px 4px rgba(255, 255, 255, 0.1),
+                    inset 0 -2px 4px rgba(0, 0, 0, 0.1)
                 `;
                 card.style.transform = '';
                 card.style.opacity = '';

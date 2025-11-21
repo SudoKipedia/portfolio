@@ -312,6 +312,8 @@ body {
 .lang-btn:hover:not(.active) {
     background: var(--color-surface-light);
     color: var(--color-text);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
 }
 
 /* ===================================
