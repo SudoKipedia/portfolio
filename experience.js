@@ -463,42 +463,125 @@ function initLegendHover() {
 }
 
 // =====================================================
-// SCROLL REVEAL FOR MOBILE
+// CARD EXPANDER - DÉPLOIEMENT AUTO AU SCROLL
 // =====================================================
 
-class ScrollReveal {
+class CardExpander {
     constructor() {
         this.cards = document.querySelectorAll('.neural-node');
-        this.initScrollReveal();
+        this.currentCardIndex = 0;
+        this.lastScrollY = window.scrollY;
+        this.isScrolling = false;
+        this.scrollHandler = null;
+        this.resizeHandler = null;
+        this.initExpander();
+        this.initResizeListener();
     }
 
-    initScrollReveal() {
-        // Désactiver l'animation initiale pour mobile
-        if (window.innerWidth <= 768) {
-            this.cards.forEach(card => {
-                card.style.animation = 'none';
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(50px)';
-            });
-
-            // Observer pour l'animation au scroll
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        // Quand la carte arrive au milieu de l'écran
-                        if (entry.intersectionRatio >= 0.5) {
-                            entry.target.style.animation = 'cardAppear 0.8s ease-out forwards';
-                            observer.unobserve(entry.target);
-                        }
-                    }
-                });
-            }, {
-                threshold: [0, 0.25, 0.5, 0.75, 1],
-                rootMargin: '-10% 0px -10% 0px'
-            });
-
-            this.cards.forEach(card => observer.observe(card));
+    initExpander() {
+        // Comportement uniquement sur mobile
+        const isMobile = window.innerWidth <= 768;
+        
+        if (!isMobile) {
+            // Sur desktop, pas de déploiement auto, juste le hover
+            this.cleanupScrollListener();
+            return;
         }
+
+        // Sur mobile : toutes les cartes commencent repliées
+        this.cards.forEach(card => {
+            card.classList.add('collapsed');
+            card.classList.remove('expanded');
+        });
+
+        // Déployer la première carte au chargement
+        setTimeout(() => {
+            this.expandCard(0);
+        }, 300);
+
+        // Fonction pour gérer le déploiement intelligent
+        const handleScroll = () => {
+            if (this.isScrolling) return;
+            
+            const currentScrollY = window.scrollY;
+            const scrollDirection = currentScrollY > this.lastScrollY ? 'down' : 'up';
+            this.lastScrollY = currentScrollY;
+
+            const screenMiddle = window.innerHeight / 2;
+
+            // Vérifier quelle carte est au milieu de l'écran
+            this.cards.forEach((card, index) => {
+                const rect = card.getBoundingClientRect();
+                const cardTop = rect.top;
+                const cardBottom = rect.bottom;
+                const cardMiddle = (cardTop + cardBottom) / 2;
+
+                // Si le milieu de cette carte est proche du milieu de l'écran
+                if (Math.abs(cardMiddle - screenMiddle) < 100 && index !== this.currentCardIndex) {
+                    this.expandCard(index);
+                }
+            });
+        };
+
+        // Vérifier au scroll
+        let scrollTimeout;
+        this.scrollHandler = () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(handleScroll, 50);
+        };
+        window.addEventListener('scroll', this.scrollHandler);
+    }
+
+    cleanupScrollListener() {
+        if (this.scrollHandler) {
+            window.removeEventListener('scroll', this.scrollHandler);
+            this.scrollHandler = null;
+        }
+        
+        // Sur desktop, retirer les classes collapsed/expanded
+        this.cards.forEach(card => {
+            card.classList.remove('collapsed');
+            card.classList.remove('expanded');
+        });
+    }
+
+    initResizeListener() {
+        let resizeTimeout;
+        this.resizeHandler = () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                this.initExpander();
+            }, 200);
+        };
+        window.addEventListener('resize', this.resizeHandler);
+    }
+
+    expandCard(index) {
+        if (this.isScrolling) return;
+        this.isScrolling = true;
+
+        // Replier toutes les cartes
+        this.cards.forEach(card => {
+            card.classList.remove('expanded');
+            card.classList.add('collapsed');
+        });
+
+        // Déployer la carte ciblée
+        const targetCard = this.cards[index];
+        if (!targetCard) {
+            this.isScrolling = false;
+            return;
+        }
+
+        this.currentCardIndex = index;
+        
+        // Déployer la carte
+        targetCard.classList.add('expanded');
+        targetCard.classList.remove('collapsed');
+        
+        setTimeout(() => {
+            this.isScrolling = false;
+        }, 600);
     }
 }
 
@@ -531,7 +614,7 @@ function initExperiencePage() {
     const scrollAnimations = new ScrollAnimations();
     const skillHighlighter = new SkillHighlighter();
     const smoothScroll = new SmoothScroll();
-    const scrollReveal = new ScrollReveal();
+    const cardExpander = new CardExpander();
     
     // Initialiser le système de survol de la légende
     initLegendHover();

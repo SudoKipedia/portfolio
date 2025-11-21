@@ -405,7 +405,8 @@
     margin: 0;
 }
 
-/* ===== DÉTAILS (RÉVÉLATION AU HOVER) ===== */
+/* ===== DÉTAILS (RÉVÉLATION AU SCROLL OU HOVER) ===== */
+/* ===== DÉTAILS (RÉVÉLATION AU HOVER SUR DESKTOP, AU SCROLL SUR MOBILE) ===== */
 .node-details {
     display: grid;
     gap: 1.5rem;
@@ -415,9 +416,20 @@
     transition: all 0.5s var(--transition-smooth);
 }
 
-.neural-node:hover .node-details {
-    max-height: 2000px;
-    opacity: 1;
+/* Desktop : déploiement au hover uniquement */
+@media (min-width: 769px) {
+    .neural-node:hover .node-details {
+        max-height: 2000px;
+        opacity: 1;
+    }
+}
+
+/* Mobile : déploiement au scroll avec classe .expanded */
+@media (max-width: 768px) {
+    .neural-node.expanded .node-details {
+        max-height: 2000px;
+        opacity: 1;
+    }
 }
 
 /* Sections individuelles */
@@ -980,6 +992,18 @@
     .neural-node {
         padding: 1.5rem;
     }
+    
+    /* Sur mobile, forcer les cartes à rester repliées par défaut */
+    .neural-node .node-details {
+        max-height: 0;
+        opacity: 0;
+    }
+    
+    /* Déployer uniquement avec la classe .expanded */
+    .neural-node.expanded .node-details {
+        max-height: 2000px;
+        opacity: 1;
+    }
 
     .node-title {
         font-size: 1.5rem;
@@ -1131,5 +1155,228 @@
         padding: 0.35rem 0.7rem;
         font-size: 0.75rem;
         min-width: 30px;
+    }
+}
+
+/* =====================================================
+   SECTION CONTACT GLASSMORPHISM
+   ===================================================== */
+
+.neural-contact {
+    position: relative;
+    z-index: 10;
+    padding: 4rem 2rem;
+    margin-top: 4rem;
+}
+
+.neural-contact .contact-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.neural-contact .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.neural-contact .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.neural-contact .contact-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.neural-contact .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.04) 100%);
+    backdrop-filter: blur(10px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    text-decoration: none;
+    transition: all 0.3s var(--transition-smooth);
+    box-shadow: 
+        0 4px 16px var(--glass-shadow),
+        inset 0 1px 2px rgba(255, 255, 255, 0.1),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.neural-contact .contact-item:hover {
+    transform: translateY(-4px);
+    border-color: rgba(239, 68, 68, 0.6);
+    box-shadow: 
+        0 8px 24px rgba(239, 68, 68, 0.3),
+        0 0 40px rgba(239, 68, 68, 0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.1),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.neural-contact .contact-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.08) 100%);
+    border-radius: 12px;
+    color: var(--red-primary);
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.neural-contact .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.neural-contact .contact-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.neural-contact .contact-value {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.neural-contact .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.04) 100%);
+    backdrop-filter: blur(10px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius-card);
+    box-shadow: 
+        0 8px 32px var(--glass-shadow),
+        inset 0 2px 4px rgba(255, 255, 255, 0.1),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.neural-contact .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.neural-contact .form-group label {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.neural-contact .form-group input,
+.neural-contact .form-group textarea {
+    padding: 0.875rem 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.3s var(--transition-smooth);
+}
+
+.neural-contact .form-group input:focus,
+.neural-contact .form-group textarea:focus {
+    outline: none;
+    border-color: var(--red-primary);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.neural-contact .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.neural-contact .char-counter {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-align: right;
+}
+
+.neural-contact .form-group input[type="file"] {
+    display: none;
+}
+
+.neural-contact .form-group label[for="attachment"] {
+    padding: 0.875rem 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s var(--transition-smooth);
+}
+
+.neural-contact .form-group label[for="attachment"]:hover {
+    border-color: var(--red-primary);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.neural-contact .file-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.neural-contact .btn-primary {
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--red-primary) 0%, var(--red-medium) 100%);
+    border: none;
+    border-radius: var(--border-radius-button);
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    transition: all 0.3s var(--transition-smooth);
+    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
+}
+
+.neural-contact .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(239, 68, 68, 0.4);
+}
+
+.neural-contact .btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .neural-contact {
+        padding: 3rem 1.5rem;
+    }
+    
+    .neural-contact .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .neural-contact .contact-form {
+        padding: 1.5rem;
+    }
+    
+    .neural-contact .contact-item {
+        padding: 1.25rem;
     }
 }
