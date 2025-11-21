@@ -85,6 +85,12 @@ body {
     position: relative;
 }
 
+.section.about,
+.section.projects {
+    padding-top: 6rem;
+    padding-bottom: var(--section-padding);
+}
+
 .section.project-section {
     padding: 2rem 0;
 }
