@@ -5,12 +5,12 @@
 class AnimatedGradient {
     constructor() {
         this.canvas = document.getElementById('neuralCanvas');
-        
+
         if (!this.canvas) {
             console.warn('Canvas #neuralCanvas not found');
             return;
         }
-        
+
         this.ctx = this.canvas.getContext('2d');
         this.blobs = [];
         this.animationId = null;
@@ -34,12 +34,12 @@ class AnimatedGradient {
         // Créer 16 blobs de gradient : bordeaux foncé vers rouge pâle
         // Répartis aléatoirement sur toute la page
         const colors = [
-            'rgba(127, 29, 29, 0.12)',   // Bordeaux foncé
-            'rgba(185, 28, 28, 0.12)',   // Rouge bordeaux
-            'rgba(220, 38, 38, 0.1)',    // Rouge medium
-            'rgba(239, 68, 68, 0.08)',   // Rouge standard
-            'rgba(252, 165, 165, 0.1)',  // Rouge clair
-            'rgba(254, 202, 202, 0.1)'   // Rouge pâle
+            'rgba(127, 29, 29, 0.12)', // Bordeaux foncé
+            'rgba(185, 28, 28, 0.12)', // Rouge bordeaux
+            'rgba(220, 38, 38, 0.1)', // Rouge medium
+            'rgba(239, 68, 68, 0.08)', // Rouge standard
+            'rgba(252, 165, 165, 0.1)', // Rouge clair
+            'rgba(254, 202, 202, 0.1)', // Rouge pâle
         ];
 
         this.blobs = [];
@@ -56,16 +56,16 @@ class AnimatedGradient {
                 speedX: (Math.random() - 0.5) * 2,
                 speedY: (Math.random() - 0.5) * 2,
                 directionX: (Math.random() - 0.5) * 0.5,
-                directionY: (Math.random() - 0.5) * 0.5
+                directionY: (Math.random() - 0.5) * 0.5,
             });
         }
-        
+
         this.radiusVariation = radiusVariation;
     }
 
     animate() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        
+
         this.time += 0.005;
 
         // Animer et dessiner chaque blob
@@ -73,12 +73,12 @@ class AnimatedGradient {
             // Mouvement aléatoire simple avec rebonds sur les bords
             blob.x += blob.directionX;
             blob.y += blob.directionY;
-            
+
             // Rebondir sur les bords horizontaux
             if (blob.x <= blob.radius || blob.x >= this.canvas.width - blob.radius) {
                 blob.directionX *= -1;
             }
-            
+
             // Rebondir sur les bords verticaux
             if (blob.y <= blob.radius || blob.y >= this.canvas.height - blob.radius) {
                 blob.directionY *= -1;
@@ -86,7 +86,7 @@ class AnimatedGradient {
 
             // Variation de taille aléatoire et continue
             blob.radius += (blob.targetRadius - blob.radius) * blob.radiusSpeed;
-            
+
             // Changer la taille cible aléatoirement
             if (Math.abs(blob.radius - blob.targetRadius) < 2) {
                 blob.targetRadius = blob.baseRadius * (0.7 + Math.random() * 0.6);
@@ -99,12 +99,9 @@ class AnimatedGradient {
             // Dessiner le blob en forme de cercle (pas d'ellipse)
             this.ctx.save();
             this.ctx.translate(blob.x, blob.y);
-            
+
             // Créer le gradient radial circulaire
-            const gradient = this.ctx.createRadialGradient(
-                0, 0, 0,
-                0, 0, breathingRadius
-            );
+            const gradient = this.ctx.createRadialGradient(0, 0, 0, 0, 0, breathingRadius);
 
             gradient.addColorStop(0, blob.color);
             gradient.addColorStop(0.5, blob.color.replace(/[\d.]+\)$/, '0.05)'));
@@ -143,7 +140,7 @@ class ScrollAnimations {
     constructor() {
         this.observerOptions = {
             threshold: 0.2,
-            rootMargin: '-100px'
+            rootMargin: '-100px',
         };
 
         this.initObserver();
@@ -153,7 +150,7 @@ class ScrollAnimations {
         const cards = document.querySelectorAll('.neural-node');
 
         if ('IntersectionObserver' in window) {
-            const observer = new IntersectionObserver((entries) => {
+            const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.style.opacity = '1';
@@ -184,7 +181,7 @@ class SkillHighlighter {
         this.legendItems = document.querySelectorAll('.legend-item');
         this.cards = document.querySelectorAll('.neural-node');
         this.activeFilter = null;
-        
+
         this.initListeners();
     }
 
@@ -197,7 +194,7 @@ class SkillHighlighter {
 
     toggleFilter(item) {
         const skill = item.getAttribute('data-skill');
-        
+
         // Si on clique sur le filtre actif, on le désactive
         if (this.activeFilter === skill) {
             this.activeFilter = null;
@@ -205,7 +202,7 @@ class SkillHighlighter {
             this.removeHighlight();
             return;
         }
-        
+
         // Activer le nouveau filtre
         this.activeFilter = skill;
         this.legendItems.forEach(i => {
@@ -215,29 +212,29 @@ class SkillHighlighter {
                 i.classList.remove('active');
             }
         });
-        
+
         this.applyFilter(item);
     }
 
     applyFilter(item) {
         const skill = item.getAttribute('data-skill');
-        
+
         // Récupérer la couleur de la compétence
         const skillColors = {
-            'cybersecurity': { rgb: '127, 29, 29', color: '#7f1d1d' },
-            'automation': { rgb: '153, 27, 27', color: '#991b1b' },
+            cybersecurity: { rgb: '127, 29, 29', color: '#7f1d1d' },
+            automation: { rgb: '153, 27, 27', color: '#991b1b' },
             'incident-response': { rgb: '185, 28, 28', color: '#b91c1c' },
-            'devops': { rgb: '220, 38, 38', color: '#dc2626' },
-            'infrastructure': { rgb: '239, 68, 68', color: '#ef4444' },
-            'networking': { rgb: '252, 165, 165', color: '#fca5a5' },
-            'systems': { rgb: '254, 202, 202', color: '#fecaca' }
+            devops: { rgb: '220, 38, 38', color: '#dc2626' },
+            infrastructure: { rgb: '239, 68, 68', color: '#ef4444' },
+            networking: { rgb: '252, 165, 165', color: '#fca5a5' },
+            systems: { rgb: '254, 202, 202', color: '#fecaca' },
         };
-        
+
         const skillColor = skillColors[skill] || { rgb: '239, 68, 68', color: '#ef4444' };
-        
+
         this.cards.forEach(card => {
             const cardSkills = card.getAttribute('data-skills');
-            
+
             if (cardSkills && cardSkills.includes(skill)) {
                 card.style.display = '';
                 card.style.borderColor = `rgba(${skillColor.rgb}, 0.8)`;
@@ -257,23 +254,23 @@ class SkillHighlighter {
 
     highlightSkill(item) {
         const skill = item.getAttribute('data-skill');
-        
+
         // Récupérer la couleur de la compétence survolée
         const skillColors = {
-            'cybersecurity': { rgb: '127, 29, 29', color: '#7f1d1d' },
-            'automation': { rgb: '153, 27, 27', color: '#991b1b' },
+            cybersecurity: { rgb: '127, 29, 29', color: '#7f1d1d' },
+            automation: { rgb: '153, 27, 27', color: '#991b1b' },
             'incident-response': { rgb: '185, 28, 28', color: '#b91c1c' },
-            'devops': { rgb: '220, 38, 38', color: '#dc2626' },
-            'infrastructure': { rgb: '239, 68, 68', color: '#ef4444' },
-            'networking': { rgb: '252, 165, 165', color: '#fca5a5' },
-            'systems': { rgb: '254, 202, 202', color: '#fecaca' }
+            devops: { rgb: '220, 38, 38', color: '#dc2626' },
+            infrastructure: { rgb: '239, 68, 68', color: '#ef4444' },
+            networking: { rgb: '252, 165, 165', color: '#fca5a5' },
+            systems: { rgb: '254, 202, 202', color: '#fecaca' },
         };
-        
+
         const skillColor = skillColors[skill] || { rgb: '239, 68, 68', color: '#ef4444' };
-        
+
         this.cards.forEach(card => {
             const cardSkills = card.getAttribute('data-skills');
-            
+
             if (cardSkills && cardSkills.includes(skill)) {
                 card.style.borderColor = `rgba(${skillColor.rgb}, 0.8)`;
                 card.style.boxShadow = `
@@ -305,15 +302,15 @@ class SkillHighlighter {
 function toggleSkillsLegend() {
     const legend = document.getElementById('skillsLegend');
     const container = document.querySelector('.neural-container');
-    
+
     if (!legend || !container) return;
-    
+
     const isMobile = window.innerWidth <= 768;
-    
+
     if (isMobile) {
         // Sur mobile : simple toggle entre déployé et réduit
         legend.classList.toggle('collapsed');
-        
+
         if (legend.classList.contains('collapsed')) {
             container.classList.remove('legend-expanded');
             container.classList.add('legend-collapsed');
@@ -321,7 +318,7 @@ function toggleSkillsLegend() {
             container.classList.remove('legend-collapsed');
             container.classList.add('legend-expanded');
         }
-        
+
         // Recalculer la position du menu après l'animation
         setTimeout(() => {
             if (window.legendPositionManager) {
@@ -353,16 +350,20 @@ function initLegendHover() {
     const legend = document.getElementById('skillsLegend');
     const toggleBtn = legend?.querySelector('.toggle-legend');
     const container = document.querySelector('.neural-container');
-    
+
     if (!legend || !toggleBtn) return;
-    
+
     let isHoveringToggle = false;
     let hoverHandlersActive = false;
-    
+
     // Gestionnaires d'événements
-    const toggleEnterHandler = () => { isHoveringToggle = true; };
-    const toggleLeaveHandler = () => { isHoveringToggle = false; };
-    
+    const toggleEnterHandler = () => {
+        isHoveringToggle = true;
+    };
+    const toggleLeaveHandler = () => {
+        isHoveringToggle = false;
+    };
+
     const legendEnterHandler = () => {
         if (!legend.classList.contains('locked') && !isHoveringToggle) {
             legend.classList.remove('collapsed');
@@ -372,7 +373,7 @@ function initLegendHover() {
             }
         }
     };
-    
+
     const legendLeaveHandler = () => {
         if (!legend.classList.contains('locked')) {
             legend.classList.add('collapsed');
@@ -382,11 +383,11 @@ function initLegendHover() {
             }
         }
     };
-    
+
     // Fonction pour activer/désactiver les gestionnaires selon la taille d'écran
     function updateHoverBehavior() {
         const isMobile = window.innerWidth <= 768;
-        
+
         if (isMobile && hoverHandlersActive) {
             // Retirer les gestionnaires sur mobile
             toggleBtn.removeEventListener('mouseenter', toggleEnterHandler);
@@ -394,7 +395,7 @@ function initLegendHover() {
             legend.removeEventListener('mouseenter', legendEnterHandler);
             legend.removeEventListener('mouseleave', legendLeaveHandler);
             hoverHandlersActive = false;
-            
+
             // Nettoyer le state locked sur mobile
             legend.classList.remove('locked');
         } else if (!isMobile && !hoverHandlersActive) {
@@ -406,10 +407,10 @@ function initLegendHover() {
             hoverHandlersActive = true;
         }
     }
-    
+
     // Initialiser
     updateHoverBehavior();
-    
+
     // Écouter les changements de taille d'écran
     window.addEventListener('resize', updateHoverBehavior);
 }
@@ -433,7 +434,7 @@ class CardExpander {
     initExpander() {
         // Comportement différent selon mobile/desktop
         const isMobile = window.innerWidth <= 768;
-        
+
         if (isMobile) {
             // Mobile : déploiement au clic
             this.setupMobileClick();
@@ -442,15 +443,15 @@ class CardExpander {
             this.cleanupMobileClick();
         }
     }
-    
+
     setupMobileClick() {
         // Sur mobile : déploiement au clic
         let scrollTimeout;
         let isScrolling = false;
-        
+
         // Référence au LegendPositionManager (sera définie plus tard)
         const getLegendManager = () => window.legendPositionManager;
-        
+
         // Détecter le scroll pour désactiver l'interaction
         const handleScroll = () => {
             isScrolling = true;
@@ -459,26 +460,26 @@ class CardExpander {
                 isScrolling = false;
             }, 150);
         };
-        
+
         window.addEventListener('scroll', handleScroll, { passive: true });
         this._scrollHandler = handleScroll;
-        
+
         this.cards.forEach(card => {
             // Retirer l'ancien listener s'il existe
             if (card._clickHandler) {
                 card.removeEventListener('click', card._clickHandler);
             }
-            
+
             // Créer le nouveau handler
-            card._clickHandler = (e) => {
+            card._clickHandler = e => {
                 // Ignorer le clic si on est en train de scroller
                 if (isScrolling) {
                     e.preventDefault();
                     return;
                 }
-                
+
                 const isExpanded = card.classList.contains('expanded');
-                
+
                 if (isExpanded) {
                     // Replier
                     card.classList.remove('expanded');
@@ -488,7 +489,7 @@ class CardExpander {
                     card.classList.add('expanded');
                     card.classList.remove('collapsed');
                 }
-                
+
                 // Recalculer la position du menu après l'animation
                 setTimeout(() => {
                     const manager = getLegendManager();
@@ -499,22 +500,22 @@ class CardExpander {
                     if (manager) manager.updatePosition();
                 }, 400);
             };
-            
+
             card.addEventListener('click', card._clickHandler);
-            
+
             // Commencer repliées
             card.classList.add('collapsed');
             card.classList.remove('expanded');
         });
     }
-    
+
     cleanupMobileClick() {
         // Retirer le listener de scroll
         if (this._scrollHandler) {
             window.removeEventListener('scroll', this._scrollHandler);
             this._scrollHandler = null;
         }
-        
+
         // Retirer les listeners de clic et classes sur desktop
         this.cards.forEach(card => {
             if (card._clickHandler) {
@@ -555,11 +556,11 @@ class CardExpander {
         }
 
         this.currentCardIndex = index;
-        
+
         // Déployer la carte
         targetCard.classList.add('expanded');
         targetCard.classList.remove('collapsed');
-        
+
         setTimeout(() => {
             this.isScrolling = false;
         }, 600);
@@ -589,14 +590,14 @@ class LegendPositionManager {
         this.legend = document.getElementById('skillsLegend');
         this.contactSection = document.querySelector('.neural-contact');
         this.experienceCards = document.querySelectorAll('.neural-node');
-        
+
         if (!this.legend || !this.contactSection || this.experienceCards.length === 0) return;
-        
+
         this.isFixed = true;
         this.initScrollListener();
         this.observeCardSizes();
     }
-    
+
     observeCardSizes() {
         // Utiliser ResizeObserver pour détecter les changements de taille des cartes
         if ('ResizeObserver' in window) {
@@ -608,35 +609,36 @@ class LegendPositionManager {
                 setTimeout(() => this.updatePosition(), 300);
                 setTimeout(() => this.updatePosition(), 450);
             });
-            
+
             // Observer toutes les cartes d'expérience
             this.experienceCards.forEach(card => {
                 resizeObserver.observe(card);
             });
-            
+
             // Observer aussi la légende elle-même
             resizeObserver.observe(this.legend);
         }
     }
-    
+
     updatePosition() {
         // Récupérer la dernière carte d'expérience
         const lastCard = this.experienceCards[this.experienceCards.length - 1];
         const lastCardRect = lastCard.getBoundingClientRect();
         const lastCardBottom = lastCardRect.bottom + window.scrollY;
-        
+
         // Hauteur et position de la légende (toujours recalculer)
         const legendHeight = this.legend.offsetHeight;
         const isMobile = window.innerWidth <= 768;
         const legendBottomMargin = isMobile ? 16 : 32;
         const cardLegendGap = 64; // 4rem d'espace
-        
+
         // Position où la légende devrait se fixer (sous la dernière carte)
         const legendFixedPosition = lastCardBottom + cardLegendGap;
-        
+
         // Position actuelle de la légende en fixed
-        const currentFixedBottom = window.scrollY + window.innerHeight - legendBottomMargin - legendHeight;
-        
+        const currentFixedBottom =
+            window.scrollY + window.innerHeight - legendBottomMargin - legendHeight;
+
         // Si la position fixed dépasse la position calculée
         if (currentFixedBottom >= legendFixedPosition) {
             // Mode absolute
@@ -650,11 +652,11 @@ class LegendPositionManager {
             this.isFixed = true;
         }
     }
-    
+
     initScrollListener() {
         window.addEventListener('scroll', () => this.updatePosition(), { passive: true });
         setTimeout(() => this.updatePosition(), 100);
-        
+
         let resizeTimeout;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimeout);
@@ -692,7 +694,7 @@ function initExperiencePage() {
 
     // Restaurer la position de scroll si changement de langue
     restoreScrollPosition();
-    
+
     // Initialiser tous les modules
     const animatedGradient = new AnimatedGradient();
     const scrollAnimations = new ScrollAnimations();
@@ -700,13 +702,13 @@ function initExperiencePage() {
     const smoothScroll = new SmoothScroll();
     const cardExpander = new CardExpander();
     const legendPositionManager = new LegendPositionManager();
-    
+
     // Rendre le legendPositionManager accessible globalement
     window.legendPositionManager = legendPositionManager;
-    
+
     // Initialiser le système de survol de la légende
     initLegendHover();
-    
+
     // Initialiser le container avec la classe appropriée
     const legend = document.getElementById('skillsLegend');
     const container = document.querySelector('.neural-container');
@@ -741,6 +743,6 @@ if (typeof module !== 'undefined' && module.exports) {
         AnimatedGradient,
         ScrollAnimations,
         SkillHighlighter,
-        SmoothScroll
+        SmoothScroll,
     };
 }
