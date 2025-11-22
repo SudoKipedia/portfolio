@@ -1,482 +1,633 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Accueil - Portfolio</title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil - Portfolio</title>
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="fb:app_id" content="966242223397117">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://sudokipedia.github.io/portfolio/">
-    <meta property="og:title" content="Portfolio">
-    <meta property="og:description" content="Découvrez mes projets en infrastructure, cybersécurité et automatisation.">
-    <meta property="og:image" content="https://sudokipedia.github.io/portfolio/assets/og-image_v2.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://sudokipedia.github.io/portfolio/">
-    <meta property="twitter:title" content="Portfolio">
-    <meta property="twitter:description" content="Découvrez mes projets en infrastructure, cybersécurité et automatisation.">
-    <meta property="twitter:image" content="https://sudokipedia.github.io/portfolio/assets/og-image_v2.png">
-    
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
+        <!-- Favicon -->
+        <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 
-<body>
-    <canvas id="bg-canvas"></canvas>
+        <!-- Open Graph / Facebook -->
+        <meta property="fb:app_id" content="966242223397117" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://sudokipedia.github.io/portfolio/" />
+        <meta property="og:title" content="Portfolio" />
+        <meta
+            property="og:description"
+            content="Découvrez mes projets en infrastructure, cybersécurité et automatisation."
+        />
+        <meta
+            property="og:image"
+            content="https://sudokipedia.github.io/portfolio/assets/og-image_v2.png"
+        />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
 
-    <header class="header">
-        <div class="container">
-            <nav class="nav">
-                <a href="#home" class="logo">
-                    <span class="logo-text">PORTFOLIO</span>
-                    <span class="logo-dot">.</span>
-                </a>
-                <div class="nav-current">
-                    <span class="nav-current-text">Accueil</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="nav-menu">
-                    <a href="#home" class="nav-link">Accueil</a>
-                    <a href="#about" class="nav-link">À propos</a>
-                    <a href="#skills" class="nav-link">Compétences Techniques</a>
-                    <a href="#projects" class="nav-link">Projets</a>
-                    <a href="#recommendations" class="nav-link">Recommandations</a>
-                    <a href="#contact" class="nav-link">Contact</a>
-                </div>
-                <div class="lang-switcher">
-                    <a href="#" class="lang-btn active" onclick="return false;">FR</a>
-                    <a href="#" class="lang-btn" onclick="switchLanguage('index_en.html'); return false;">EN</a>
-                </div>
-            </nav>
-        </div>
-    </header>
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://sudokipedia.github.io/portfolio/" />
+        <meta property="twitter:title" content="Portfolio" />
+        <meta
+            property="twitter:description"
+            content="Découvrez mes projets en infrastructure, cybersécurité et automatisation."
+        />
+        <meta
+            property="twitter:image"
+            content="https://sudokipedia.github.io/portfolio/assets/og-image_v2.png"
+        />
 
-    <section id="home" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-badge animate-in">
-                    <i class="fas fa-graduation-cap"></i>
-                    <span>Étudiant IPI Blagnac</span>
-                </div>
-                <h1 class="hero-title">
-                    <span class="line animate-in" style="--delay: 0.1s">Systèmes,</span>
-                    <span class="line animate-in" style="--delay: 0.2s">Réseaux &</span>
-                    <span class="line highlight animate-in" style="--delay: 0.3s">Sécurité</span>
-                </h1>
-                <p class="hero-subtitle animate-in" style="--delay: 0.4s">
-                    Passionné par l'infrastructure IT, la cybersécurité et l'automatisation.<br>
-                    Je conçois des solutions techniques robustes et sécurisées.
-                </p>
-                <div class="hero-cta animate-in" style="--delay: 0.5s">
-                    <a href="#projects" class="btn btn-primary">
-                        <span>Découvrir mes projets</span>
-                        <i class="fas fa-arrow-right"></i>
+        <link rel="stylesheet" href="style.css" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+    </head>
+
+    <body>
+        <canvas id="bg-canvas"></canvas>
+
+        <header class="header">
+            <div class="container">
+                <nav class="nav">
+                    <a href="#home" class="logo">
+                        <span class="logo-text">PORTFOLIO</span>
+                        <span class="logo-dot">.</span>
                     </a>
-                    <a href="#contact" class="btn btn-secondary">
-                        <span>Me contacter</span>
+                    <div class="nav-current">
+                        <span class="nav-current-text">Accueil</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="nav-menu">
+                        <a href="#home" class="nav-link">Accueil</a>
+                        <a href="#about" class="nav-link">À propos</a>
+                        <a href="#skills" class="nav-link">Compétences Techniques</a>
+                        <a href="#projects" class="nav-link">Projets</a>
+                        <a href="#recommendations" class="nav-link">Recommandations</a>
+                        <a href="#contact" class="nav-link">Contact</a>
+                    </div>
+                    <div class="lang-switcher">
+                        <a href="#" class="lang-btn active" onclick="return false;">FR</a>
+                        <a
+                            href="#"
+                            class="lang-btn"
+                            onclick="switchLanguage('index_en.html'); return false;"
+                            >EN</a
+                        >
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-badge animate-in">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Étudiant IPI Blagnac</span>
+                    </div>
+                    <h1 class="hero-title">
+                        <span class="line animate-in" style="--delay: 0.1s">Systèmes,</span>
+                        <span class="line animate-in" style="--delay: 0.2s">Réseaux &</span>
+                        <span class="line highlight animate-in" style="--delay: 0.3s"
+                            >Sécurité</span
+                        >
+                    </h1>
+                    <p class="hero-subtitle animate-in" style="--delay: 0.4s">
+                        Passionné par l'infrastructure IT, la cybersécurité et l'automatisation.<br />
+                        Je conçois des solutions techniques robustes et sécurisées.
+                    </p>
+                    <div class="hero-cta animate-in" style="--delay: 0.5s">
+                        <a href="#projects" class="btn btn-primary">
+                            <span>Découvrir mes projets</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="#contact" class="btn btn-secondary">
+                            <span>Me contacter</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-stats animate-in" style="--delay: 0.6s">
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="3">0</span>
+                        <span class="stat-label">Années d'études</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="15">0</span>
+                        <span class="stat-label">Projets réalisés</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="10">0</span>
+                        <span class="stat-label">Certifications</span>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <span>Scroll</span>
+                <div class="scroll-line"></div>
+            </div>
+        </section>
+
+        <section id="about" class="section about">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">À propos</span>
+                    <h2 class="section-title">Qui suis-je ?</h2>
+                </div>
+                <div class="about-grid">
+                    <div class="about-text">
+                        <p class="lead">
+                            Actuellement en formation à l'<strong>IPI Blagnac</strong> en Systèmes,
+                            Réseaux et Sécurité, je me spécialise dans la conception
+                            d'infrastructures IT performantes et sécurisées.
+                        </p>
+                        <p>
+                            Mon parcours m'a permis de développer des compétences solides en
+                            administration système, configuration réseau, sécurité informatique et
+                            automatisation. Je suis constamment à la recherche de nouveaux défis
+                            techniques.
+                        </p>
+                        <div class="about-highlights">
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Administration Windows Server & Linux</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Configuration réseau Cisco & virtualisation</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Sécurité & audits d'infrastructure</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Automatisation PowerShell & Ansible</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-visual">
+                        <div class="timeline">
+                            <h3 class="timeline-title">Parcours Académique</h3>
+                            <div class="timeline-items">
+                                <div class="timeline-item" data-year="2023-2025">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <span class="timeline-date">2023 - 2025</span>
+                                        <h4>Titre Niveau 6 (Bac+3/4)</h4>
+                                        <p class="timeline-school">IPI - Paris</p>
+                                        <p class="timeline-desc">
+                                            Expertise en Systèmes, Réseaux & Sécurité
+                                        </p>
+                                        <div class="timeline-extra">
+                                            <ul>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Administration
+                                                    avancée Windows Server & Linux
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Architecture réseau
+                                                    d'entreprise (Cisco CCNA)
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Sécurité des
+                                                    infrastructures et audits
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Virtualisation et
+                                                    conteneurisation
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Automatisation avec
+                                                    Ansible et scripts
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item" data-year="2021-2023">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <span class="timeline-date">2021 - 2023</span>
+                                        <h4>BTS SIO Option SISR</h4>
+                                        <p class="timeline-school">Lycée Technique - Paris</p>
+                                        <p class="timeline-desc">
+                                            Solutions d'Infrastructure, Systèmes et Réseaux
+                                        </p>
+                                        <div class="timeline-extra">
+                                            <ul>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Bases de
+                                                    l'administration système
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Configuration
+                                                    réseau et services TCP/IP
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Active Directory et
+                                                    gestion des utilisateurs
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Maintenance et
+                                                    support technique
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Sécurité des
+                                                    systèmes d'information
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item" data-year="2018-2021">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <span class="timeline-date">2018 - 2021</span>
+                                        <h4>Baccalauréat Général</h4>
+                                        <p class="timeline-school">Lycée - Paris</p>
+                                        <p class="timeline-desc">
+                                            Spécialités Mathématiques et NSI
+                                        </p>
+                                        <div class="timeline-extra">
+                                            <ul>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Fondamentaux en
+                                                    mathématiques
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Algorithmique et
+                                                    programmation Python
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Bases de données et
+                                                    SQL
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Architecture des
+                                                    réseaux
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Link to Experience Page -->
+                <div class="experience-link-container">
+                    <a href="experience.html" class="experience-link">
+                        <div class="experience-link-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="experience-link-content">
+                            <h3>Découvrez mon expérience professionnelle</h3>
+                            <p>
+                                Dashboard de supervision de carrière avec métriques et réalisations
+                                détaillées
+                            </p>
+                        </div>
+                        <div class="experience-link-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
                     </a>
                 </div>
             </div>
-            <div class="hero-stats animate-in" style="--delay: 0.6s">
-                <div class="stat-item">
-                    <span class="stat-number" data-target="3">0</span>
-                    <span class="stat-label">Années d'études</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number" data-target="15">0</span>
-                    <span class="stat-label">Projets réalisés</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number" data-target="10">0</span>
-                    <span class="stat-label">Certifications</span>
-                </div>
-            </div>
-        </div>
-        <div class="scroll-indicator">
-            <span>Scroll</span>
-            <div class="scroll-line"></div>
-        </div>
-    </section>
+        </section>
 
-    <section id="about" class="section about">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">À propos</span>
-                <h2 class="section-title">Qui suis-je ?</h2>
-            </div>
-            <div class="about-grid">
-                <div class="about-text">
-                    <p class="lead">
-                        Actuellement en formation à l'<strong>IPI Blagnac</strong> en Systèmes, Réseaux et Sécurité, 
-                        je me spécialise dans la conception d'infrastructures IT performantes et sécurisées.
-                    </p>
-                    <p>
-                        Mon parcours m'a permis de développer des compétences solides en administration système, 
-                        configuration réseau, sécurité informatique et automatisation. Je suis constamment à la 
-                        recherche de nouveaux défis techniques.
-                    </p>
-                    <div class="about-highlights">
-                        <div class="highlight-item">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Administration Windows Server & Linux</span>
-                        </div>
-                        <div class="highlight-item">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Configuration réseau Cisco & virtualisation</span>
-                        </div>
-                        <div class="highlight-item">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Sécurité & audits d'infrastructure</span>
-                        </div>
-                        <div class="highlight-item">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Automatisation PowerShell & Ansible</span>
-                        </div>
-                    </div>
+        <section id="skills" class="section skills">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Compétences Techniques</span>
+                    <h2 class="section-title">Compétences Techniques</h2>
                 </div>
-                <div class="about-visual">
-                    <div class="timeline">
-                        <h3 class="timeline-title">Parcours Académique</h3>
-                        <div class="timeline-items">
-                            <div class="timeline-item" data-year="2023-2025">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-content">
-                                    <span class="timeline-date">2023 - 2025</span>
-                                    <h4>Titre Niveau 6 (Bac+3/4)</h4>
-                                    <p class="timeline-school">IPI - Paris</p>
-                                    <p class="timeline-desc">Expertise en Systèmes, Réseaux & Sécurité</p>
-                                    <div class="timeline-extra">
-                                        <ul>
-                                            <li><i class="fas fa-check"></i> Administration avancée Windows Server & Linux</li>
-                                            <li><i class="fas fa-check"></i> Architecture réseau d'entreprise (Cisco CCNA)</li>
-                                            <li><i class="fas fa-check"></i> Sécurité des infrastructures et audits</li>
-                                            <li><i class="fas fa-check"></i> Virtualisation et conteneurisation</li>
-                                            <li><i class="fas fa-check"></i> Automatisation avec Ansible et scripts</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="timeline-item" data-year="2021-2023">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-content">
-                                    <span class="timeline-date">2021 - 2023</span>
-                                    <h4>BTS SIO Option SISR</h4>
-                                    <p class="timeline-school">Lycée Technique - Paris</p>
-                                    <p class="timeline-desc">Solutions d'Infrastructure, Systèmes et Réseaux</p>
-                                    <div class="timeline-extra">
-                                        <ul>
-                                            <li><i class="fas fa-check"></i> Bases de l'administration système</li>
-                                            <li><i class="fas fa-check"></i> Configuration réseau et services TCP/IP</li>
-                                            <li><i class="fas fa-check"></i> Active Directory et gestion des utilisateurs</li>
-                                            <li><i class="fas fa-check"></i> Maintenance et support technique</li>
-                                            <li><i class="fas fa-check"></i> Sécurité des systèmes d'information</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="timeline-item" data-year="2018-2021">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-content">
-                                    <span class="timeline-date">2018 - 2021</span>
-                                    <h4>Baccalauréat Général</h4>
-                                    <p class="timeline-school">Lycée - Paris</p>
-                                    <p class="timeline-desc">Spécialités Mathématiques et NSI</p>
-                                    <div class="timeline-extra">
-                                        <ul>
-                                            <li><i class="fas fa-check"></i> Fondamentaux en mathématiques</li>
-                                            <li><i class="fas fa-check"></i> Algorithmique et programmation Python</li>
-                                            <li><i class="fas fa-check"></i> Bases de données et SQL</li>
-                                            <li><i class="fas fa-check"></i> Architecture des réseaux</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h3>Administration Système</h3>
+                        <p>
+                            Gestion de serveurs Linux (Debian, Ubuntu, CentOS) et Windows Server.
+                            Configuration Active Directory, GPO, et virtualisation (VMware, Hyper-V,
+                            Proxmox).
+                        </p>
+                        <div class="skill-tags">
+                            <span>Linux</span>
+                            <span>Windows Server</span>
+                            <span>Active Directory</span>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Link to Experience Page -->
-            <div class="experience-link-container">
-                <a href="experience.html" class="experience-link">
-                    <div class="experience-link-icon">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
-                    <div class="experience-link-content">
-                        <h3>Découvrez mon expérience professionnelle</h3>
-                        <p>Dashboard de supervision de carrière avec métriques et réalisations détaillées</p>
-                    </div>
-                    <div class="experience-link-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <section id="skills" class="section skills">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Compétences Techniques</span>
-                <h2 class="section-title">Compétences Techniques</h2>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="fas fa-server"></i>
-                    </div>
-                    <h3>Administration Système</h3>
-                    <p>Gestion de serveurs Linux (Debian, Ubuntu, CentOS) et Windows Server. Configuration Active Directory, GPO, et virtualisation (VMware, Hyper-V, Proxmox).</p>
-                    <div class="skill-tags">
-                        <span>Linux</span>
-                        <span>Windows Server</span>
-                        <span>Active Directory</span>
-                    </div>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="fas fa-network-wired"></i>
-                    </div>
-                    <h3>Infrastructure Réseau</h3>
-                    <p>Configuration et administration d'équipements Cisco (CCNA). Mise en place de VLANs, routage, VPN, et gestion de pare-feu (pfSense, Fortinet).</p>
-                    <div class="skill-tags">
-                        <span>Cisco CCNA</span>
-                        <span>Routing & Switching</span>
-                        <span>Firewall</span>
-                    </div>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Cybersécurité</h3>
-                    <p>Audits de sécurité, hardening système, analyse de vulnérabilités, mise en place de politiques de sécurité et gestion d'incidents.</p>
-                    <div class="skill-tags">
-                        <span>Pentesting</span>
-                        <span>Hardening</span>
-                        <span>SIEM</span>
-                    </div>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Automatisation</h3>
-                    <p>Scripts PowerShell, Bash et Python pour automatiser les tâches. Déploiement avec Ansible et gestion de configuration infrastructure as code.</p>
-                    <div class="skill-tags">
-                        <span>PowerShell</span>
-                        <span>Ansible</span>
-                        <span>Python</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="projects" class="section projects">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Réalisations</span>
-                <h2 class="section-title">Mes projets</h2>
-            </div>
-            <div class="projects-grid">
-                <a href="project_ad.html" class="project-card">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?w=800" alt="Active Directory">
-                        <div class="project-overlay">
-                            <i class="fas fa-arrow-right"></i>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <div class="project-tags">
-                            <span>Système</span>
-                            <span>Sécurité</span>
-                        </div>
-                        <h3>Audit Active Directory</h3>
-                        <p>Audit de sécurité complet d'une infrastructure Active Directory avec recommandations de durcissement.</p>
-                    </div>
-                </a>
-                <a href="project_ansible.html" class="project-card">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800" alt="Ansible">
-                        <div class="project-overlay">
-                            <i class="fas fa-arrow-right"></i>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <div class="project-tags">
-                            <span>Automatisation</span>
-                            <span>DevOps</span>
-                        </div>
-                        <h3>Automatisation Ansible</h3>
-                        <p>Déploiement automatisé d'infrastructure avec Ansible pour standardiser les configurations serveurs.</p>
-                    </div>
-                </a>
-                <a href="project_infra.html" class="project-card">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800" alt="Infrastructure">
-                        <div class="project-overlay">
-                            <i class="fas fa-arrow-right"></i>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <div class="project-tags">
-                            <span>Réseau</span>
-                            <span>Architecture</span>
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <i class="fas fa-network-wired"></i>
                         </div>
                         <h3>Infrastructure Réseau</h3>
-                        <p>Conception et déploiement d'une infrastructure réseau complète avec segmentation VLAN et haute disponibilité.</p>
+                        <p>
+                            Configuration et administration d'équipements Cisco (CCNA). Mise en
+                            place de VLANs, routage, VPN, et gestion de pare-feu (pfSense,
+                            Fortinet).
+                        </p>
+                        <div class="skill-tags">
+                            <span>Cisco CCNA</span>
+                            <span>Routing & Switching</span>
+                            <span>Firewall</span>
+                        </div>
                     </div>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <section id="recommendations" class="section project-section">
-        <div class="container" style="max-width: 900px;">
-            <div class="section-header">
-                <span class="section-tag">Recommandations</span>
-                <h2 class="section-title">Ce qu'ils disent de moi</h2>
-            </div>
-            <div class="accordion-section">
-                <button class="accordion-toggle" data-accordion="recommendations-accordion">
-                    <div class="accordion-header">
-                        <i class="fas fa-quote-left accordion-icon"></i>
-                        <h2>Témoignages & Recommandations</h2>
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Cybersécurité</h3>
+                        <p>
+                            Audits de sécurité, hardening système, analyse de vulnérabilités, mise
+                            en place de politiques de sécurité et gestion d'incidents.
+                        </p>
+                        <div class="skill-tags">
+                            <span>Pentesting</span>
+                            <span>Hardening</span>
+                            <span>SIEM</span>
+                        </div>
                     </div>
-                    <i class="fas fa-chevron-down accordion-arrow"></i>
-                </button>
-                <div class="accordion-content" id="recommendations-accordion">
-                    <div class="document-list">
-                        <a href="#" class="document-item">
-                            <div class="document-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <div class="document-info">
-                                <h3>Lettre de recommandation - Jean Dupont</h3>
-                                <p>"Excellent travail sur le projet Active Directory. Rigueur et professionnalisme remarquables."</p>
-                                <span class="document-meta">Responsable Infrastructure • Entreprise XYZ • PDF • 245 KB</span>
-                            </div>
-                            <i class="fas fa-download document-download"></i>
-                        </a>
-                        <a href="#" class="document-item">
-                            <div class="document-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <div class="document-info">
-                                <h3>Lettre de recommandation - Marie Martin</h3>
-                                <p>"Compétences techniques solides et grande capacité d'apprentissage. Un atout pour toute équipe IT."</p>
-                                <span class="document-meta">Formatrice Systèmes & Réseaux • IPI Blagnac • PDF • 198 KB</span>
-                            </div>
-                            <i class="fas fa-download document-download"></i>
-                        </a>
-                        <a href="#" class="document-item">
-                            <div class="document-icon">
-                                <i class="fas fa-file-pdf"></i>
-                            </div>
-                            <div class="document-info">
-                                <h3>Lettre de recommandation - Pierre Durand</h3>
-                                <p>"Autonome et méthodique, il a su mener à bien l'automatisation de notre infrastructure avec Ansible."</p>
-                                <span class="document-meta">DevOps Engineer • Tech Solutions • PDF • 312 KB</span>
-                            </div>
-                            <i class="fas fa-download document-download"></i>
-                        </a>
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3>Automatisation</h3>
+                        <p>
+                            Scripts PowerShell, Bash et Python pour automatiser les tâches.
+                            Déploiement avec Ansible et gestion de configuration infrastructure as
+                            code.
+                        </p>
+                        <div class="skill-tags">
+                            <span>PowerShell</span>
+                            <span>Ansible</span>
+                            <span>Python</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="contact" class="section contact">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Contact</span>
-                <h2 class="section-title">Travaillons ensemble</h2>
-            </div>
-            <p class="contact-intro">
-                Vous avez un projet ou une opportunité ? N'hésitez pas à me contacter. 
-                Je suis toujours ouvert aux nouvelles collaborations et défis techniques.
-            </p>
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <div class="contact-methods">
-                        <a href="mailto:quentin.poisson23@gmail.com" class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="contact-details">
-                                <span class="contact-label">Email</span>
-                                <span class="contact-value">quentin.poisson23@gmail.com</span>
-                            </div>
-                        </a>
-                        <a href="https://www.linkedin.com/in/quentin-pssn" class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fab fa-linkedin"></i>
-                            </div>
-                            <div class="contact-details">
-                                <span class="contact-label">LinkedIn</span>
-                                <span class="contact-value">Quentin Poisson</span>
-                            </div>
-                        </a>
-                        <a href="https://github.com/SudoKipedia" target="_blank" class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fab fa-github"></i>
-                            </div>
-                            <div class="contact-details">
-                                <span class="contact-label">GitHub</span>
-                                <span class="contact-value">Mes dépôts</span>
-                            </div>
-                        </a>
-                    </div>
+        <section id="projects" class="section projects">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Réalisations</span>
+                    <h2 class="section-title">Mes projets</h2>
                 </div>
-                <form class="contact-form">
-                    <div class="form-group">
-                        <label for="name">Nom</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" maxlength="1000" required></textarea>
-                        <span class="char-counter"><span id="char-count">0</span>/1000</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="attachment">
-                            <span>Cliquez pour ajouter des fichiers</span>
-                        </label>
-                        <input type="file" id="attachment" name="attachment" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" multiple>
-                        <small style="color: #666; font-size: 0.85rem; margin-top: 0.5rem; display: block;">Formats acceptés : PDF, DOC, DOCX, TXT, JPG, PNG (max 5 fichiers, 8MB chacun)</small>
-                        <div id="file-list" class="file-list"></div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">
-                        <span>Envoyer le message</span>
-                        <i class="fas fa-paper-plane"></i>
+                <div class="projects-grid">
+                    <a href="project_ad.html" class="project-card">
+                        <div class="project-image">
+                            <img
+                                src="https://images.unsplash.com/photo-1639322537228-f710d846310a?w=800"
+                                alt="Active Directory"
+                            />
+                            <div class="project-overlay">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-tags">
+                                <span>Système</span>
+                                <span>Sécurité</span>
+                            </div>
+                            <h3>Audit Active Directory</h3>
+                            <p>
+                                Audit de sécurité complet d'une infrastructure Active Directory avec
+                                recommandations de durcissement.
+                            </p>
+                        </div>
+                    </a>
+                    <a href="project_ansible.html" class="project-card">
+                        <div class="project-image">
+                            <img
+                                src="https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800"
+                                alt="Ansible"
+                            />
+                            <div class="project-overlay">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-tags">
+                                <span>Automatisation</span>
+                                <span>DevOps</span>
+                            </div>
+                            <h3>Automatisation Ansible</h3>
+                            <p>
+                                Déploiement automatisé d'infrastructure avec Ansible pour
+                                standardiser les configurations serveurs.
+                            </p>
+                        </div>
+                    </a>
+                    <a href="project_infra.html" class="project-card">
+                        <div class="project-image">
+                            <img
+                                src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800"
+                                alt="Infrastructure"
+                            />
+                            <div class="project-overlay">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-tags">
+                                <span>Réseau</span>
+                                <span>Architecture</span>
+                            </div>
+                            <h3>Infrastructure Réseau</h3>
+                            <p>
+                                Conception et déploiement d'une infrastructure réseau complète avec
+                                segmentation VLAN et haute disponibilité.
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="recommendations" class="section project-section">
+            <div class="container" style="max-width: 900px">
+                <div class="section-header">
+                    <span class="section-tag">Recommandations</span>
+                    <h2 class="section-title">Ce qu'ils disent de moi</h2>
+                </div>
+                <div class="accordion-section">
+                    <button class="accordion-toggle" data-accordion="recommendations-accordion">
+                        <div class="accordion-header">
+                            <i class="fas fa-quote-left accordion-icon"></i>
+                            <h2>Témoignages & Recommandations</h2>
+                        </div>
+                        <i class="fas fa-chevron-down accordion-arrow"></i>
                     </button>
-                </form>
+                    <div class="accordion-content" id="recommendations-accordion">
+                        <div class="document-list">
+                            <a href="#" class="document-item">
+                                <div class="document-icon">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="document-info">
+                                    <h3>Lettre de recommandation - Jean Dupont</h3>
+                                    <p>
+                                        "Excellent travail sur le projet Active Directory. Rigueur
+                                        et professionnalisme remarquables."
+                                    </p>
+                                    <span class="document-meta"
+                                        >Responsable Infrastructure • Entreprise XYZ • PDF • 245
+                                        KB</span
+                                    >
+                                </div>
+                                <i class="fas fa-download document-download"></i>
+                            </a>
+                            <a href="#" class="document-item">
+                                <div class="document-icon">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="document-info">
+                                    <h3>Lettre de recommandation - Marie Martin</h3>
+                                    <p>
+                                        "Compétences techniques solides et grande capacité
+                                        d'apprentissage. Un atout pour toute équipe IT."
+                                    </p>
+                                    <span class="document-meta"
+                                        >Formatrice Systèmes & Réseaux • IPI Blagnac • PDF • 198
+                                        KB</span
+                                    >
+                                </div>
+                                <i class="fas fa-download document-download"></i>
+                            </a>
+                            <a href="#" class="document-item">
+                                <div class="document-icon">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="document-info">
+                                    <h3>Lettre de recommandation - Pierre Durand</h3>
+                                    <p>
+                                        "Autonome et méthodique, il a su mener à bien
+                                        l'automatisation de notre infrastructure avec Ansible."
+                                    </p>
+                                    <span class="document-meta"
+                                        >DevOps Engineer • Tech Solutions • PDF • 312 KB</span
+                                    >
+                                </div>
+                                <i class="fas fa-download document-download"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Portfolio. Tous droits réservés.</p>
-        </div>
-    </footer>
+        <section id="contact" class="section contact">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Contact</span>
+                    <h2 class="section-title">Travaillons ensemble</h2>
+                </div>
+                <p class="contact-intro">
+                    Vous avez un projet ou une opportunité ? N'hésitez pas à me contacter. Je suis
+                    toujours ouvert aux nouvelles collaborations et défis techniques.
+                </p>
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <div class="contact-methods">
+                            <a href="mailto:quentin.poisson23@gmail.com" class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="contact-details">
+                                    <span class="contact-label">Email</span>
+                                    <span class="contact-value">quentin.poisson23@gmail.com</span>
+                                </div>
+                            </a>
+                            <a href="https://www.linkedin.com/in/quentin-pssn" class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fab fa-linkedin"></i>
+                                </div>
+                                <div class="contact-details">
+                                    <span class="contact-label">LinkedIn</span>
+                                    <span class="contact-value">Quentin Poisson</span>
+                                </div>
+                            </a>
+                            <a
+                                href="https://github.com/SudoKipedia"
+                                target="_blank"
+                                class="contact-item"
+                            >
+                                <div class="contact-icon">
+                                    <i class="fab fa-github"></i>
+                                </div>
+                                <div class="contact-details">
+                                    <span class="contact-label">GitHub</span>
+                                    <span class="contact-value">Mes dépôts</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Nom</label>
+                            <input type="text" id="name" name="name" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea
+                                id="message"
+                                name="message"
+                                rows="5"
+                                maxlength="1000"
+                                required
+                            ></textarea>
+                            <span class="char-counter"><span id="char-count">0</span>/1000</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="attachment">
+                                <span>Cliquez pour ajouter des fichiers</span>
+                            </label>
+                            <input
+                                type="file"
+                                id="attachment"
+                                name="attachment"
+                                accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png"
+                                multiple
+                            />
+                            <small
+                                style="
+                                    color: #666;
+                                    font-size: 0.85rem;
+                                    margin-top: 0.5rem;
+                                    display: block;
+                                "
+                                >Formats acceptés : PDF, DOC, DOCX, TXT, JPG, PNG (max 5 fichiers,
+                                8MB chacun)</small
+                            >
+                            <div id="file-list" class="file-list"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <span>Envoyer le message</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
 
-    <script src="script.js"></script>
-</body>
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2025 Portfolio. Tous droits réservés.</p>
+            </div>
+        </footer>
 
+        <script src="script.js"></script>
+    </body>
 </html>

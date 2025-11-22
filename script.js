@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     // ===================================
     // CANVAS PARTICLES BACKGROUND
     // ===================================
@@ -16,10 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
             y: null,
             radius: (canvas.height / 150) * (canvas.width / 150),
             isMouseDown: false,
-            isBlasting: false
-        }
+            isBlasting: false,
+        };
 
-        window.addEventListener('mousemove', (event) => {
+        window.addEventListener('mousemove', event => {
             mouse.x = event.clientX;
             mouse.y = event.clientY;
         });
@@ -53,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 mouse.isMouseDown = false;
                 mouse.x = null;
                 mouse.y = null;
-                
+
                 setTimeout(() => {
                     isViewportChanging = false;
                     initialViewportHeight = currentHeight;
@@ -61,67 +60,80 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        window.addEventListener('touchstart', (event) => {
-            if (event.touches.length > 0 && !isViewportChanging) {
-                isScrolling = false;
-                touchStartY = event.touches[0].clientY;
-                lastTouchY = touchStartY;
-                
-                // Activer les interactions tactiles
-                mouse.x = event.touches[0].clientX;
-                mouse.y = event.touches[0].clientY;
-                mouse.isMouseDown = true;
-            }
-        }, { passive: true });
+        window.addEventListener(
+            'touchstart',
+            event => {
+                if (event.touches.length > 0 && !isViewportChanging) {
+                    isScrolling = false;
+                    touchStartY = event.touches[0].clientY;
+                    lastTouchY = touchStartY;
 
-        window.addEventListener('touchmove', (event) => {
-            if (event.touches.length > 0) {
-                const currentTouchY = event.touches[0].clientY;
-                
-                // Détecte si c'est un scroll vertical (mouvement significatif depuis le départ)
-                if (touchStartY !== null) {
-                    const totalDeltaY = Math.abs(currentTouchY - touchStartY);
-                    const recentDeltaY = lastTouchY !== null ? Math.abs(currentTouchY - lastTouchY) : 0;
-                    
-                    // Considérer comme scroll si mouvement total > 15px OU mouvement récent > 5px
-                    if (totalDeltaY > 15 || recentDeltaY > 5) {
-                        isScrolling = true;
+                    // Activer les interactions tactiles
+                    mouse.x = event.touches[0].clientX;
+                    mouse.y = event.touches[0].clientY;
+                    mouse.isMouseDown = true;
+                }
+            },
+            { passive: true }
+        );
+
+        window.addEventListener(
+            'touchmove',
+            event => {
+                if (event.touches.length > 0) {
+                    const currentTouchY = event.touches[0].clientY;
+
+                    // Détecte si c'est un scroll vertical (mouvement significatif depuis le départ)
+                    if (touchStartY !== null) {
+                        const totalDeltaY = Math.abs(currentTouchY - touchStartY);
+                        const recentDeltaY =
+                            lastTouchY !== null ? Math.abs(currentTouchY - lastTouchY) : 0;
+
+                        // Considérer comme scroll si mouvement total > 15px OU mouvement récent > 5px
+                        if (totalDeltaY > 15 || recentDeltaY > 5) {
+                            isScrolling = true;
+                        }
+                    }
+
+                    lastTouchY = currentTouchY;
+
+                    // Si c'est un scroll ou viewport change, désactiver l'interaction
+                    if (isScrolling || isViewportChanging) {
+                        mouse.isMouseDown = false;
+                        mouse.x = null;
+                        mouse.y = null;
                     }
                 }
-                
-                lastTouchY = currentTouchY;
-                
-                // Si c'est un scroll ou viewport change, désactiver l'interaction
-                if (isScrolling || isViewportChanging) {
+            },
+            { passive: true }
+        );
+
+        window.addEventListener(
+            'touchend',
+            () => {
+                touchStartY = null;
+                lastTouchY = null;
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    isScrolling = false;
+                }, 200);
+
+                if (!isScrolling && !isViewportChanging) {
+                    mouse.isMouseDown = false;
+                    mouse.isBlasting = true;
+                    setTimeout(() => {
+                        mouse.isBlasting = false;
+                        mouse.x = null;
+                        mouse.y = null;
+                    }, 300);
+                } else {
                     mouse.isMouseDown = false;
                     mouse.x = null;
                     mouse.y = null;
                 }
-            }
-        }, { passive: true });
-
-        window.addEventListener('touchend', () => {
-            touchStartY = null;
-            lastTouchY = null;
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                isScrolling = false;
-            }, 200);
-            
-            if (!isScrolling && !isViewportChanging) {
-                mouse.isMouseDown = false;
-                mouse.isBlasting = true;
-                setTimeout(() => {
-                    mouse.isBlasting = false;
-                    mouse.x = null;
-                    mouse.y = null;
-                }, 300);
-            } else {
-                mouse.isMouseDown = false;
-                mouse.x = null;
-                mouse.y = null;
-            }
-        }, { passive: true });
+            },
+            { passive: true }
+        );
 
         class Particle {
             constructor(x, y, directionX, directionY, size, color) {
@@ -131,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.directionY = directionY;
                 this.size = size;
                 this.color = color;
-                this.density = (Math.random() * 5) + 1;
+                this.density = Math.random() * 5 + 1;
                 this.vx = 0;
                 this.vy = 0;
                 this.friction = 0.96;
@@ -192,11 +204,11 @@ document.addEventListener('DOMContentLoaded', () => {
             particlesArray = [];
             let numberOfParticles = (canvas.height * canvas.width) / 9000;
             for (let i = 0; i < numberOfParticles; i++) {
-                let size = (Math.random() * 2) + 1;
-                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
-                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
-                let directionX = (Math.random() * 0.4) - 0.2;
-                let directionY = (Math.random() * 0.4) - 0.2;
+                let size = Math.random() * 2 + 1;
+                let x = Math.random() * (innerWidth - size * 2 - size * 2) + size * 2;
+                let y = Math.random() * (innerHeight - size * 2 - size * 2) + size * 2;
+                let directionX = Math.random() * 0.4 - 0.2;
+                let directionY = Math.random() * 0.4 - 0.2;
                 let color = '#ef4444';
 
                 particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
@@ -207,10 +219,13 @@ document.addEventListener('DOMContentLoaded', () => {
             let opacityValue = 1;
             for (let a = 0; a < particlesArray.length; a++) {
                 for (let b = a; b < particlesArray.length; b++) {
-                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
-                        + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                    let distance =
+                        (particlesArray[a].x - particlesArray[b].x) *
+                            (particlesArray[a].x - particlesArray[b].x) +
+                        (particlesArray[a].y - particlesArray[b].y) *
+                            (particlesArray[a].y - particlesArray[b].y);
                     if (distance < (canvas.width / 7) * (canvas.height / 7)) {
-                        opacityValue = 1 - (distance / 20000);
+                        opacityValue = 1 - distance / 20000;
                         ctx.strokeStyle = 'rgba(239, 68, 68,' + opacityValue + ')';
                         ctx.lineWidth = 1;
                         ctx.beginPath();
@@ -244,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('mouseout', () => {
             mouse.x = undefined;
             mouse.y = undefined;
-        })
+        });
     }
 
     // ===================================
@@ -255,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const targetId = this.getAttribute('href');
             if (targetId === '#') return;
-            
+
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
                 const headerOffset = 100;
@@ -264,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 window.scrollTo({
                     top: offsetPosition,
-                    behavior: 'smooth'
+                    behavior: 'smooth',
                 });
             }
         });
@@ -277,17 +292,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const scrollIndicator = document.querySelector('.scroll-indicator');
     const heroStats = document.querySelector('.hero-stats');
     let lastScroll = 0;
-    
+
     console.log('heroStats trouvé:', heroStats);
 
     function updateScrollIndicator() {
         const currentScroll = window.scrollY || window.pageYOffset;
-        
+
         if (scrollIndicator) {
             const firstSection = document.querySelector('section:first-of-type');
             if (firstSection) {
                 const firstSectionHeight = firstSection.offsetHeight;
-                
+
                 // L'indicateur est visible uniquement dans la première section
                 if (currentScroll < firstSectionHeight - 100) {
                     scrollIndicator.classList.add('visible');
@@ -298,26 +313,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-        
+
         // Faire disparaître les stats progressivement avec transition fluide
         if (heroStats) {
             const viewportHeight = window.innerHeight;
             const isMobile = window.innerWidth <= 768;
-            
+
             if (isMobile) {
                 // Sur mobile : faire disparaître/réapparaître chaque stat individuellement
                 const statItems = heroStats.querySelectorAll('.stat-item');
-                const disappearTrigger = viewportHeight * (2/3); // Disparition au 1/3 en partant du bas
-                const reappearTrigger = viewportHeight * (2/3); // Réapparition complète au 1/3 de la page
-                
+                const disappearTrigger = viewportHeight * (2 / 3); // Disparition au 1/3 en partant du bas
+                const reappearTrigger = viewportHeight * (2 / 3); // Réapparition complète au 1/3 de la page
+
                 // Configuration de la vitesse de disparition (plus c'est petit, plus c'est rapide)
                 const fadeSpeed = 0.05; // Ajustable : 0.1 (très rapide) à 0.5 (très lent)
                 const fadeRange = viewportHeight * fadeSpeed;
-                
+
                 statItems.forEach((item, index) => {
                     const itemRect = item.getBoundingClientRect();
                     const itemBottom = itemRect.bottom; // Position du bas de l'item
-                    
+
                     // Disparition (scroll vers le bas)
                     if (itemBottom > disappearTrigger + fadeRange) {
                         // Item complètement visible (en dessous du point de disparition)
@@ -326,13 +341,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else if (itemBottom < disappearTrigger - fadeRange) {
                         // Item a disparu, mais peut être en train de réapparaître
                         // Vérifier si on est en train de remonter et réapparaître
-                        if (itemBottom < reappearTrigger + fadeRange && itemBottom > reappearTrigger - fadeRange) {
+                        if (
+                            itemBottom < reappearTrigger + fadeRange &&
+                            itemBottom > reappearTrigger - fadeRange
+                        ) {
                             // En train de réapparaître : le bas approche du 1/3 de la page
-                            const reappearProgress = (reappearTrigger - itemBottom + fadeRange) / (fadeRange * 2);
+                            const reappearProgress =
+                                (reappearTrigger - itemBottom + fadeRange) / (fadeRange * 2);
                             const opacity = Math.max(0, Math.min(1, reappearProgress));
-                            const translateY = -30 * (1 - Math.max(0, Math.min(1, reappearProgress)));
+                            const translateY =
+                                -30 * (1 - Math.max(0, Math.min(1, reappearProgress)));
                             item.style.setProperty('opacity', opacity.toString(), 'important');
-                            item.style.setProperty('transform', `translateY(${translateY}px)`, 'important');
+                            item.style.setProperty(
+                                'transform',
+                                `translateY(${translateY}px)`,
+                                'important'
+                            );
                         } else if (itemBottom >= reappearTrigger + fadeRange) {
                             // Complètement réapparu (le bas est au-dessus du 1/3)
                             item.style.setProperty('opacity', '1', 'important');
@@ -344,18 +368,23 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     } else {
                         // Transition de disparition progressive
-                        const progress = (disappearTrigger - itemBottom + fadeRange) / (fadeRange * 2);
+                        const progress =
+                            (disappearTrigger - itemBottom + fadeRange) / (fadeRange * 2);
                         const opacity = 1 - Math.max(0, Math.min(1, progress));
                         const translateY = -30 * Math.max(0, Math.min(1, progress));
                         item.style.setProperty('opacity', opacity.toString(), 'important');
-                        item.style.setProperty('transform', `translateY(${translateY}px)`, 'important');
+                        item.style.setProperty(
+                            'transform',
+                            `translateY(${translateY}px)`,
+                            'important'
+                        );
                     }
                 });
             } else {
                 // Sur desktop : faire disparaître toutes les stats ensemble
                 const fadeStart = viewportHeight * 0.55;
                 const fadeEnd = viewportHeight * 1;
-                
+
                 if (currentScroll <= fadeStart) {
                     heroStats.style.setProperty('opacity', '1', 'important');
                     heroStats.style.setProperty('transform', 'translateY(0)', 'important');
@@ -368,7 +397,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     const opacity = 1 - progress;
                     const translateY = -30 * progress;
                     heroStats.style.setProperty('opacity', opacity.toString(), 'important');
-                    heroStats.style.setProperty('transform', `translateY(${translateY}px)`, 'important');
+                    heroStats.style.setProperty(
+                        'transform',
+                        `translateY(${translateY}px)`,
+                        'important'
+                    );
                 }
             }
         }
@@ -382,7 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             header.classList.remove('scrolled');
         }
-        
+
         updateScrollIndicator();
         lastScroll = currentScroll;
     });
@@ -396,7 +429,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     };
-    
+
     initOnce();
 
     // ===================================
@@ -410,7 +443,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
             const sectionHeight = section.clientHeight;
-            if (window.pageYOffset >= (sectionTop - 200)) {
+            if (window.pageYOffset >= sectionTop - 200) {
                 current = section.getAttribute('id');
             }
         });
@@ -468,10 +501,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===================================
     const observerOptions = {
         threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        rootMargin: '0px 0px -50px 0px',
     };
 
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
@@ -498,23 +531,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Détecter la langue de la page
         const isEnglish = document.documentElement.lang === 'en';
-        const message = isEnglish 
+        const message = isEnglish
             ? 'Please wait <strong id="countdown">{time}</strong> before sending a new message'
             : 'Veuillez patienter <strong id="countdown">{time}</strong> avant d\'envoyer un nouveau message';
 
         // Créer la notification
         const notification = document.createElement('div');
         notification.className = 'rate-limit-notification';
-        
+
         const remainingSeconds = remainingMinutes * 60;
         let secondsLeft = Math.ceil(remainingSeconds);
-        
-        const formatTime = (seconds) => {
+
+        const formatTime = seconds => {
             const mins = Math.floor(seconds / 60);
             const secs = seconds % 60;
             return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         };
-        
+
         notification.innerHTML = `
             <div class="rate-limit-content">
                 <i class="fas fa-clock"></i>
@@ -522,12 +555,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 <button class="rate-limit-close"><i class="fas fa-times"></i></button>
             </div>
         `;
-        
+
         document.body.appendChild(notification);
-        
+
         // Animer l'apparition
         setTimeout(() => notification.classList.add('show'), 10);
-        
+
         // Mettre à jour le compte à rebours
         const countdownEl = notification.querySelector('#countdown');
         const interval = setInterval(() => {
@@ -540,7 +573,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 countdownEl.textContent = formatTime(secondsLeft);
             }
         }, 1000);
-        
+
         // Bouton de fermeture
         notification.querySelector('.rate-limit-close').addEventListener('click', () => {
             clearInterval(interval);
@@ -554,27 +587,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===================================
     const STORAGE_KEY = 'portfolio_contact_form';
     const FILES_KEY = 'portfolio_contact_files';
-    
+
     function saveFormData() {
         const formData = {
             name: document.getElementById('name')?.value || '',
             email: document.getElementById('email')?.value || '',
             message: document.getElementById('message')?.value || '',
-            timestamp: Date.now()
+            timestamp: Date.now(),
         };
         sessionStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
     }
-    
+
     function saveFiles() {
         // Sauvegarder les métadonnées des fichiers (pas le contenu binaire)
         const filesMetadata = selectedFiles.map(file => ({
             name: file.name,
             size: file.size,
-            type: file.type
+            type: file.type,
         }));
         sessionStorage.setItem(FILES_KEY, JSON.stringify(filesMetadata));
     }
-    
+
     function loadFormData() {
         const saved = sessionStorage.getItem(STORAGE_KEY);
         if (saved) {
@@ -583,7 +616,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const emailInput = document.getElementById('email');
             const messageInput = document.getElementById('message');
             const charCount = document.getElementById('char-count');
-            
+
             if (nameInput) nameInput.value = formData.name;
             if (emailInput) emailInput.value = formData.email;
             if (messageInput) {
@@ -591,19 +624,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (charCount) charCount.textContent = formData.message.length;
             }
         }
-        
+
         // Note: On ne peut pas restaurer les fichiers car sessionStorage ne peut pas stocker de données binaires
         // L'utilisateur devra re-sélectionner les fichiers après un refresh
     }
-    
+
     function clearFormData() {
         sessionStorage.removeItem(STORAGE_KEY);
         sessionStorage.removeItem(FILES_KEY);
     }
-    
+
     // Charger les données au chargement de la page
     loadFormData();
-    
+
     // Sauvegarder les données à chaque modification
     ['name', 'email', 'message'].forEach(id => {
         const input = document.getElementById(id);
@@ -620,22 +653,24 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedFiles = [];
 
     if (fileInput && fileListContainer) {
-        fileInput.addEventListener('change', (e) => {
+        fileInput.addEventListener('change', e => {
             const files = Array.from(e.target.files);
-            
+
             // Limiter à 5 fichiers
             if (selectedFiles.length + files.length > 5) {
                 alert('Maximum 5 fichiers autorisés');
                 return;
             }
-            
+
             // Vérifier la taille (8MB max)
             const oversizedFiles = files.filter(f => f.size > 8 * 1024 * 1024);
             if (oversizedFiles.length > 0) {
-                alert(`Fichier(s) trop volumineux : ${oversizedFiles.map(f => f.name).join(', ')}\nTaille maximale : 8MB`);
+                alert(
+                    `Fichier(s) trop volumineux : ${oversizedFiles.map(f => f.name).join(', ')}\nTaille maximale : 8MB`
+                );
                 return;
             }
-            
+
             selectedFiles = [...selectedFiles, ...files];
             updateFileList();
             saveFiles(); // Sauvegarder les métadonnées
@@ -644,31 +679,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateFileList() {
         if (!fileListContainer) return;
-        
+
         fileListContainer.innerHTML = '';
-        
+
         selectedFiles.forEach((file, index) => {
             const fileItem = document.createElement('div');
             fileItem.className = 'file-item';
-            
+
             // Créer la miniature ou l'icône
             const isImage = file.type.startsWith('image/');
-            
+
             if (isImage) {
                 const preview = document.createElement('img');
                 preview.className = 'file-item-preview';
-                
+
                 const reader = new FileReader();
-                reader.onload = (e) => {
+                reader.onload = e => {
                     preview.src = e.target.result;
                 };
                 reader.readAsDataURL(file);
-                
+
                 fileItem.appendChild(preview);
             } else {
                 const icon = document.createElement('div');
                 icon.className = 'file-item-icon';
-                
+
                 // Icône selon le type de fichier
                 if (file.type.includes('pdf')) {
                     icon.textContent = '📄';
@@ -679,25 +714,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     icon.textContent = '📎';
                 }
-                
+
                 fileItem.appendChild(icon);
             }
-            
+
             // Info du fichier
             const fileInfo = document.createElement('div');
             fileInfo.className = 'file-item-info';
-            
+
             const fileName = document.createElement('span');
             fileName.className = 'file-item-name';
             fileName.textContent = file.name;
-            
+
             const fileSize = document.createElement('span');
             fileSize.className = 'file-item-size';
             fileSize.textContent = `${(file.size / 1024).toFixed(1)} KB`;
-            
+
             fileInfo.appendChild(fileName);
             fileInfo.appendChild(fileSize);
-            
+
             const removeBtn = document.createElement('button');
             removeBtn.className = 'file-item-remove';
             removeBtn.innerHTML = '×';
@@ -708,7 +743,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateFileInput();
                 saveFiles(); // Sauvegarder après suppression
             };
-            
+
             fileItem.appendChild(fileInfo);
             fileItem.appendChild(removeBtn);
             fileListContainer.appendChild(fileItem);
@@ -717,7 +752,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateFileInput() {
         if (!fileInput) return;
-        
+
         // Créer un nouveau DataTransfer pour mettre à jour l'input
         const dt = new DataTransfer();
         selectedFiles.forEach(file => dt.items.add(file));
@@ -729,27 +764,29 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===================================
     const contactForm = document.querySelector('.contact-form');
     if (contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
+        contactForm.addEventListener('submit', async e => {
             e.preventDefault();
-            
+
             const btn = contactForm.querySelector('.btn');
             const originalText = btn.innerHTML;
-            
+
             // Créer un FormData pour gérer les fichiers
             const formData = new FormData();
             formData.append('name', contactForm.querySelector('#name').value);
             formData.append('email', contactForm.querySelector('#email').value);
             formData.append('message', contactForm.querySelector('#message').value);
-            
+
             // Ajouter les fichiers depuis selectedFiles (et non depuis l'input)
             if (selectedFiles.length > 0) {
                 console.log(`Envoi de ${selectedFiles.length} fichier(s)`);
                 selectedFiles.forEach((file, index) => {
-                    console.log(`  ${index + 1}. ${file.name} (${(file.size / 1024).toFixed(1)} KB)`);
+                    console.log(
+                        `  ${index + 1}. ${file.name} (${(file.size / 1024).toFixed(1)} KB)`
+                    );
                     formData.append('attachments', file);
                 });
             }
-            
+
             btn.innerHTML = '<span>Envoi en cours...</span>';
             btn.style.opacity = '0.7';
             btn.style.pointerEvents = 'none';
@@ -758,7 +795,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // URL du serveur backend sur Oracle Cloud (HTTPS via Nginx + Let's Encrypt)
                 const response = await fetch('https://quentinpoisson.duckdns.org/api/contact', {
                     method: 'POST',
-                    body: formData
+                    body: formData,
                 });
 
                 const result = await response.json();
@@ -766,7 +803,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (result.success) {
                     btn.innerHTML = '<span>Message envoyé !</span><i class="fas fa-check"></i>';
                     btn.style.background = '#10b981';
-                    
+
                     setTimeout(() => {
                         btn.innerHTML = originalText;
                         btn.style.opacity = '1';
@@ -789,19 +826,19 @@ document.addEventListener('DOMContentLoaded', () => {
                         const match = result.error.match(/(\d+)\s+minute/);
                         const remainingMinutes = match ? parseInt(match[1]) : 10;
                         showRateLimitNotification(remainingMinutes);
-                        
+
                         btn.innerHTML = originalText;
                         btn.style.opacity = '1';
                         btn.style.pointerEvents = 'all';
                     } else {
-                        throw new Error(result.error || 'Erreur lors de l\'envoi');
+                        throw new Error(result.error || "Erreur lors de l'envoi");
                     }
                 }
             } catch (error) {
                 console.error('Erreur:', error);
                 btn.innerHTML = '<span>Erreur d\'envoi</span><i class="fas fa-times"></i>';
                 btn.style.background = '#dc2626';
-                
+
                 setTimeout(() => {
                     btn.innerHTML = originalText;
                     btn.style.opacity = '1';
@@ -830,7 +867,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let mouseTrail = [];
     const trailLength = 20;
 
-    document.addEventListener('mousemove', (e) => {
+    document.addEventListener('mousemove', e => {
         mouseTrail.push({ x: e.clientX, y: e.clientY });
         if (mouseTrail.length > trailLength) {
             mouseTrail.shift();
@@ -841,20 +878,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // ACCORDION TOGGLE
     // ===================================
     const accordionToggles = document.querySelectorAll('.accordion-toggle');
-    
+
     accordionToggles.forEach(toggle => {
-        toggle.addEventListener('click', function() {
+        toggle.addEventListener('click', function () {
             const targetId = this.getAttribute('data-accordion');
             const content = document.getElementById(targetId);
             const isActive = this.classList.contains('active');
-            
+
             // Close all accordions
             accordionToggles.forEach(t => {
                 t.classList.remove('active');
                 const c = document.getElementById(t.getAttribute('data-accordion'));
                 if (c) c.classList.remove('active');
             });
-            
+
             // Toggle current accordion
             if (!isActive) {
                 this.classList.add('active');
@@ -873,7 +910,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (navCurrent) {
         // Toggle menu
-        navCurrent.addEventListener('click', (e) => {
+        navCurrent.addEventListener('click', e => {
             e.stopPropagation();
             navCurrent.classList.toggle('active');
             navMenu.classList.toggle('active');
@@ -888,7 +925,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Fermer le menu quand on clique en dehors
-        document.addEventListener('click', (e) => {
+        document.addEventListener('click', e => {
             if (!navCurrent.contains(e.target) && !navMenu.contains(e.target)) {
                 navCurrent.classList.remove('active');
                 navMenu.classList.remove('active');
@@ -897,34 +934,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Mettre à jour le texte de la section active au scroll
         const sectionNames = {
-            'home': { fr: 'Accueil', en: 'Home' },
-            'about': { fr: 'À propos', en: 'About' },
-            'skills': { fr: 'Compétences Techniques', en: 'Technical Skills' },
-            'projects': { fr: 'Projets', en: 'Projects' },
-            'recommendations': { fr: 'Recommandations', en: 'Recommendations' },
-            'contact': { fr: 'Contact', en: 'Contact' },
+            home: { fr: 'Accueil', en: 'Home' },
+            about: { fr: 'À propos', en: 'About' },
+            skills: { fr: 'Compétences Techniques', en: 'Technical Skills' },
+            projects: { fr: 'Projets', en: 'Projects' },
+            recommendations: { fr: 'Recommandations', en: 'Recommendations' },
+            contact: { fr: 'Contact', en: 'Contact' },
             'other-projects': { fr: 'Autres projets', en: 'Other projects' },
-            'overview': { fr: 'Vue d\'ensemble', en: 'Overview' },
-            'context': { fr: 'Contexte', en: 'Context' },
-            'technologies': { fr: 'Technologies', en: 'Technologies' },
-            'results': { fr: 'Résultats', en: 'Results' },
-            'documents': { fr: 'Documents', en: 'Documents' }
+            overview: { fr: "Vue d'ensemble", en: 'Overview' },
+            context: { fr: 'Contexte', en: 'Context' },
+            technologies: { fr: 'Technologies', en: 'Technologies' },
+            results: { fr: 'Résultats', en: 'Results' },
+            documents: { fr: 'Documents', en: 'Documents' },
         };
-        
+
         const isEnglish = document.documentElement.lang === 'en';
 
         function updateActiveSection() {
             const sections = document.querySelectorAll('section[id]');
             if (sections.length === 0 || !navCurrentText) return;
-            
+
             let current = sections[0].getAttribute('id');
-            
+
             // Parcourir les sections dans l'ordre inverse pour trouver celle qui est visible
             for (let i = sections.length - 1; i >= 0; i--) {
                 const section = sections[i];
                 const sectionTop = section.offsetTop;
                 const scrollPosition = window.scrollY + 150; // offset pour le header
-                
+
                 if (scrollPosition >= sectionTop) {
                     current = section.getAttribute('id');
                     break;
@@ -933,7 +970,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Mettre à jour le texte
             if (sectionNames[current]) {
-                navCurrentText.textContent = isEnglish ? sectionNames[current].en : sectionNames[current].fr;
+                navCurrentText.textContent = isEnglish
+                    ? sectionNames[current].en
+                    : sectionNames[current].fr;
             }
 
             // Mettre à jour l'active dans le menu
@@ -947,16 +986,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Appeler une fois au chargement
         updateActiveSection();
-        
+
         // Appeler au scroll
         window.addEventListener('scroll', updateActiveSection);
     }
 
     // Fonction pour le carrousel de projets compact avec effet de rotation 3D
-    window.navigateCarousel = function(direction) {
+    window.navigateCarousel = function (direction) {
         const items = document.querySelectorAll('.carousel-item-compact');
         if (items.length === 0) return;
-        
+
         if (items.length === 2) {
             // Pour 2 éléments: alterner simplement entre position 1 et 2
             items.forEach(item => {
@@ -974,7 +1013,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const pos = parseInt(item.getAttribute('data-position') || '0');
                 positions.push({ item, position: pos });
             });
-            
+
             positions.forEach(({ item, position }) => {
                 let newPosition = position + direction;
                 if (newPosition < 0) newPosition = items.length - 1;
@@ -983,10 +1022,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     };
-    
+
     // Initialiser les positions du carrousel au chargement
     const carouselItems = document.querySelectorAll('.carousel-item-compact');
-    
+
     if (carouselItems.length === 2) {
         // Pour 2 éléments: un en position 1 (centre), un en position 2 (droite)
         carouselItems.forEach((item, index) => {
@@ -1002,9 +1041,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Compteur de caractères pour le champ message
     const messageTextarea = document.getElementById('message');
     const charCount = document.getElementById('char-count');
-    
+
     if (messageTextarea && charCount) {
-        messageTextarea.addEventListener('input', function() {
+        messageTextarea.addEventListener('input', function () {
             charCount.textContent = this.value.length;
         });
     }
@@ -1025,12 +1064,12 @@ function initializeScrollState() {
     const header = document.querySelector('.header');
     const scrollIndicator = document.querySelector('.scroll-indicator');
     const heroStats = document.querySelector('.hero-stats');
-    
+
     // Initialiser le header
     if (header && currentScroll > 50) {
         header.classList.add('scrolled');
     }
-    
+
     // Initialiser l'indicateur de scroll
     if (scrollIndicator) {
         const firstSection = document.querySelector('section:first-of-type');
@@ -1045,13 +1084,13 @@ function initializeScrollState() {
             }
         }
     }
-    
+
     // Initialiser les stats avec transition progressive
     if (heroStats) {
         const viewportHeight = window.innerHeight;
         const fadeStart = viewportHeight * 0.55;
         const fadeEnd = viewportHeight * 1;
-        
+
         if (currentScroll <= fadeStart) {
             heroStats.style.setProperty('opacity', '1', 'important');
             heroStats.style.setProperty('transform', 'translateY(0)', 'important');
@@ -1074,7 +1113,7 @@ window.addEventListener('load', () => {
     if (savedPosition) {
         window.scrollTo(0, parseInt(savedPosition));
         sessionStorage.removeItem('scrollPosition');
-        
+
         // Réinitialiser l'état après restauration du scroll
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
@@ -1082,7 +1121,7 @@ window.addEventListener('load', () => {
             });
         });
     }
-    
+
     // Initialiser les animations de la timeline
     initTimelineAnimations();
 });
@@ -1090,13 +1129,13 @@ window.addEventListener('load', () => {
 // Animation de la timeline au scroll
 function initTimelineAnimations() {
     const timelineItems = document.querySelectorAll('.timeline-item');
-    
+
     const observerOptions = {
         threshold: 0.3,
-        rootMargin: '0px 0px -100px 0px'
+        rootMargin: '0px 0px -100px 0px',
     };
-    
-    const observer = new IntersectionObserver((entries) => {
+
+    const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
@@ -1104,7 +1143,7 @@ function initTimelineAnimations() {
             }
         });
     }, observerOptions);
-    
+
     timelineItems.forEach((item, index) => {
         item.style.opacity = '0';
         item.style.transform = 'translateX(-30px)';
