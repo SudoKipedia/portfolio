@@ -369,12 +369,13 @@ body {
    HERO SECTION
    =================================== */
 .hero {
-    min-height: 100vh;
+    min-height: 150vh;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     padding-top: 180px;
+    padding-bottom: 30vh;
 }
 
 .hero .container {

@@ -381,27 +381,116 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
             } else {
-                // Sur desktop : faire disparaître toutes les stats ensemble
-                const fadeStart = viewportHeight * 0.55;
-                const fadeEnd = viewportHeight * 1;
+                // Sur desktop : Réduction avec mouvement vers le coin supérieur gauche
+                const heroStatsRect = heroStats.getBoundingClientRect();
+                
+                // L'animation commence SEULEMENT quand les cartes sont complètement visibles
+                // (le bas des cartes doit être à au moins 200px du bas de l'écran)
+                const cardsFullyVisible = heroStatsRect.bottom < viewportHeight - 10;
+                
+                // Sauvegarder UNIQUEMENT le scroll au moment où les cartes deviennent complètement visibles
+                // La position sera capturée au premier frame de l'animation
+                if (cardsFullyVisible && !heroStats.dataset.scrollAtStart) {
+                    heroStats.dataset.scrollAtStart = currentScroll.toString();
+                }
+                
+                const scrollAtStart = parseFloat(heroStats.dataset.scrollAtStart || 999999);
+                
+                // L'animation dure 50vh de scroll après que les cartes soient visibles
+                const shrinkStart = scrollAtStart;
+                const shrinkEnd = scrollAtStart + (viewportHeight * 0.5);
 
-                if (currentScroll <= fadeStart) {
-                    heroStats.style.setProperty('opacity', '1', 'important');
-                    heroStats.style.setProperty('transform', 'translateY(0)', 'important');
-                } else if (currentScroll >= fadeEnd) {
-                    heroStats.style.setProperty('opacity', '0', 'important');
-                    heroStats.style.setProperty('transform', 'translateY(-30px)', 'important');
+                if (currentScroll < shrinkStart || !cardsFullyVisible) {
+                    // État normal : avant l'animation OU si les cartes ne sont plus visibles
+                    if (heroStats.dataset.miniMode === 'true' || heroStats.dataset.fixedPositionSet === 'true') {
+                        heroStats.dataset.miniMode = 'false';
+                        heroStats.style.position = '';
+                        heroStats.style.top = '';
+                        heroStats.style.left = '';
+                        heroStats.style.transform = '';
+                        heroStats.style.opacity = '';
+                        heroStats.style.zIndex = '';
+                        heroStats.style.transition = '';
+                        heroStats.style.boxShadow = '';
+                        heroStats.style.width = '';
+                        delete heroStats.dataset.initialTop;
+                        delete heroStats.dataset.initialLeft;
+                        delete heroStats.dataset.scrollAtStart;
+                        delete heroStats.dataset.fixedPositionSet;
+                        
+                        // Supprimer le placeholder
+                        const placeholder = document.getElementById('hero-stats-placeholder');
+                        if (placeholder) {
+                            placeholder.remove();
+                        }
+                    }
+                } else if (currentScroll >= shrinkEnd) {
+                    // État final : mini-badge au coin supérieur gauche
+                    heroStats.dataset.miniMode = 'true';
+                    
+                    heroStats.style.setProperty('position', 'fixed', 'important');
+                    heroStats.style.setProperty('top', '10px', 'important');
+                    heroStats.style.setProperty('left', '30px', 'important');
+                    heroStats.style.setProperty('transform', 'scale(0.35)', 'important');
+                    heroStats.style.setProperty('transform-origin', 'top left', 'important');
+                    heroStats.style.setProperty('opacity', '0.95', 'important');
+                    heroStats.style.setProperty('z-index', '999', 'important');
+                    heroStats.style.setProperty('transition', 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)', 'important');
+                    heroStats.style.setProperty('box-shadow', '0 8px 25px rgba(0, 0, 0, 0.3)', 'important');
+                    heroStats.style.setProperty('width', 'max-content', 'important');
                 } else {
-                    // Transition progressive entre fadeStart et fadeEnd
-                    const progress = (currentScroll - fadeStart) / (fadeEnd - fadeStart);
-                    const opacity = 1 - progress;
-                    const translateY = -30 * progress;
+                    // Transition progressive en ligne droite vers le coin supérieur gauche
+                    const progress = (currentScroll - shrinkStart) / (shrinkEnd - shrinkStart);
+                    const scale = 1 - (0.65 * progress); // De 1 à 0.35
+                    const opacity = 1 - (0.05 * progress); // De 1 à 0.95
+                    
+                    // Au premier frame, sauvegarder la position et créer un placeholder
+                    if (!heroStats.dataset.fixedPositionSet) {
+                        const rect = heroStats.getBoundingClientRect();
+                        heroStats.dataset.initialTop = rect.top.toString();
+                        heroStats.dataset.initialLeft = rect.left.toString();
+                        heroStats.dataset.fixedPositionSet = 'true';
+                        
+                        // Supprimer l'ancien placeholder s'il existe
+                        const oldPlaceholder = document.getElementById('hero-stats-placeholder');
+                        if (oldPlaceholder) {
+                            oldPlaceholder.remove();
+                        }
+                        
+                        // Créer un nouveau placeholder invisible pour garder l'espace
+                        const placeholder = document.createElement('div');
+                        placeholder.id = 'hero-stats-placeholder';
+                        placeholder.style.width = rect.width + 'px';
+                        placeholder.style.height = rect.height + 'px';
+                        placeholder.style.margin = window.getComputedStyle(heroStats).margin;
+                        placeholder.style.padding = '0';
+                        placeholder.style.border = 'none';
+                        placeholder.style.visibility = 'hidden';
+                        placeholder.style.pointerEvents = 'none';
+                        heroStats.parentNode.insertBefore(placeholder, heroStats);
+                    }
+                    
+                    const initialTop = parseFloat(heroStats.dataset.initialTop);
+                    const initialLeft = parseFloat(heroStats.dataset.initialLeft);
+                    const targetLeft = 30;
+                    const targetTop = 10; // Coin supérieur gauche (plus haut)
+                    
+                    // Mouvement linéaire direct sur les deux axes
+                    const currentLeft = initialLeft + (targetLeft - initialLeft) * progress;
+                    const currentTop = initialTop + (targetTop - initialTop) * progress;
+                    
+                    // Appliquer la transformation progressive
+                    heroStats.style.setProperty('position', 'fixed', 'important');
+                    heroStats.style.setProperty('top', `${currentTop}px`, 'important');
+                    heroStats.style.setProperty('left', `${currentLeft}px`, 'important');
+                    heroStats.style.setProperty('width', 'max-content', 'important');
+                    
+                    heroStats.style.setProperty('transform', `scale(${scale})`, 'important');
+                    heroStats.style.setProperty('transform-origin', 'top left', 'important');
                     heroStats.style.setProperty('opacity', opacity.toString(), 'important');
-                    heroStats.style.setProperty(
-                        'transform',
-                        `translateY(${translateY}px)`,
-                        'important'
-                    );
+                    heroStats.style.setProperty('z-index', '999', 'important');
+                    heroStats.style.setProperty('transition', 'none', 'important');
+                    heroStats.style.setProperty('box-shadow', `0 ${8 * progress}px ${25 * progress}px rgba(0, 0, 0, ${0.3 * progress})`, 'important');
                 }
             }
         }
