@@ -1,25 +1,27 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Professional Experience - Portfolio</title>
-    
+
     <!-- Theme Color for Mobile Browsers -->
-    <meta name="theme-color" content="#000000">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
+    <meta name="theme-color" content="#000000" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="experience.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="experience.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
+
 <body class="experience-page">
     <!-- Canvas for particle neural network -->
     <canvas id="neuralCanvas"></canvas>
-    
+
     <!-- Back navigation -->
     <div class="back-nav">
         <a href="index_en.html" class="btn-back-neural">
@@ -30,7 +32,8 @@
 
     <!-- Language switch button -->
     <div class="lang-switch">
-        <div class="lang-toggle" data-lang="en" onclick="sessionStorage.setItem('scrollPos', window.scrollY); window.location.href='experience.html'">
+        <div class="lang-toggle" data-lang="en"
+            onclick="sessionStorage.setItem('scrollPos', window.scrollY); window.location.href='experience.html'">
             <div class="lang-slider"></div>
             <span class="lang-option">FR</span>
             <span class="lang-option active">EN</span>
@@ -47,7 +50,6 @@
 
     <!-- Main container with experience nodes -->
     <main class="neural-container">
-        
         <!-- Experience Node 1 -->
         <article class="neural-node" data-node="1" data-skills="cybersecurity,automation,incident-response">
             <div class="node-core">
@@ -191,7 +193,6 @@
                 </div>
             </div>
         </article>
-
     </main>
 
     <!-- Transferable skills legend -->
@@ -239,12 +240,14 @@
 
     <!-- Contact Section -->
     <section class="neural-contact">
-        <div class="container" style="max-width: 900px;">
+        <div class="container" style="max-width: 900px">
             <div class="contact-header">
-                <h2 class="neural-title" style="font-size: 2.5rem;">Let's Work Together</h2>
-                <p class="neural-subtitle">Have a project or opportunity? Feel free to contact me.</p>
+                <h2 class="neural-title" style="font-size: 2.5rem">Let's Work Together</h2>
+                <p class="neural-subtitle">
+                    Have a project or opportunity? Feel free to contact me.
+                </p>
             </div>
-            
+
             <div class="contact-grid">
                 <div class="contact-info">
                     <div class="contact-methods">
@@ -280,11 +283,11 @@
                 <form class="contact-form">
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
+                        <input type="text" id="name" name="name" required />
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" required />
                     </div>
                     <div class="form-group">
                         <label for="message">Message</label>
@@ -295,9 +298,16 @@
                         <label for="attachment">
                             <span>Click to add files</span>
                         </label>
-                        <input type="file" id="attachment" name="attachment" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" multiple>
-                        <small style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.5rem; display: block;">
-                            Accepted formats: PDF, DOC, DOCX, TXT, JPG, PNG (max 5 files, 8MB each)
+                        <input type="file" id="attachment" name="attachment"
+                            accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" multiple />
+                        <small style="
+                                    color: var(--text-muted);
+                                    font-size: 0.85rem;
+                                    margin-top: 0.5rem;
+                                    display: block;
+                                ">
+                            Accepted formats: PDF, DOC, DOCX, TXT, JPG, PNG (max 5 files, 8MB
+                            each)
                         </small>
                         <div id="file-list" class="file-list"></div>
                     </div>
@@ -313,4 +323,5 @@
     <script src="script.js"></script>
     <script src="experience.js"></script>
 </body>
+
 </html>

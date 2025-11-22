@@ -1,33 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Automatisation Ansible - Portfolio</title>
-    
+
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
     <!-- Open Graph / Facebook -->
-    <meta property="fb:app_id" content="966242223397117">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Automatisation Ansible - Portfolio">
-    <meta property="og:description" content="Projet d'automatisation de déploiements et configuration avec Ansible, playbooks et rôles personnalisés.">
-    <meta property="og:image" content="https://sudokipedia.github.io/portfolio/assets/og-image.png">
-    
+    <meta property="fb:app_id" content="966242223397117" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Automatisation Ansible - Portfolio" />
+    <meta property="og:description"
+        content="Projet d'automatisation de déploiements et configuration avec Ansible, playbooks et rôles personnalisés." />
+    <meta property="og:image" content="https://sudokipedia.github.io/portfolio/assets/og-image.png" />
+
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="Automatisation Ansible - Portfolio">
-    <meta property="twitter:description" content="Projet d'automatisation de déploiements et configuration avec Ansible, playbooks et rôles personnalisés.">
-    <meta property="twitter:image" content="https://sudokipedia.github.io/portfolio/assets/og-image.png">
-    
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Automatisation Ansible - Portfolio" />
+    <meta property="twitter:description"
+        content="Projet d'automatisation de déploiements et configuration avec Ansible, playbooks et rôles personnalisés." />
+    <meta property="twitter:image" content="https://sudokipedia.github.io/portfolio/assets/og-image.png" />
+
+    <link rel="stylesheet" href="style.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
+
 <body>
     <canvas id="bg-canvas"></canvas>
-    
+
     <header class="header">
         <div class="container">
             <nav class="nav">
@@ -51,37 +57,44 @@
                 </div>
                 <div class="lang-switcher">
                     <a href="#" class="lang-btn active" onclick="return false;">FR</a>
-                    <a href="#" class="lang-btn" onclick="switchLanguage('project_ansible_en.html'); return false;">EN</a>
+                    <a href="#" class="lang-btn"
+                        onclick="switchLanguage('project_ansible_en.html'); return false;">EN</a>
                 </div>
             </nav>
         </div>
     </header>
 
-    <section id="other-projects" class="section project-section" style="padding-top: 150px;">
-        <div class="container" style="max-width: 1200px;">
+    <section id="other-projects" class="section project-section" style="padding-top: 150px">
+        <div class="container" style="max-width: 1200px">
             <span class="section-tag">Autres projets</span>
             <h2 class="section-title">Découvrez mes autres réalisations</h2>
             <div class="projects-carousel-compact">
                 <div class="carousel-wrapper">
-                    <div class="carousel-track-compact" id="carouselTrack">
+                    <div class="carousel-track-compact" id="carousel-track">
                         <a href="project_infra.html" class="carousel-item-compact" data-position="0">
-                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600" alt="Infrastructure Cloud" class="carousel-item-compact-image">
+                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600"
+                                alt="Infrastructure Cloud" class="carousel-item-compact-image" />
                             <div class="carousel-item-compact-content">
                                 <div class="carousel-item-compact-tags">
                                     <span>Cloud</span>
                                     <span>Infrastructure</span>
                                 </div>
-                                <h4 class="carousel-item-compact-title">Déploiement Infrastructure Cloud AWS</h4>
+                                <h4 class="carousel-item-compact-title">
+                                    Déploiement Infrastructure Cloud AWS
+                                </h4>
                             </div>
                         </a>
                         <a href="project_ad.html" class="carousel-item-compact" data-position="2">
-                            <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?w=600" alt="Active Directory" class="carousel-item-compact-image">
+                            <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?w=600"
+                                alt="Active Directory" class="carousel-item-compact-image" />
                             <div class="carousel-item-compact-content">
                                 <div class="carousel-item-compact-tags">
                                     <span>Système</span>
                                     <span>Sécurité</span>
                                 </div>
-                                <h4 class="carousel-item-compact-title">Audit de Sécurité Active Directory</h4>
+                                <h4 class="carousel-item-compact-title">
+                                    Audit de Sécurité Active Directory
+                                </h4>
                             </div>
                         </a>
                     </div>
@@ -99,24 +112,34 @@
     </section>
 
     <section id="overview" class="section project-section">
-        <div class="container" style="max-width: 900px;">
-            <div style="margin-bottom: 3rem;">
-                <div class="project-tags" style="margin-bottom: 1.5rem;">
+        <div class="container" style="max-width: 900px">
+            <div style="margin-bottom: 3rem">
+                <div class="project-tags" style="margin-bottom: 1.5rem">
                     <span>Automatisation</span>
                     <span>DevOps</span>
                     <span>IaC</span>
                 </div>
-                <h1 class="section-title" style="margin-bottom: 1.5rem;">Automatisation avec Ansible</h1>
-                <p style="font-size: 1.125rem; color: var(--color-text-secondary); line-height: 1.7;">
-                    Déploiement automatisé d'infrastructure serveur avec Ansible pour standardiser 
-                    les configurations et accélérer les déploiements.
+                <h1 class="section-title" style="margin-bottom: 1.5rem">
+                    Automatisation avec Ansible
+                </h1>
+                <p style="
+                            font-size: 1.125rem;
+                            color: var(--color-text-secondary);
+                            line-height: 1.7;
+                        ">
+                    Déploiement automatisé d'infrastructure serveur avec Ansible pour
+                    standardiser les configurations et accélérer les déploiements.
                 </p>
             </div>
 
-            <div style="margin-bottom: 3rem; border-radius: 16px; overflow: hidden; border: 1px solid var(--color-border);">
-                <img src="https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=1200" 
-                     alt="Ansible" 
-                     style="width: 100%; height: 400px; object-fit: cover;">
+            <div style="
+                        margin-bottom: 3rem;
+                        border-radius: 16px;
+                        overflow: hidden;
+                        border: 1px solid var(--color-border);
+                    ">
+                <img src="https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=1200" alt="Ansible"
+                    style="width: 100%; height: 400px; object-fit: cover" />
             </div>
         </div>
         <div class="scroll-indicator">
@@ -126,40 +149,80 @@
     </section>
 
     <section id="context" class="section project-section">
-        <div class="container" style="max-width: 900px;">
-            <div style="background: var(--color-surface); padding: 3rem; border-radius: 16px; border: 1px solid var(--color-border); margin-bottom: 3rem;">
-                <h2 style="font-family: var(--font-display); font-size: 2rem; margin-bottom: 1.5rem;">Contexte du projet</h2>
-                <p style="color: var(--color-text-secondary); line-height: 1.8; margin-bottom: 1.5rem;">
-                    Mise en place d'une solution d'automatisation avec Ansible pour le déploiement et la configuration 
-                    de serveurs Linux. L'objectif était de réduire le temps de provisioning et d'assurer la cohérence des configurations.
+        <div class="container" style="max-width: 900px">
+            <div style="
+                        background: var(--color-surface);
+                        padding: 3rem;
+                        border-radius: 16px;
+                        border: 1px solid var(--color-border);
+                        margin-bottom: 3rem;
+                    ">
+                <h2 style="
+                            font-family: var(--font-display);
+                            font-size: 2rem;
+                            margin-bottom: 1.5rem;
+                        ">
+                    Contexte du projet
+                </h2>
+                <p style="
+                            color: var(--color-text-secondary);
+                            line-height: 1.8;
+                            margin-bottom: 1.5rem;
+                        ">
+                    Mise en place d'une solution d'automatisation avec Ansible pour le
+                    déploiement et la configuration de serveurs Linux. L'objectif était de
+                    réduire le temps de provisioning et d'assurer la cohérence des
+                    configurations.
                 </p>
-                <p style="color: var(--color-text-secondary); line-height: 1.8;">
-                    Le projet inclut la création de playbooks pour l'installation de services, la configuration réseau, 
-                    et l'application de politiques de sécurité.
+                <p style="color: var(--color-text-secondary); line-height: 1.8">
+                    Le projet inclut la création de playbooks pour l'installation de services,
+                    la configuration réseau, et l'application de politiques de sécurité.
                 </p>
             </div>
         </div>
     </section>
 
     <section id="technologies" class="section project-section">
-        <div class="container" style="max-width: 900px;">
-            <div style="background: var(--color-surface); padding: 3rem; border-radius: 16px; border: 1px solid var(--color-border); margin-bottom: 3rem;">
-                <h2 style="font-family: var(--font-display); font-size: 2rem; margin-bottom: 1.5rem;">Technologies utilisées</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+        <div class="container" style="max-width: 900px">
+            <div style="
+                        background: var(--color-surface);
+                        padding: 3rem;
+                        border-radius: 16px;
+                        border: 1px solid var(--color-border);
+                        margin-bottom: 3rem;
+                    ">
+                <h2 style="
+                            font-family: var(--font-display);
+                            font-size: 2rem;
+                            margin-bottom: 1.5rem;
+                        ">
+                    Technologies utilisées
+                </h2>
+                <div style="
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                            gap: 1rem;
+                        ">
                     <div class="tech-card">
                         <i class="fas fa-cogs"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem;">Ansible</h3>
-                        <p style="color: var(--color-text-muted); font-size: 0.875rem;">Core & Tower</p>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Ansible</h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
+                            Core & Tower
+                        </p>
                     </div>
                     <div class="tech-card">
                         <i class="fab fa-linux"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem;">Linux</h3>
-                        <p style="color: var(--color-text-muted); font-size: 0.875rem;">Ubuntu & CentOS</p>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Linux</h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
+                            Ubuntu & CentOS
+                        </p>
                     </div>
                     <div class="tech-card">
                         <i class="fab fa-python"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem;">Python</h3>
-                        <p style="color: var(--color-text-muted); font-size: 0.875rem;">Modules custom</p>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Python</h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
+                            Modules custom
+                        </p>
                     </div>
                 </div>
             </div>
@@ -167,29 +230,62 @@
     </section>
 
     <section id="results" class="section project-section">
-        <div class="container" style="max-width: 900px;">
-            <div style="background: var(--color-surface); padding: 3rem; border-radius: 16px; border: 1px solid var(--color-border); margin-bottom: 3rem;">
-                <h2 style="font-family: var(--font-display); font-size: 2rem; margin-bottom: 1.5rem;">Résultats et bénéfices</h2>
-                <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 1rem;">
+        <div class="container" style="max-width: 900px">
+            <div style="
+                        background: var(--color-surface);
+                        padding: 3rem;
+                        border-radius: 16px;
+                        border: 1px solid var(--color-border);
+                        margin-bottom: 3rem;
+                    ">
+                <h2 style="
+                            font-family: var(--font-display);
+                            font-size: 2rem;
+                            margin-bottom: 1.5rem;
+                        ">
+                    Résultats et bénéfices
+                </h2>
+                <ul style="
+                            list-style: none;
+                            padding: 0;
+                            display: flex;
+                            flex-direction: column;
+                            gap: 1rem;
+                        ">
                     <li class="result-item">
                         <i class="fas fa-check-circle"></i>
                         <div>
-                            <strong style="color: var(--color-text); display: block; margin-bottom: 0.5rem;">Réduction du temps de déploiement</strong>
-                            <span style="color: var(--color-text-secondary)">Passage de 2h à 15 minutes pour un déploiement complet</span>
+                            <strong style="
+                                        color: var(--color-text);
+                                        display: block;
+                                        margin-bottom: 0.5rem;
+                                    ">Réduction du temps de déploiement</strong>
+                            <span style="color: var(--color-text-secondary)">Passage de 2h à 15 minutes pour un
+                                déploiement complet</span>
                         </div>
                     </li>
                     <li class="result-item">
                         <i class="fas fa-check-circle"></i>
                         <div>
-                            <strong style="color: var(--color-text); display: block; margin-bottom: 0.5rem;">Standardisation des configurations</strong>
-                            <span style="color: var(--color-text-secondary)">Infrastructure as Code garantissant la cohérence</span>
+                            <strong style="
+                                        color: var(--color-text);
+                                        display: block;
+                                        margin-bottom: 0.5rem;
+                                    ">Standardisation des configurations</strong>
+                            <span style="color: var(--color-text-secondary)">Infrastructure as Code garantissant la
+                                cohérence</span>
                         </div>
                     </li>
                     <li class="result-item">
                         <i class="fas fa-check-circle"></i>
                         <div>
-                            <strong style="color: var(--color-text); display: block; margin-bottom: 0.5rem;">Gestion centralisée</strong>
-                            <span style="color: var(--color-text-secondary)">Contrôle version et rollback facilités avec Git</span>
+                            <strong style="
+                                        color: var(--color-text);
+                                        display: block;
+                                        margin-bottom: 0.5rem;
+                                    ">Gestion centralisée</strong>
+                            <span style="color: var(--color-text-secondary)">Contrôle version et rollback facilités avec
+                                Git</span>
                         </div>
                     </li>
                 </ul>
@@ -198,7 +294,7 @@
     </section>
 
     <section id="documents" class="section project-section">
-        <div class="container" style="max-width: 900px;">
+        <div class="container" style="max-width: 900px">
             <div class="accordion-section">
                 <button class="accordion-toggle" data-accordion="docs-accordion">
                     <div class="accordion-header">
@@ -255,8 +351,8 @@
                 <h2 class="section-title">Travaillons ensemble</h2>
             </div>
             <p class="contact-intro">
-                Vous avez un projet ou une opportunité ? N'hésitez pas à me contacter. 
-                Je suis toujours ouvert aux nouvelles collaborations et défis techniques.
+                Vous avez un projet ou une opportunité ? N'hésitez pas à me contacter. Je suis
+                toujours ouvert aux nouvelles collaborations et défis techniques.
             </p>
             <div class="contact-grid">
                 <div class="contact-info">
@@ -293,11 +389,11 @@
                 <form class="contact-form">
                     <div class="form-group">
                         <label for="name">Nom</label>
-                        <input type="text" id="name" name="name" required>
+                        <input type="text" id="name" name="name" required />
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" required />
                     </div>
                     <div class="form-group">
                         <label for="message">Message</label>
@@ -308,8 +404,15 @@
                         <label for="attachment">
                             <span>Cliquez pour ajouter des fichiers</span>
                         </label>
-                        <input type="file" id="attachment" name="attachment" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" multiple>
-                        <small style="color: #666; font-size: 0.85rem; margin-top: 0.5rem; display: block;">Formats acceptés : PDF, DOC, DOCX, TXT, JPG, PNG (max 5 fichiers, 8MB chacun)</small>
+                        <input type="file" id="attachment" name="attachment"
+                            accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" multiple />
+                        <small style="
+                                    color: #666;
+                                    font-size: 0.85rem;
+                                    margin-top: 0.5rem;
+                                    display: block;
+                                ">Formats acceptés : PDF, DOC, DOCX, TXT, JPG, PNG (max 5 fichiers,
+                            8MB chacun)</small>
                         <div id="file-list" class="file-list"></div>
                     </div>
                     <button type="submit" class="btn btn-primary">
@@ -329,5 +432,5 @@
 
     <script src="script.js"></script>
 </body>
-</html>
 
+</html>

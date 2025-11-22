@@ -1,33 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Active Directory Audit - Portfolio</title>
-    
+
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
     <!-- Open Graph / Facebook -->
-    <meta property="fb:app_id" content="966242223397117">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Active Directory Audit - Portfolio">
-    <meta property="og:description" content="Active Directory infrastructure and audit project with GPO, DNS and advanced security.">
-    <meta property="og:image" content="https://sudokipedia.github.io/portfolio/assets/og-image_en.png">
-    
+    <meta property="fb:app_id" content="966242223397117" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Active Directory Audit - Portfolio" />
+    <meta property="og:description"
+        content="Active Directory infrastructure and audit project with GPO, DNS and advanced security." />
+    <meta property="og:image" content="https://sudokipedia.github.io/portfolio/assets/og-image_en.png" />
+
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="Active Directory Audit - Portfolio">
-    <meta property="twitter:description" content="Active Directory infrastructure and audit project with GPO, DNS and advanced security.">
-    <meta property="twitter:image" content="https://sudokipedia.github.io/portfolio/assets/og-image_en.png">
-    
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Active Directory Audit - Portfolio" />
+    <meta property="twitter:description"
+        content="Active Directory infrastructure and audit project with GPO, DNS and advanced security." />
+    <meta property="twitter:image" content="https://sudokipedia.github.io/portfolio/assets/og-image_en.png" />
+
+    <link rel="stylesheet" href="style.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
+
 <body>
     <canvas id="bg-canvas"></canvas>
-    
+
     <header class="header">
         <div class="container">
             <nav class="nav">
@@ -57,31 +63,37 @@
         </div>
     </header>
 
-    <section id="other-projects" class="section project-section" style="padding-top: 150px;">
-        <div class="container" style="max-width: 1200px;">
+    <section id="other-projects" class="section project-section" style="padding-top: 150px">
+        <div class="container" style="max-width: 1200px">
             <span class="section-tag">Other projects</span>
             <h2 class="section-title">Discover my other projects</h2>
             <div class="projects-carousel-compact">
                 <div class="carousel-wrapper">
-                    <div class="carousel-track-compact" id="carouselTrack">
+                    <div class="carousel-track-compact" id="carousel-track">
                         <a href="project_ansible_en.html" class="carousel-item-compact" data-position="0">
-                            <img src="https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=600" alt="Ansible Automation" class="carousel-item-compact-image">
+                            <img src="https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=600"
+                                alt="Ansible Automation" class="carousel-item-compact-image" />
                             <div class="carousel-item-compact-content">
                                 <div class="carousel-item-compact-tags">
                                     <span>DevOps</span>
                                     <span>Automation</span>
                                 </div>
-                                <h4 class="carousel-item-compact-title">Infrastructure Automation with Ansible</h4>
+                                <h4 class="carousel-item-compact-title">
+                                    Infrastructure Automation with Ansible
+                                </h4>
                             </div>
                         </a>
                         <a href="project_infra_en.html" class="carousel-item-compact" data-position="2">
-                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600" alt="Cloud Infrastructure" class="carousel-item-compact-image">
+                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600"
+                                alt="Cloud Infrastructure" class="carousel-item-compact-image" />
                             <div class="carousel-item-compact-content">
                                 <div class="carousel-item-compact-tags">
                                     <span>Cloud</span>
                                     <span>Infrastructure</span>
                                 </div>
-                                <h4 class="carousel-item-compact-title">AWS Cloud Infrastructure Deployment</h4>
+                                <h4 class="carousel-item-compact-title">
+                                    AWS Cloud Infrastructure Deployment
+                                </h4>
                             </div>
                         </a>
                     </div>
@@ -99,24 +111,34 @@
     </section>
 
     <section id="overview" class="section project-section">
-        <div class="container" style="max-width: 900px;">
-            <div style="margin-bottom: 3rem;">
-                <div class="project-tags" style="margin-bottom: 1.5rem;">
+        <div class="container" style="max-width: 900px">
+            <div style="margin-bottom: 3rem">
+                <div class="project-tags" style="margin-bottom: 1.5rem">
                     <span>System</span>
                     <span>Security</span>
                     <span>Audit</span>
                 </div>
-                <h1 class="section-title" style="margin-bottom: 1.5rem;">Active Directory Security Audit</h1>
-                <p style="font-size: 1.125rem; color: var(--color-text-secondary); line-height: 1.7;">
-                    Complete security audit of an enterprise Active Directory infrastructure 
+                <h1 class="section-title" style="margin-bottom: 1.5rem">
+                    Active Directory Security Audit
+                </h1>
+                <p style="
+                            font-size: 1.125rem;
+                            color: var(--color-text-secondary);
+                            line-height: 1.7;
+                        ">
+                    Complete security audit of an enterprise Active Directory infrastructure
                     with vulnerability identification and hardening proposals.
                 </p>
             </div>
 
-            <div style="margin-bottom: 3rem; border-radius: 16px; overflow: hidden; border: 1px solid var(--color-border);">
-                <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?w=1200" 
-                     alt="Active Directory" 
-                     style="width: 100%; height: 400px; object-fit: cover;">
+            <div style="
+                        margin-bottom: 3rem;
+                        border-radius: 16px;
+                        overflow: hidden;
+                        border: 1px solid var(--color-border);
+                    ">
+                <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?w=1200" alt="Active Directory"
+                    style="width: 100%; height: 400px; object-fit: cover" />
             </div>
         </div>
         <div class="scroll-indicator">
@@ -126,40 +148,83 @@
     </section>
 
     <section id="context" class="section project-section">
-        <div class="container" style="max-width: 900px;">
-            <div style="background: var(--color-surface); padding: 3rem; border-radius: 16px; border: 1px solid var(--color-border); margin-bottom: 3rem;">
-                <h2 style="font-family: var(--font-display); font-size: 2rem; margin-bottom: 1.5rem;">Project Context</h2>
-                <p style="color: var(--color-text-secondary); line-height: 1.8; margin-bottom: 1.5rem;">
-                    This project involved conducting a comprehensive security audit of an Active Directory infrastructure 
-                    for a medium-sized company. The goal was to identify security flaws and propose corrective measures.
+        <div class="container" style="max-width: 900px">
+            <div style="
+                        background: var(--color-surface);
+                        padding: 3rem;
+                        border-radius: 16px;
+                        border: 1px solid var(--color-border);
+                        margin-bottom: 3rem;
+                    ">
+                <h2 style="
+                            font-family: var(--font-display);
+                            font-size: 2rem;
+                            margin-bottom: 1.5rem;
+                        ">
+                    Project Context
+                </h2>
+                <p style="
+                            color: var(--color-text-secondary);
+                            line-height: 1.8;
+                            margin-bottom: 1.5rem;
+                        ">
+                    This project involved conducting a comprehensive security audit of an Active
+                    Directory infrastructure for a medium-sized company. The goal was to
+                    identify security flaws and propose corrective measures.
                 </p>
-                <p style="color: var(--color-text-secondary); line-height: 1.8;">
-                    The audit covered GPO configuration, access rights, privileged account management, 
-                    and compliance with Microsoft security best practices.
+                <p style="color: var(--color-text-secondary); line-height: 1.8">
+                    The audit covered GPO configuration, access rights, privileged account
+                    management, and compliance with Microsoft security best practices.
                 </p>
             </div>
         </div>
     </section>
 
     <section id="technologies" class="section project-section">
-        <div class="container" style="max-width: 900px;">
-            <div style="background: var(--color-surface); padding: 3rem; border-radius: 16px; border: 1px solid var(--color-border); margin-bottom: 3rem;">
-                <h2 style="font-family: var(--font-display); font-size: 2rem; margin-bottom: 1.5rem;">Technologies Used</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+        <div class="container" style="max-width: 900px">
+            <div style="
+                        background: var(--color-surface);
+                        padding: 3rem;
+                        border-radius: 16px;
+                        border: 1px solid var(--color-border);
+                        margin-bottom: 3rem;
+                    ">
+                <h2 style="
+                            font-family: var(--font-display);
+                            font-size: 2rem;
+                            margin-bottom: 1.5rem;
+                        ">
+                    Technologies Used
+                </h2>
+                <div style="
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                            gap: 1rem;
+                        ">
                     <div class="tech-card">
                         <i class="fas fa-server"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem;">Windows Server</h3>
-                        <p style="color: var(--color-text-muted); font-size: 0.875rem;">2016/2019</p>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">
+                            Windows Server
+                        </h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
+                            2016/2019
+                        </p>
                     </div>
                     <div class="tech-card">
                         <i class="fas fa-shield-alt"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem;">Active Directory</h3>
-                        <p style="color: var(--color-text-muted); font-size: 0.875rem;">GPO & Security</p>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">
+                            Active Directory
+                        </h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
+                            GPO & Security
+                        </p>
                     </div>
                     <div class="tech-card">
                         <i class="fas fa-code"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem;">PowerShell</h3>
-                        <p style="color: var(--color-text-muted); font-size: 0.875rem;">Audit scripts</p>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">PowerShell</h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
+                            Audit scripts
+                        </p>
                     </div>
                 </div>
             </div>
@@ -167,29 +232,65 @@
     </section>
 
     <section id="results" class="section project-section">
-        <div class="container" style="max-width: 900px;">
-            <div style="background: var(--color-surface); padding: 3rem; border-radius: 16px; border: 1px solid var(--color-border); margin-bottom: 3rem;">
-                <h2 style="font-family: var(--font-display); font-size: 2rem; margin-bottom: 1.5rem;">Results and Recommendations</h2>
-                <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 1rem;">
+        <div class="container" style="max-width: 900px">
+            <div style="
+                        background: var(--color-surface);
+                        padding: 3rem;
+                        border-radius: 16px;
+                        border: 1px solid var(--color-border);
+                        margin-bottom: 3rem;
+                    ">
+                <h2 style="
+                            font-family: var(--font-display);
+                            font-size: 2rem;
+                            margin-bottom: 1.5rem;
+                        ">
+                    Results and Recommendations
+                </h2>
+                <ul style="
+                            list-style: none;
+                            padding: 0;
+                            display: flex;
+                            flex-direction: column;
+                            gap: 1rem;
+                        ">
                     <li class="result-item">
                         <i class="fas fa-check-circle"></i>
                         <div>
-                            <strong style="color: var(--color-text); display: block; margin-bottom: 0.5rem;">GPO Hardening</strong>
-                            <span style="color: var(--color-text-secondary);">Implementation of enhanced password policies and local rights restrictions</span>
+                            <strong style="
+                                        color: var(--color-text);
+                                        display: block;
+                                        margin-bottom: 0.5rem;
+                                    ">GPO Hardening</strong>
+                            <span style="color: var(--color-text-secondary)">Implementation of enhanced password
+                                policies and local rights
+                                restrictions</span>
                         </div>
                     </li>
                     <li class="result-item">
                         <i class="fas fa-check-circle"></i>
                         <div>
-                            <strong style="color: var(--color-text); display: block; margin-bottom: 0.5rem;">Privileged Account Management</strong>
-                            <span style="color: var(--color-text-secondary);">Implementation of PAW (Privileged Access Workstation) and rights separation</span>
+                            <strong style="
+                                        color: var(--color-text);
+                                        display: block;
+                                        margin-bottom: 0.5rem;
+                                    ">Privileged Account Management</strong>
+                            <span style="color: var(--color-text-secondary)">Implementation of PAW (Privileged Access
+                                Workstation) and
+                                rights separation</span>
                         </div>
                     </li>
                     <li class="result-item">
                         <i class="fas fa-check-circle"></i>
                         <div>
-                            <strong style="color: var(--color-text); display: block; margin-bottom: 0.5rem;">Monitoring and Logging</strong>
-                            <span style="color: var(--color-text-secondary);">Advanced audit configuration and centralization of security logs</span>
+                            <strong style="
+                                        color: var(--color-text);
+                                        display: block;
+                                        margin-bottom: 0.5rem;
+                                    ">Monitoring and Logging</strong>
+                            <span style="color: var(--color-text-secondary)">Advanced audit configuration and
+                                centralization of security
+                                logs</span>
                         </div>
                     </li>
                 </ul>
@@ -198,7 +299,7 @@
     </section>
 
     <section id="documents" class="section project-section">
-        <div class="container" style="max-width: 900px;">
+        <div class="container" style="max-width: 900px">
             <div class="accordion-section">
                 <button class="accordion-toggle" data-accordion="docs-accordion">
                     <div class="accordion-header">
@@ -255,8 +356,8 @@
                 <h2 class="section-title">Let's work together</h2>
             </div>
             <p class="contact-intro">
-                Do you have a project or an opportunity? Feel free to contact me. 
-                I'm always open to new collaborations and technical challenges.
+                Do you have a project or an opportunity? Feel free to contact me. I'm always
+                open to new collaborations and technical challenges.
             </p>
             <div class="contact-grid">
                 <div class="contact-info">
@@ -293,11 +394,11 @@
                 <form class="contact-form">
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
+                        <input type="text" id="name" name="name" required />
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" required />
                     </div>
                     <div class="form-group">
                         <label for="message">Message</label>
@@ -308,8 +409,15 @@
                         <label for="attachment">
                             <span>Click to add files</span>
                         </label>
-                        <input type="file" id="attachment" name="attachment" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" multiple>
-                        <small style="color: #666; font-size: 0.85rem; margin-top: 0.5rem; display: block;">Accepted formats: PDF, DOC, DOCX, TXT, JPG, PNG (max 5 files, 8MB each)</small>
+                        <input type="file" id="attachment" name="attachment"
+                            accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" multiple />
+                        <small style="
+                                    color: #666;
+                                    font-size: 0.85rem;
+                                    margin-top: 0.5rem;
+                                    display: block;
+                                ">Accepted formats: PDF, DOC, DOCX, TXT, JPG, PNG (max 5 files, 8MB
+                            each)</small>
                         <div id="file-list" class="file-list"></div>
                     </div>
                     <button type="submit" class="btn btn-primary">
@@ -329,5 +437,5 @@
 
     <script src="script.js"></script>
 </body>
-</html>
 
+</html>
