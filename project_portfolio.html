@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio Interactif - Portfolio</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="fb:app_id" content="966242223397117" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Portfolio Interactif - Portfolio" />
+    <meta property="og:description"
+        content="Site portfolio personnel avec animations fluides, dashboard d'expérience et design responsive moderne." />
+    <meta property="og:image" content="https://sudokipedia.github.io/portfolio/assets/og-image.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Portfolio Interactif - Portfolio" />
+    <meta property="twitter:description"
+        content="Site portfolio personnel avec animations fluides, dashboard d'expérience et design responsive moderne." />
+    <meta property="twitter:image" content="https://sudokipedia.github.io/portfolio/assets/og-image.png" />
+
+    <link rel="stylesheet" href="style.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+    <canvas id="bg-canvas"></canvas>
+
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="index.html#projects" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Accueil</span>
+                </a>
+                <a href="index.html" class="logo">
+                    <span class="logo-text">PORTFOLIO</span>
+                    <span class="logo-dot">.</span>
+                </a>
+                <div class="nav-current">
+                    <span class="nav-current-text">Vue d'ensemble</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="nav-menu">
+                    <a href="#other-projects" class="nav-link">Autres projets</a>
+                    <a href="#overview" class="nav-link">Vue d'ensemble</a>
+                    <a href="#context" class="nav-link">Contexte</a>
+                    <a href="#technologies" class="nav-link">Technologies</a>
+                    <a href="#results" class="nav-link">Résultats</a>
+                    <a href="#documents" class="nav-link">Documents</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                    <a href="index.html#projects" class="nav-link">← Retour aux projets</a>
+                </div>
+                <div class="lang-switcher">
+                    <a href="#" class="lang-btn active" onclick="return false;">FR</a>
+                    <a href="#" class="lang-btn"
+                        onclick="switchLanguage('project_portfolio_en.html'); return false;">EN</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section id="other-projects" class="section project-section">
+        <div class="container" style="max-width: 1200px">
+            <span class="section-tag">Autres projets</span>
+            <h2 class="section-title">Découvrez mes autres réalisations</h2>
+            <div class="projects-carousel-compact">
+                <div class="carousel-wrapper">
+                    <div class="carousel-track-compact" id="carousel-track">
+                        <a href="project_bot_discord.html" class="carousel-item-compact" data-position="0">
+                            <img src="https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=600"
+                                alt="Bot Discord" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Discord.js</span>
+                                    <span>Node.js</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Bot Discord de Gestion Scolaire
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_blog_porto.html" class="carousel-item-compact" data-position="1">
+                            <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=600"
+                                alt="Blog Porto" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Web</span>
+                                    <span>Voyage</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Blog de Voyage Porto
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_nfs_raid.html" class="carousel-item-compact" data-position="2">
+                            <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600"
+                                alt="NFS RAID" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Linux</span>
+                                    <span>RAID</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Serveur NFS avec RAID
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_ad_automation.html" class="carousel-item-compact" data-position="3">
+                            <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=600"
+                                alt="AD Automation" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>PowerShell</span>
+                                    <span>Active Directory</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Automatisation Active Directory
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_proxmox_infra.html" class="carousel-item-compact" data-position="4">
+                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600"
+                                alt="Infrastructure Proxmox" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Proxmox</span>
+                                    <span>Virtualisation</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Infrastructure Proxmox & AD
+                                </h4>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="carousel-controls">
+                        <button class="carousel-btn-compact" onclick="navigateCarousel(-1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="carousel-btn-compact" onclick="navigateCarousel(1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="overview" class="section project-section">
+        <div class="container" style="max-width: 900px">
+            <div style="margin-bottom: 3rem">
+                <div class="project-tags" style="margin-bottom: 1.5rem">
+                    <span>HTML/CSS/JS</span>
+                    <span>Design</span>
+                    <span>Animations</span>
+                </div>
+                <h1 class="section-title" style="margin-bottom: 1.5rem">
+                    Portfolio Interactif
+                </h1>
+                <p style="
+                            font-size: 1.125rem;
+                            color: var(--color-text-secondary);
+                            line-height: 1.7;
+                        ">
+                    Site portfolio personnel développé entièrement en HTML/CSS/JavaScript vanilla avec animations fluides, 
+                    dashboard d'expérience professionnelle de type "réseau neuronal", système de navigation dynamique et design responsive moderne.
+                </p>
+            </div>
+
+            <div style="
+                        margin-bottom: 3rem;
+                        border-radius: 16px;
+                        overflow: hidden;
+                        border: 1px solid var(--color-border);
+                    ">
+                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200" alt="Portfolio"
+                    style="width: 100%; height: 400px; object-fit: cover" />
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <section id="context" class="section project-section">
+        <div class="container" style="max-width: 900px">
+            <div style="
+                        background: var(--color-surface);
+                        padding: 3rem;
+                        border-radius: 16px;
+                        border: 1px solid var(--color-border);
+                        margin-bottom: 3rem;
+                    ">
+                <h2 style="
+                            font-family: var(--font-display);
+                            font-size: 2rem;
+                            margin-bottom: 1.5rem;
+                        ">
+                    Contexte du projet
+                </h2>
+                <p style="
+                            color: var(--color-text-secondary);
+                            line-height: 1.8;
+                            margin-bottom: 1.5rem;
+                        ">
+                    Développement d'un site portfolio personnel moderne et interactif pour présenter mes compétences, 
+                    projets et expériences professionnelles. Le site intègre des animations CSS avancées, un dashboard 
+                    d'expérience avec visualisation de type "réseau neuronal", et une navigation fluide.
+                </p>
+                <p style="color: var(--color-text-secondary); line-height: 1.8">
+                    Le projet a été réalisé entièrement en technologies web natives (HTML5, CSS3, JavaScript vanilla) 
+                    sans framework, avec un focus sur les performances, l'accessibilité et le responsive design.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="technologies" class="section project-section">
+        <div class="container" style="max-width: 900px">
+            <div style="
+                        background: var(--color-surface);
+                        padding: 3rem;
+                        border-radius: 16px;
+                        border: 1px solid var(--color-border);
+                        margin-bottom: 3rem;
+                    ">
+                <h2 style="
+                            font-family: var(--font-display);
+                            font-size: 2rem;
+                            margin-bottom: 1.5rem;
+                        ">
+                    Technologies utilisées
+                </h2>
+                <div style="
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                            gap: 1rem;
+                        ">
+                    <div class="tech-card">
+                        <i class="fab fa-html5"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">HTML5 & CSS3</h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
+                            Sémantique & Animations
+                        </p>
+                    </div>
+                    <div class="tech-card">
+                        <i class="fab fa-js"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">JavaScript</h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
+                            Vanilla ES6+
+                        </p>
+                    </div>
+                    <div class="tech-card">
+                        <i class="fas fa-palette"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Design</h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
+                            Responsive & Accessible
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="results" class="section project-section">
+        <div class="container" style="max-width: 900px">
+            <div style="
+                        background: var(--color-surface);
+                        padding: 3rem;
+                        border-radius: 16px;
+                        border: 1px solid var(--color-border);
+                        margin-bottom: 3rem;
+                    ">
+                <h2 style="
+                            font-family: var(--font-display);
+                            font-size: 2rem;
+                            margin-bottom: 1.5rem;
+                        ">
+                    Fonctionnalités principales
+                </h2>
+                <ul style="
+                            list-style: none;
+                            padding: 0;
+                            display: flex;
+                            flex-direction: column;
+                            gap: 1rem;
+                        ">
+                    <li class="result-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong style="
+                                        color: var(--color-text);
+                                        display: block;
+                                        margin-bottom: 0.5rem;
+                                    ">Dashboard expérience "réseau neuronal"</strong>
+                            <span style="color: var(--color-text-secondary)">Page d'expérience interactive avec animation de particules, nœuds connectés et design futuriste</span>
+                        </div>
+                    </li>
+                    <li class="result-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong style="
+                                        color: var(--color-text);
+                                        display: block;
+                                        margin-bottom: 0.5rem;
+                                    ">Animations fluides et responsive</strong>
+                            <span style="color: var(--color-text-secondary)">Transitions CSS avancées, scroll indicators, animations d'apparition progressives et design mobile-first</span>
+                        </div>
+                    </li>
+                    <li class="result-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong style="
+                                        color: var(--color-text);
+                                        display: block;
+                                        margin-bottom: 0.5rem;
+                                    ">Système de navigation dynamique</strong>
+                            <span style="color: var(--color-text-secondary)">Menu contextuel, switcher de langue FR/EN, accordions interactifs et formulaire de contact fonctionnel</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="documents" class="section project-section">
+        <div class="container" style="max-width: 900px">
+            <div class="accordion-section">
+                <button class="accordion-toggle" data-accordion="docs-accordion">
+                    <div class="accordion-header">
+                        <i class="fas fa-file-alt accordion-icon"></i>
+                        <h2>Documents & Ressources</h2>
+                    </div>
+                    <i class="fas fa-chevron-down accordion-arrow"></i>
+                </button>
+                <div class="accordion-content" id="docs-accordion">
+                    <div class="document-list">
+                        <a href="#" class="document-item">
+                            <div class="document-icon">
+                                <i class="fas fa-file-code"></i>
+                            </div>
+                            <div class="document-info">
+                                <h3>Playbooks Ansible</h3>
+                                <p>Collection complète des playbooks de déploiement</p>
+                                <span class="document-meta">ZIP • 245 KB</span>
+                            </div>
+                            <i class="fas fa-download document-download"></i>
+                        </a>
+                        <a href="#" class="document-item">
+                            <div class="document-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="document-info">
+                                <h3>Documentation Architecture</h3>
+                                <p>Schéma détaillé de l'infrastructure automatisée</p>
+                                <span class="document-meta">PDF • 1.8 MB</span>
+                            </div>
+                            <i class="fas fa-download document-download"></i>
+                        </a>
+                        <a href="#" class="document-item">
+                            <div class="document-icon">
+                                <i class="fas fa-file-word"></i>
+                            </div>
+                            <div class="document-info">
+                                <h3>Guide d'utilisation</h3>
+                                <p>Manuel pour l'équipe d'exploitation</p>
+                                <span class="document-meta">DOCX • 670 KB</span>
+                            </div>
+                            <i class="fas fa-download document-download"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Contact</span>
+                <h2 class="section-title">Travaillons ensemble</h2>
+            </div>
+            <p class="contact-intro">
+                Vous avez un projet ou une opportunité ? N'hésitez pas à me contacter. Je suis
+                toujours ouvert aux nouvelles collaborations et défis techniques.
+            </p>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-methods">
+                        <a href="https://github.com/SudoKipedia" target="_blank" class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div class="contact-details">
+                                <span class="contact-label">GitHub</span>
+                                <span class="contact-value">Mes dépôts</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Nom</label>
+                        <input type="text" id="name" name="name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" maxlength="1000" required></textarea>
+                        <span class="char-counter"><span id="char-count">0</span>/1000</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="attachment">
+                            <span>Cliquez pour ajouter des fichiers</span>
+                        </label>
+                        <input type="file" id="attachment" name="attachment"
+                            accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" multiple />
+                        <small style="
+                                    color: #666;
+                                    font-size: 0.85rem;
+                                    margin-top: 0.5rem;
+                                    display: block;
+                                ">Formats acceptés : PDF, DOC, DOCX, TXT, JPG, PNG (max 5 fichiers,
+                            8MB chacun)</small>
+                        <div id="file-list" class="file-list"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span>Envoyer le message</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Portfolio. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cloud Infrastructure - Portfolio</title>
+    <title>Blog de Voyage Porto - Portfolio</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -12,17 +12,17 @@
     <!-- Open Graph / Facebook -->
     <meta property="fb:app_id" content="966242223397117" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Cloud Infrastructure - Portfolio" />
+    <meta property="og:title" content="Blog de Voyage Porto - Portfolio" />
     <meta property="og:description"
-        content="Cloud infrastructure project with Oracle Cloud, Docker and advanced configurations." />
-    <meta property="og:image" content="https://sudokipedia.github.io/portfolio/assets/og-image_en.png" />
+        content="Site web documentant un voyage linguistique de 12 jours à Porto avec blog quotidien, galeries photos et playlist musicale." />
+    <meta property="og:image" content="https://sudokipedia.github.io/portfolio/assets/og-image.png" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content="Cloud Infrastructure - Portfolio" />
+    <meta property="twitter:title" content="Blog de Voyage Porto - Portfolio" />
     <meta property="twitter:description"
-        content="Cloud infrastructure project with Oracle Cloud, Docker and advanced configurations." />
-    <meta property="twitter:image" content="https://sudokipedia.github.io/portfolio/assets/og-image_en.png" />
+        content="Site web documentant un voyage linguistique de 12 jours à Porto avec blog quotidien, galeries photos et playlist musicale." />
+    <meta property="twitter:image" content="https://sudokipedia.github.io/portfolio/assets/og-image.png" />
 
     <link rel="stylesheet" href="style.css" />
     <link
@@ -37,31 +37,32 @@
     <header class="header">
         <div class="container">
             <nav class="nav">
-                <a href="index_en.html#projects" class="back-btn">
+                <a href="index.html#projects" class="back-btn">
                     <i class="fas fa-arrow-left"></i>
-                    <span>Home</span>
+                    <span>Accueil</span>
                 </a>
-                <a href="index_en.html" class="logo">
+                <a href="index.html" class="logo">
                     <span class="logo-text">PORTFOLIO</span>
                     <span class="logo-dot">.</span>
                 </a>
                 <div class="nav-current">
-                    <span class="nav-current-text">Overview</span>
+                    <span class="nav-current-text">Vue d'ensemble</span>
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="nav-menu">
-                    <a href="#other-projects" class="nav-link">Other projects</a>
-                    <a href="#overview" class="nav-link">Overview</a>
-                    <a href="#context" class="nav-link">Context</a>
+                    <a href="#other-projects" class="nav-link">Autres projets</a>
+                    <a href="#overview" class="nav-link">Vue d'ensemble</a>
+                    <a href="#context" class="nav-link">Contexte</a>
                     <a href="#technologies" class="nav-link">Technologies</a>
-                    <a href="#results" class="nav-link">Results</a>
+                    <a href="#results" class="nav-link">Résultats</a>
                     <a href="#documents" class="nav-link">Documents</a>
                     <a href="#contact" class="nav-link">Contact</a>
-                    <a href="index_en.html#projects" class="nav-link">← Back to Projects</a>
+                    <a href="index.html#projects" class="nav-link">← Retour aux projets</a>
                 </div>
                 <div class="lang-switcher">
-                    <a href="#" class="lang-btn" onclick="switchLanguage('project_infra.html'); return false;">FR</a>
-                    <a href="#" class="lang-btn active" onclick="return false;">EN</a>
+                    <a href="#" class="lang-btn active" onclick="return false;">FR</a>
+                    <a href="#" class="lang-btn"
+                        onclick="switchLanguage('project_blog_porto_en.html'); return false;">EN</a>
                 </div>
             </nav>
         </div>
@@ -69,34 +70,73 @@
 
     <section id="other-projects" class="section project-section">
         <div class="container" style="max-width: 1200px">
-            <span class="section-tag">Other projects</span>
-            <h2 class="section-title">Discover my other projects</h2>
+            <span class="section-tag">Autres projets</span>
+            <h2 class="section-title">Découvrez mes autres réalisations</h2>
             <div class="projects-carousel-compact">
                 <div class="carousel-wrapper">
                     <div class="carousel-track-compact" id="carousel-track">
-                        <a href="project_ansible_en.html" class="carousel-item-compact" data-position="0">
-                            <img src="https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=600"
-                                alt="Ansible Automation" class="carousel-item-compact-image" />
+                        <a href="project_bot_discord.html" class="carousel-item-compact" data-position="0">
+                            <img src="https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=600"
+                                alt="Bot Discord" class="carousel-item-compact-image" />
                             <div class="carousel-item-compact-content">
                                 <div class="carousel-item-compact-tags">
-                                    <span>DevOps</span>
-                                    <span>Automation</span>
+                                    <span>Discord.js</span>
+                                    <span>Node.js</span>
                                 </div>
                                 <h4 class="carousel-item-compact-title">
-                                    Infrastructure Automation with Ansible
+                                    Bot Discord de Gestion Scolaire
                                 </h4>
                             </div>
                         </a>
-                        <a href="project_ad_en.html" class="carousel-item-compact" data-position="2">
-                            <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?w=600"
-                                alt="Active Directory" class="carousel-item-compact-image" />
+                        <a href="project_portfolio.html" class="carousel-item-compact" data-position="1">
+                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600"
+                                alt="Portfolio" class="carousel-item-compact-image" />
                             <div class="carousel-item-compact-content">
                                 <div class="carousel-item-compact-tags">
-                                    <span>System</span>
-                                    <span>Security</span>
+                                    <span>HTML/CSS/JS</span>
+                                    <span>Design</span>
                                 </div>
                                 <h4 class="carousel-item-compact-title">
-                                    Active Directory Security Audit
+                                    Portfolio Interactif
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_nfs_raid.html" class="carousel-item-compact" data-position="2">
+                            <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600"
+                                alt="NFS RAID" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Linux</span>
+                                    <span>RAID</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Serveur NFS avec RAID
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_ad_automation.html" class="carousel-item-compact" data-position="3">
+                            <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=600"
+                                alt="AD Automation" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>PowerShell</span>
+                                    <span>Active Directory</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Automatisation Active Directory
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_proxmox_infra.html" class="carousel-item-compact" data-position="4">
+                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600"
+                                alt="Infrastructure Proxmox" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Proxmox</span>
+                                    <span>Virtualisation</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Infrastructure Proxmox & AD
                                 </h4>
                             </div>
                         </a>
@@ -118,20 +158,20 @@
         <div class="container" style="max-width: 900px">
             <div style="margin-bottom: 3rem">
                 <div class="project-tags" style="margin-bottom: 1.5rem">
-                    <span>Network</span>
-                    <span>Architecture</span>
-                    <span>Cisco</span>
+                    <span>Web</span>
+                    <span>HTML/CSS/JS</span>
+                    <span>Anglais</span>
                 </div>
                 <h1 class="section-title" style="margin-bottom: 1.5rem">
-                    Complete Network Infrastructure
+                    Blog de Voyage à Porto
                 </h1>
                 <p style="
                             font-size: 1.125rem;
                             color: var(--color-text-secondary);
                             line-height: 1.7;
                         ">
-                    Design and deployment of a secure network infrastructure with VLAN
-                    segmentation, high availability and redundancy.
+                    Site web créé pour documenter un voyage linguistique de 12 jours à Porto avec l'équipe "Rocket League". 
+                    Blog quotidien avec galeries photos, vidéos de fond, playlist musicale interactive et design responsive.
                 </p>
             </div>
 
@@ -141,7 +181,7 @@
                         overflow: hidden;
                     border: 1px solid var(--color-border);
                     ">
-                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200" alt="Infrastructure"
+                <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=1200" alt="Blog Porto"
                     style="width: 100%; height: 400px; object-fit: cover" />
             </div>
         </div>
@@ -165,20 +205,20 @@
                             font-size: 2rem;
                             margin-bottom: 1.5rem;
                         ">
-                    Project Context
+                    Contexte du projet
                 </h2>
                 <p style="
                             color: var(--color-text-secondary);
                             line-height: 1.8;
                             margin-bottom: 1.5rem;
                         ">
-                    Design and implementation of a complete network infrastructure for a
-                    multi-floor site. The project included network segmentation, perimeter
-                    security and high availability.
+                    Dans le cadre d'un voyage linguistique à Porto organisé par l'IPI, création d'un site web en anglais 
+                    pour partager notre expérience quotidienne. Le projet était un travail d'équipe avec Alexandre et Maxence 
+                    sous le nom "Rocket League".
                 </p>
                 <p style="color: var(--color-text-secondary); line-height: 1.8">
-                    The architecture includes stacked Cisco switches, inter-VLAN routing, link
-                    redundancy, and implementation of security policies with ACLs.
+                    Le site documente 12 jours de voyage avec des articles quotidiens, des galeries photos, une vidéo de fond en boucle, 
+                    et une playlist musicale personnalisée. Design épuré avec un menu hamburger et des animations subtiles.
                 </p>
             </div>
         </div>
@@ -198,7 +238,7 @@
                             font-size: 2rem;
                             margin-bottom: 1.5rem;
                         ">
-                    Technologies used
+                    Technologies utilisées
                 </h2>
                 <div style="
                             display: grid;
@@ -206,24 +246,24 @@
                             gap: 1rem;
                         ">
                     <div class="tech-card">
-                        <i class="fas fa-network-wired"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Cisco</h3>
+                        <i class="fab fa-html5"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">HTML5/CSS3</h3>
                         <p style="color: var(--color-text-muted); font-size: 0.875rem">
-                            Catalyst & ASA
+                            Structure & Style
                         </p>
                     </div>
                     <div class="tech-card">
-                        <i class="fas fa-project-diagram"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">VLAN</h3>
+                        <i class="fab fa-js"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">JavaScript</h3>
                         <p style="color: var(--color-text-muted); font-size: 0.875rem">
-                            Segmentation
+                            Interactivité
                         </p>
                     </div>
                     <div class="tech-card">
-                        <i class="fas fa-shield-alt"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Firewall</h3>
+                        <i class="fas fa-music"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Média</h3>
                         <p style="color: var(--color-text-muted); font-size: 0.875rem">
-                            pfSense
+                            Video & Audio
                         </p>
                     </div>
                 </div>
@@ -245,7 +285,7 @@
                             font-size: 2rem;
                             margin-bottom: 1.5rem;
                         ">
-                    Technical Results
+                    Fonctionnalités principales
                 </h2>
                 <ul style="
                             list-style: none;
@@ -261,9 +301,8 @@
                                         color: var(--color-text);
                                         display: block;
                                         margin-bottom: 0.5rem;
-                                    ">Network segmentation</strong>
-                            <span style="color: var(--color-text-secondary)">8 VLANs with inter-VLAN routing and traffic
-                                isolation</span>
+                                    ">Blog quotidien de 12 jours</strong>
+                            <span style="color: var(--color-text-secondary)">Articles quotidiens avec galeries photos (day1 à day12) documentant l'expérience à Porto</span>
                         </div>
                     </li>
                     <li class="result-item">
@@ -273,9 +312,8 @@
                                         color: var(--color-text);
                                         display: block;
                                         margin-bottom: 0.5rem;
-                                    ">High availability</strong>
-                            <span style="color: var(--color-text-secondary)">Link redundancy with HSRP and switch
-                                stacking</span>
+                                    ">Expérience immersive</strong>
+                            <span style="color: var(--color-text-secondary)">Vidéo de fond en boucle et playlist musicale interactive avec contrôles play/pause/skip</span>
                         </div>
                     </li>
                     <li class="result-item">
@@ -285,10 +323,22 @@
                                         color: var(--color-text);
                                         display: block;
                                         margin-bottom: 0.5rem;
-                                    ">Perimeter security</strong>
-                            <span style="color: var(--color-text-secondary)">Firewall with DMZ, site-to-site VPN and
-                                application
-                                filtering</span>
+                                    ">Design responsive</strong>
+                            <span style="color: var(--color-text-secondary)">Navigation hamburger, page membres de l'équipe, page overview et design adaptatif mobile</span>
+                        </div>
+                    </li>
+                </ul>
+                    <li class="result-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong style="
+                                        color: var(--color-text);
+                                        display: block;
+                                        margin-bottom: 0.5rem;
+                                    ">Sécurité périmétrique</strong>
+                            <span style="color: var(--color-text-secondary)">Firewall avec DMZ, VPN site-to-site et
+                                filtrage
+                                applicatif</span>
                         </div>
                     </li>
                 </ul>
@@ -302,7 +352,7 @@
                 <button class="accordion-toggle" data-accordion="docs-accordion">
                     <div class="accordion-header">
                         <i class="fas fa-file-alt accordion-icon"></i>
-                        <h2>Documents & Resources</h2>
+                        <h2>Documents & Ressources</h2>
                     </div>
                     <i class="fas fa-chevron-down accordion-arrow"></i>
                 </button>
@@ -313,8 +363,8 @@
                                 <i class="fas fa-file-image"></i>
                             </div>
                             <div class="document-info">
-                                <h3>Complete Network Diagram</h3>
-                                <p>Detailed topology with VLANs and IP addressing</p>
+                                <h3>Schéma réseau complet</h3>
+                                <p>Topologie détaillée avec VLANs et adressage IP</p>
                                 <span class="document-meta">PDF • 3.2 MB</span>
                             </div>
                             <i class="fas fa-download document-download"></i>
@@ -324,8 +374,8 @@
                                 <i class="fas fa-file-code"></i>
                             </div>
                             <div class="document-info">
-                                <h3>Equipment Configurations</h3>
-                                <p>Switch and router configuration files</p>
+                                <h3>Configurations équipements</h3>
+                                <p>Fichiers de config switchs et routeurs</p>
                                 <span class="document-meta">ZIP • 89 KB</span>
                             </div>
                             <i class="fas fa-download document-download"></i>
@@ -335,8 +385,8 @@
                                 <i class="fas fa-file-alt"></i>
                             </div>
                             <div class="document-info">
-                                <h3>IP Addressing Plan</h3>
-                                <p>Complete addressing scheme documentation</p>
+                                <h3>Plan d'adressage IP</h3>
+                                <p>Documentation complète du schéma d'adressage</p>
                                 <span class="document-meta">XLSX • 124 KB</span>
                             </div>
                             <i class="fas fa-download document-download"></i>
@@ -351,11 +401,11 @@
         <div class="container">
             <div class="section-header">
                 <span class="section-tag">Contact</span>
-                <h2 class="section-title">Let's work together</h2>
+                <h2 class="section-title">Travaillons ensemble</h2>
             </div>
             <p class="contact-intro">
-                Do you have a project or an opportunity? Feel free to contact me. I'm always
-                open to new collaborations and technical challenges.
+                Vous avez un projet ou une opportunité ? N'hésitez pas à me contacter. Je suis
+                toujours ouvert aux nouvelles collaborations et défis techniques.
             </p>
             <div class="contact-grid">
                 <div class="contact-info">
@@ -366,14 +416,14 @@
                             </div>
                             <div class="contact-details">
                                 <span class="contact-label">GitHub</span>
-                                <span class="contact-value">My repositories</span>
+                                <span class="contact-value">Mes dépôts</span>
                             </div>
                         </a>
                     </div>
                 </div>
                 <form class="contact-form">
                     <div class="form-group">
-                        <label for="name">Name</label>
+                        <label for="name">Nom</label>
                         <input type="text" id="name" name="name" required />
                     </div>
                     <div class="form-group">
@@ -387,7 +437,7 @@
                     </div>
                     <div class="form-group">
                         <label for="attachment">
-                            <span>Click to add files</span>
+                            <span>Cliquez pour ajouter des fichiers</span>
                         </label>
                         <input type="file" id="attachment" name="attachment"
                             accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" multiple />
@@ -396,12 +446,12 @@
                                     font-size: 0.85rem;
                                     margin-top: 0.5rem;
                                     display: block;
-                                ">Accepted formats: PDF, DOC, DOCX, TXT, JPG, PNG (max 5 files, 8MB
-                            each)</small>
+                                ">Formats acceptés : PDF, DOC, DOCX, TXT, JPG, PNG (max 5 fichiers,
+                            8MB chacun)</small>
                         <div id="file-list" class="file-list"></div>
                     </div>
                     <button type="submit" class="btn btn-primary">
-                        <span>Send message</span>
+                        <span>Envoyer le message</span>
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </form>
@@ -411,7 +461,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 Portfolio. All rights reserved.</p>
+            <p>&copy; 2025 Portfolio. Tous droits réservés.</p>
         </div>
     </footer>
 

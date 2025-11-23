@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bot Discord de Gestion Scolaire - Portfolio</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="fb:app_id" content="966242223397117" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Bot Discord de Gestion Scolaire - Portfolio" />
+    <meta property="og:description"
+        content="Bot Discord complet pour gérer l'inscription automatique des étudiants et enseignants avec système de refonte administrative." />
+    <meta property="og:image" content="https://sudokipedia.github.io/portfolio/assets/og-image.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Bot Discord de Gestion Scolaire - Portfolio" />
+    <meta property="twitter:description"
+        content="Bot Discord complet pour gérer l'inscription automatique des étudiants et enseignants avec système de refonte administrative." />
+    <meta property="twitter:image" content="https://sudokipedia.github.io/portfolio/assets/og-image.png" />
+
+    <link rel="stylesheet" href="style.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+    <canvas id="bg-canvas"></canvas>
+
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="index.html#projects" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Accueil</span>
+                </a>
+                <a href="index.html" class="logo">
+                    <span class="logo-text">PORTFOLIO</span>
+                    <span class="logo-dot">.</span>
+                </a>
+                <div class="nav-current">
+                    <span class="nav-current-text">Vue d'ensemble</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="nav-menu">
+                    <a href="#other-projects" class="nav-link">Autres projets</a>
+                    <a href="#overview" class="nav-link">Vue d'ensemble</a>
+                    <a href="#context" class="nav-link">Contexte</a>
+                    <a href="#technologies" class="nav-link">Technologies</a>
+                    <a href="#results" class="nav-link">Résultats</a>
+                    <a href="#documents" class="nav-link">Documents</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                    <a href="index.html#projects" class="nav-link">← Retour aux projets</a>
+                </div>
+                <div class="lang-switcher">
+                    <a href="#" class="lang-btn active" onclick="return false;">FR</a>
+                    <a href="#" class="lang-btn"
+                        onclick="switchLanguage('project_bot_discord_en.html'); return false;">EN</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section id="other-projects" class="section project-section">
+        <div class="container" style="max-width: 1200px">
+            <span class="section-tag">Autres projets</span>
+            <h2 class="section-title">Découvrez mes autres réalisations</h2>
+            <div class="projects-carousel-compact">
+                <div class="carousel-wrapper">
+                    <div class="carousel-track-compact" id="carousel-track">
+                        <a href="project_portfolio.html" class="carousel-item-compact" data-position="0">
+                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600"
+                                alt="Portfolio Interactif" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>HTML/CSS/JS</span>
+                                    <span>Design</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Portfolio Interactif
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_blog_porto.html" class="carousel-item-compact" data-position="1">
+                            <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=600"
+                                alt="Blog Porto" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Web</span>
+                                    <span>Voyage</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Blog de Voyage Porto
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_nfs_raid.html" class="carousel-item-compact" data-position="2">
+                            <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600"
+                                alt="NFS RAID" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Linux</span>
+                                    <span>RAID</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Serveur NFS avec RAID
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_ad_automation.html" class="carousel-item-compact" data-position="3">
+                            <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=600"
+                                alt="AD Automation" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>PowerShell</span>
+                                    <span>Active Directory</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Automatisation Active Directory
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_proxmox_infra.html" class="carousel-item-compact" data-position="4">
+                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600"
+                                alt="Infrastructure Proxmox" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Proxmox</span>
+                                    <span>Virtualisation</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Infrastructure Proxmox & AD
+                                </h4>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="carousel-controls">
+                        <button class="carousel-btn-compact" onclick="navigateCarousel(-1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="carousel-btn-compact" onclick="navigateCarousel(1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="overview" class="section project-section">
+        <div class="container" style="max-width: 900px">
+            <div style="margin-bottom: 3rem">
+                <div class="project-tags" style="margin-bottom: 1.5rem">
+                    <span>Discord.js</span>
+                    <span>Node.js</span>
+                    <span>Automatisation</span>
+                </div>
+                <h1 class="section-title" style="margin-bottom: 1.5rem">
+                    Bot Discord de Gestion Scolaire IPI
+                </h1>
+                <p style="
+                            font-size: 1.125rem;
+                            color: var(--color-text-secondary);
+                            line-height: 1.7;
+                        ">
+                    Bot Discord complet développé pour automatiser la gestion administrative d'un serveur scolaire : 
+                    inscription des étudiants et enseignants, attribution automatique de rôles par promo/classe, 
+                    système de refonte annuelle et gestion complète des permissions.
+                </p>
+            </div>
+
+            <div style="
+                        margin-bottom: 3rem;
+                        border-radius: 16px;
+                        overflow: hidden;
+                        border: 1px solid var(--color-border);
+                    ">
+                <img src="https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=1200" alt="Discord Bot"
+                    style="width: 100%; height: 400px; object-fit: cover" />
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <section id="context" class="section project-section">
+        <div class="container" style="max-width: 900px">
+            <div style="
+                        background: var(--color-surface);
+                        padding: 3rem;
+                        border-radius: 16px;
+                        border: 1px solid var(--color-border);
+                        margin-bottom: 3rem;
+                    ">
+                <h2 style="
+                            font-family: var(--font-display);
+                            font-size: 2rem;
+                            margin-bottom: 1.5rem;
+                        ">
+                    Contexte du projet
+                </h2>
+                <p style="
+                            color: var(--color-text-secondary);
+                            line-height: 1.8;
+                            margin-bottom: 1.5rem;
+                        ">
+                    Ce bot Discord a été développé pour gérer l'organisation administrative complète d'un serveur Discord scolaire (IPI). 
+                    Il automatise l'inscription des étudiants et enseignants, attribue les rôles par promotion et classe, 
+                    et intègre un système de refonte administrative annuelle pour restructurer automatiquement le serveur.
+                </p>
+                <p style="color: var(--color-text-secondary); line-height: 1.8">
+                    Le bot gère plus de 2000 lignes de code avec un système modulaire incluant la gestion des rôles, 
+                    des sauvegardes automatiques, des diagnostics multi-serveurs, et une architecture robuste avec 
+                    logging Winston et tests Jest.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="technologies" class="section project-section">
+        <div class="container" style="max-width: 900px">
+            <div style="
+                        background: var(--color-surface);
+                        padding: 3rem;
+                        border-radius: 16px;
+                        border: 1px solid var(--color-border);
+                        margin-bottom: 3rem;
+                    ">
+                <h2 style="
+                            font-family: var(--font-display);
+                            font-size: 2rem;
+                            margin-bottom: 1.5rem;
+                        ">
+                    Technologies utilisées
+                </h2>
+                <div style="
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                            gap: 1rem;
+                        ">
+                    <div class="tech-card">
+                        <i class="fab fa-discord"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">
+                            Discord.js
+                        </h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
+                            v14.20.0
+                        </p>
+                    </div>
+                    <div class="tech-card">
+                        <i class="fab fa-node-js"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">
+                            Node.js
+                        </h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
+                            ≥18.0.0
+                        </p>
+                    </div>
+                    <div class="tech-card">
+                        <i class="fas fa-code"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Winston & Jest</h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
+                            Logging & Tests
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="results" class="section project-section">
+        <div class="container" style="max-width: 900px">
+            <div style="
+                        background: var(--color-surface);
+                        padding: 3rem;
+                        border-radius: 16px;
+                        border: 1px solid var(--color-border);
+                        margin-bottom: 3rem;
+                    ">
+                <h2 style="
+                            font-family: var(--font-display);
+                            font-size: 2rem;
+                            margin-bottom: 1.5rem;
+                        ">
+                    Fonctionnalités principales
+                </h2>
+                <ul style="
+                            list-style: none;
+                            padding: 0;
+                            display: flex;
+                            flex-direction: column;
+                            gap: 1rem;
+                        ">
+                    <li class="result-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong style="
+                                        color: var(--color-text);
+                                        display: block;
+                                        margin-bottom: 0.5rem;
+                                    ">Système d'inscription automatique</strong>
+                            <span style="color: var(--color-text-secondary)">Interface interactive pour l'inscription des étudiants et enseignants avec attribution automatique de rôles par promo et classe</span>
+                        </div>
+                    </li>
+                    <li class="result-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong style="
+                                        color: var(--color-text);
+                                        display: block;
+                                        margin-bottom: 0.5rem;
+                                    ">Refonte administrative annuelle</strong>
+                            <span style="color: var(--color-text-secondary)">Système de refonte automatique du serveur avec countdown, recréation des catégories/rôles, et migration des données</span>
+                        </div>
+                    </li>
+                    <li class="result-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong style="
+                                        color: var(--color-text);
+                                        display: block;
+                                        margin-bottom: 0.5rem;
+                                    ">Architecture robuste</strong>
+                            <span style="color: var(--color-text-secondary)">Gestion modulaire avec sauvegardes automatiques, logging Winston, tests Jest, et support multi-serveurs</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="documents" class="section project-section">
+        <div class="container" style="max-width: 900px">
+            <div class="accordion-section">
+                <button class="accordion-toggle" data-accordion="docs-accordion">
+                    <div class="accordion-header">
+                        <i class="fas fa-file-alt accordion-icon"></i>
+                        <h2>Documents & Ressources</h2>
+                    </div>
+                    <i class="fas fa-chevron-down accordion-arrow"></i>
+                </button>
+                <div class="accordion-content" id="docs-accordion">
+                    <div class="document-list">
+                        <a href="https://github.com/SudoKipedia/bot-discord-ipi" target="_blank" class="document-item">
+                            <div class="document-icon">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div class="document-info">
+                                <h3>Code source GitHub</h3>
+                                <p>Dépôt complet avec documentation technique</p>
+                                <span class="document-meta">GitHub Repository</span>
+                            </div>
+                            <i class="fas fa-external-link-alt document-download"></i>
+                        </a>
+                        <a href="#" class="document-item">
+                            <div class="document-icon">
+                                <i class="fas fa-file-code"></i>
+                            </div>
+                            <div class="document-info">
+                                <h3>Documentation technique</h3>
+                                <p>Architecture du bot, guides d'utilisation et API</p>
+                                <span class="document-meta">Markdown • docs/</span>
+                            </div>
+                            <i class="fas fa-download document-download"></i>
+                        </a>
+                        <a href="#" class="document-item">
+                            <div class="document-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="document-info">
+                                <h3>Changelog et roadmap</h3>
+                                <p>Historique des versions et fonctionnalités prévues</p>
+                                <span class="document-meta">MD • CHANGELOG.md</span>
+                            </div>
+                            <i class="fas fa-download document-download"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Contact</span>
+                <h2 class="section-title">Travaillons ensemble</h2>
+            </div>
+            <p class="contact-intro">
+                Vous avez un projet ou une opportunité ? N'hésitez pas à me contacter. Je suis
+                toujours ouvert aux nouvelles collaborations et défis techniques.
+            </p>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-methods">
+                        <a href="https://github.com/SudoKipedia" target="_blank" class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div class="contact-details">
+                                <span class="contact-label">GitHub</span>
+                                <span class="contact-value">Mes dépôts</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Nom</label>
+                        <input type="text" id="name" name="name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" maxlength="1000" required></textarea>
+                        <span class="char-counter"><span id="char-count">0</span>/1000</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="attachment">
+                            <span>Cliquez pour ajouter des fichiers</span>
+                        </label>
+                        <input type="file" id="attachment" name="attachment"
+                            accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" multiple />
+                        <small style="
+                                    color: #666;
+                                    font-size: 0.85rem;
+                                    margin-top: 0.5rem;
+                                    display: block;
+                                ">Formats acceptés : PDF, DOC, DOCX, TXT, JPG, PNG (max 5 fichiers,
+                            8MB chacun)</small>
+                        <div id="file-list" class="file-list"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span>Envoyer le message</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Portfolio. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

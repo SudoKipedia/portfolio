@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Audit Active Directory - Portfolio</title>
+    <title>Active Directory Automation - Portfolio</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -12,17 +12,17 @@
     <!-- Open Graph / Facebook -->
     <meta property="fb:app_id" content="966242223397117" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Audit Active Directory - Portfolio" />
+    <meta property="og:title" content="Active Directory Automation - Portfolio" />
     <meta property="og:description"
-        content="Projet d'audit et d'infrastructure Active Directory avec GPO, DNS et sécurisation avancée." />
-    <meta property="og:image" content="https://sudokipedia.github.io/portfolio/assets/og-image.png" />
+        content="PowerShell scripts to automate Active Directory management: domain joining, GPO, user and security group creation." />
+    <meta property="og:image" content="https://sudokipedia.github.io/portfolio/assets/og-image_en.png" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content="Audit Active Directory - Portfolio" />
+    <meta property="twitter:title" content="Active Directory Automation - Portfolio" />
     <meta property="twitter:description"
-        content="Projet d'audit et d'infrastructure Active Directory avec GPO, DNS et sécurisation avancée." />
-    <meta property="twitter:image" content="https://sudokipedia.github.io/portfolio/assets/og-image.png" />
+        content="PowerShell scripts to automate Active Directory management: domain joining, GPO, user and security group creation." />
+    <meta property="twitter:image" content="https://sudokipedia.github.io/portfolio/assets/og-image_en.png" />
 
     <link rel="stylesheet" href="style.css" />
     <link
@@ -37,31 +37,32 @@
     <header class="header">
         <div class="container">
             <nav class="nav">
-                <a href="index.html#projects" class="back-btn">
+                <a href="index_en.html#projects" class="back-btn">
                     <i class="fas fa-arrow-left"></i>
-                    <span>Accueil</span>
+                    <span>Home</span>
                 </a>
-                <a href="index.html" class="logo">
+                <a href="index_en.html" class="logo">
                     <span class="logo-text">PORTFOLIO</span>
                     <span class="logo-dot">.</span>
                 </a>
                 <div class="nav-current">
-                    <span class="nav-current-text">Vue d'ensemble</span>
+                    <span class="nav-current-text">Overview</span>
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="nav-menu">
-                    <a href="#other-projects" class="nav-link">Autres projets</a>
-                    <a href="#overview" class="nav-link">Vue d'ensemble</a>
-                    <a href="#context" class="nav-link">Contexte</a>
+                    <a href="#other-projects" class="nav-link">Other projects</a>
+                    <a href="#overview" class="nav-link">Overview</a>
+                    <a href="#context" class="nav-link">Context</a>
                     <a href="#technologies" class="nav-link">Technologies</a>
-                    <a href="#results" class="nav-link">Résultats</a>
+                    <a href="#results" class="nav-link">Results</a>
                     <a href="#documents" class="nav-link">Documents</a>
                     <a href="#contact" class="nav-link">Contact</a>
-                    <a href="index.html#projects" class="nav-link">← Retour aux projets</a>
+                    <a href="index_en.html#projects" class="nav-link">← Back to Projects</a>
                 </div>
                 <div class="lang-switcher">
-                    <a href="#" class="lang-btn active" onclick="return false;">FR</a>
-                    <a href="#" class="lang-btn" onclick="switchLanguage('project_ad_en.html'); return false;">EN</a>
+                    <a href="#" class="lang-btn"
+                        onclick="switchLanguage('project_ad_automation.html'); return false;">FR</a>
+                    <a href="#" class="lang-btn active" onclick="return false;">EN</a>
                 </div>
             </nav>
         </div>
@@ -69,34 +70,73 @@
 
     <section id="other-projects" class="section project-section">
         <div class="container" style="max-width: 1200px">
-            <span class="section-tag">Autres projets</span>
-            <h2 class="section-title">Découvrez mes autres réalisations</h2>
+            <span class="section-tag">Other projects</span>
+            <h2 class="section-title">Discover my other projects</h2>
             <div class="projects-carousel-compact">
                 <div class="carousel-wrapper">
                     <div class="carousel-track-compact" id="carousel-track">
-                        <a href="project_ansible.html" class="carousel-item-compact" data-position="0">
-                            <img src="https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=600"
-                                alt="Automatisation Ansible" class="carousel-item-compact-image" />
+                        <a href="project_bot_discord_en.html" class="carousel-item-compact" data-position="0">
+                            <img src="https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=600"
+                                alt="Discord Bot" class="carousel-item-compact-image" />
                             <div class="carousel-item-compact-content">
                                 <div class="carousel-item-compact-tags">
-                                    <span>DevOps</span>
-                                    <span>Automatisation</span>
+                                    <span>Discord.js</span>
+                                    <span>Node.js</span>
                                 </div>
                                 <h4 class="carousel-item-compact-title">
-                                    Automatisation Infrastructure avec Ansible
+                                    School Management Discord Bot
                                 </h4>
                             </div>
                         </a>
-                        <a href="project_infra.html" class="carousel-item-compact" data-position="2">
-                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600"
-                                alt="Infrastructure Cloud" class="carousel-item-compact-image" />
+                        <a href="project_portfolio_en.html" class="carousel-item-compact" data-position="1">
+                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600"
+                                alt="Portfolio" class="carousel-item-compact-image" />
                             <div class="carousel-item-compact-content">
                                 <div class="carousel-item-compact-tags">
-                                    <span>Cloud</span>
-                                    <span>Infrastructure</span>
+                                    <span>HTML/CSS/JS</span>
+                                    <span>Design</span>
                                 </div>
                                 <h4 class="carousel-item-compact-title">
-                                    Déploiement Infrastructure Cloud AWS
+                                    Interactive Portfolio
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_blog_porto_en.html" class="carousel-item-compact" data-position="2">
+                            <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=600"
+                                alt="Porto Blog" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Web</span>
+                                    <span>Travel</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Porto Travel Blog
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_nfs_raid_en.html" class="carousel-item-compact" data-position="3">
+                            <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600"
+                                alt="NFS RAID" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Linux</span>
+                                    <span>RAID</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    NFS RAID Server
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_proxmox_infra_en.html" class="carousel-item-compact" data-position="4">
+                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600"
+                                alt="Proxmox Infrastructure" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Proxmox</span>
+                                    <span>Virtualization</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Proxmox & AD Infrastructure
                                 </h4>
                             </div>
                         </a>
@@ -118,21 +158,21 @@
         <div class="container" style="max-width: 900px">
             <div style="margin-bottom: 3rem">
                 <div class="project-tags" style="margin-bottom: 1.5rem">
-                    <span>Système</span>
-                    <span>Sécurité</span>
-                    <span>Audit</span>
+                    <span>PowerShell</span>
+                    <span>Active Directory</span>
+                    <span>Automation</span>
+                    <span>GPO</span>
                 </div>
                 <h1 class="section-title" style="margin-bottom: 1.5rem">
-                    Audit de Sécurité Active Directory
+                    Active Directory Automation
                 </h1>
                 <p style="
                             font-size: 1.125rem;
                             color: var(--color-text-secondary);
                             line-height: 1.7;
                         ">
-                    Réalisation d'un audit de sécurité complet sur une infrastructure Active
-                    Directory d'entreprise avec identification des vulnérabilités et
-                    propositions de durcissement.
+                    Suite of PowerShell scripts to automate Active Directory administration tasks: 
+                    automatic domain joining, GPO configuration, user creation and security group management.
                 </p>
             </div>
 
@@ -140,9 +180,9 @@
                         margin-bottom: 3rem;
                         border-radius: 16px;
                         overflow: hidden;
-                        border: 1px solid var(--color-border);
+                    border: 1px solid var(--color-border);
                     ">
-                <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?w=1200" alt="Active Directory"
+                <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=1200" alt="Active Directory Automation"
                     style="width: 100%; height: 400px; object-fit: cover" />
             </div>
         </div>
@@ -166,22 +206,20 @@
                             font-size: 2rem;
                             margin-bottom: 1.5rem;
                         ">
-                    Contexte du projet
+                    Project Context
                 </h2>
                 <p style="
                             color: var(--color-text-secondary);
                             line-height: 1.8;
                             margin-bottom: 1.5rem;
                         ">
-                    Ce projet consistait à effectuer un audit de sécurité approfondi d'une
-                    infrastructure Active Directory pour une entreprise de taille moyenne.
-                    L'objectif était d'identifier les failles de sécurité et de proposer des
-                    mesures correctives.
+                    Development of a PowerShell script collection to automate repetitive Active Directory administration tasks. 
+                    The goal was to save time and reduce human errors during common operations.
                 </p>
                 <p style="color: var(--color-text-secondary); line-height: 1.8">
-                    L'audit a porté sur la configuration des GPO, les droits d'accès, la gestion
-                    des comptes privilégiés, et la conformité aux bonnes pratiques de sécurité
-                    Microsoft.
+                    The scripts cover four main areas: automatic domain joining of workstations with network configuration, 
+                    GPO deployment and modification, bulk user creation from CSV files, and automated security group management 
+                    with permission assignment.
                 </p>
             </div>
         </div>
@@ -201,7 +239,7 @@
                             font-size: 2rem;
                             margin-bottom: 1.5rem;
                         ">
-                    Technologies utilisées
+                    Technologies Used
                 </h2>
                 <div style="
                             display: grid;
@@ -209,28 +247,24 @@
                             gap: 1rem;
                         ">
                     <div class="tech-card">
-                        <i class="fas fa-server"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">
-                            Windows Server
-                        </h3>
+                        <i class="fas fa-terminal"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">PowerShell</h3>
                         <p style="color: var(--color-text-muted); font-size: 0.875rem">
-                            2016/2019
+                            Automation Scripts
+                        </p>
+                    </div>
+                    <div class="tech-card">
+                        <i class="fas fa-sitemap"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Active Directory</h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
+                            Enterprise Directory
                         </p>
                     </div>
                     <div class="tech-card">
                         <i class="fas fa-shield-alt"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">
-                            Active Directory
-                        </h3>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">GPO</h3>
                         <p style="color: var(--color-text-muted); font-size: 0.875rem">
-                            GPO & Security
-                        </p>
-                    </div>
-                    <div class="tech-card">
-                        <i class="fas fa-code"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">PowerShell</h3>
-                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
-                            Scripts d'audit
+                            Group Policies
                         </p>
                     </div>
                 </div>
@@ -252,7 +286,7 @@
                             font-size: 2rem;
                             margin-bottom: 1.5rem;
                         ">
-                    Résultats et recommandations
+                    Key Features
                 </h2>
                 <ul style="
                             list-style: none;
@@ -268,10 +302,8 @@
                                         color: var(--color-text);
                                         display: block;
                                         margin-bottom: 0.5rem;
-                                    ">Durcissement des GPO</strong>
-                            <span style="color: var(--color-text-secondary)">Mise en place de politiques de mot de passe
-                                renforcées et
-                                restriction des droits locaux</span>
+                                    ">Automatic domain joining</strong>
+                            <span style="color: var(--color-text-secondary)">Scripts to add workstations to the domain with DNS configuration, automatic reboot and connectivity verification</span>
                         </div>
                     </li>
                     <li class="result-item">
@@ -281,10 +313,8 @@
                                         color: var(--color-text);
                                         display: block;
                                         margin-bottom: 0.5rem;
-                                    ">Gestion des comptes privilégiés</strong>
-                            <span style="color: var(--color-text-secondary)">Implémentation de PAW (Privileged Access
-                                Workstation) et
-                                séparation des droits</span>
+                                    ">User and group management</strong>
+                            <span style="color: var(--color-text-secondary)">Bulk user creation from CSV, password generation, automatic security group assignment</span>
                         </div>
                     </li>
                     <li class="result-item">
@@ -294,10 +324,8 @@
                                         color: var(--color-text);
                                         display: block;
                                         margin-bottom: 0.5rem;
-                                    ">Monitoring et journalisation</strong>
-                            <span style="color: var(--color-text-secondary)">Configuration de l'audit avancé et
-                                centralisation des logs de
-                                sécurité</span>
+                                    ">GPO automation</strong>
+                            <span style="color: var(--color-text-secondary)">Scripts for creating and modifying Group Policies with OU-based application, GPO backup and restore</span>
                         </div>
                     </li>
                 </ul>
@@ -311,7 +339,7 @@
                 <button class="accordion-toggle" data-accordion="docs-accordion">
                     <div class="accordion-header">
                         <i class="fas fa-file-alt accordion-icon"></i>
-                        <h2>Documents & Ressources</h2>
+                        <h2>Documents & Resources</h2>
                     </div>
                     <i class="fas fa-chevron-down accordion-arrow"></i>
                 </button>
@@ -319,34 +347,34 @@
                     <div class="document-list">
                         <a href="#" class="document-item">
                             <div class="document-icon">
-                                <i class="fas fa-file-pdf"></i>
+                                <i class="fab fa-github"></i>
                             </div>
                             <div class="document-info">
-                                <h3>Rapport d'audit complet</h3>
-                                <p>Analyse détaillée des vulnérabilités détectées</p>
-                                <span class="document-meta">PDF • 2.4 MB</span>
+                                <h3>GitHub Repository</h3>
+                                <p>Complete collection of PowerShell scripts</p>
+                                <span class="document-meta">Repository</span>
                             </div>
-                            <i class="fas fa-download document-download"></i>
+                            <i class="fas fa-external-link-alt document-download"></i>
                         </a>
                         <a href="#" class="document-item">
                             <div class="document-icon">
                                 <i class="fas fa-file-code"></i>
                             </div>
                             <div class="document-info">
-                                <h3>Scripts PowerShell</h3>
-                                <p>Scripts d'audit et de durcissement AD</p>
-                                <span class="document-meta">ZIP • 156 KB</span>
+                                <h3>PowerShell Scripts</h3>
+                                <p>Full set of AD automation scripts</p>
+                                <span class="document-meta">ZIP • 45 KB</span>
                             </div>
                             <i class="fas fa-download document-download"></i>
                         </a>
                         <a href="#" class="document-item">
                             <div class="document-icon">
-                                <i class="fas fa-file-word"></i>
+                                <i class="fas fa-book"></i>
                             </div>
                             <div class="document-info">
-                                <h3>Procédure de durcissement</h3>
-                                <p>Guide étape par étape pour la mise en conformité</p>
-                                <span class="document-meta">DOCX • 890 KB</span>
+                                <h3>User Documentation</h3>
+                                <p>Usage guide and examples</p>
+                                <span class="document-meta">PDF • 1.2 MB</span>
                             </div>
                             <i class="fas fa-download document-download"></i>
                         </a>
@@ -360,11 +388,11 @@
         <div class="container">
             <div class="section-header">
                 <span class="section-tag">Contact</span>
-                <h2 class="section-title">Travaillons ensemble</h2>
+                <h2 class="section-title">Let's Work Together</h2>
             </div>
             <p class="contact-intro">
-                Vous avez un projet ou une opportunité ? N'hésitez pas à me contacter. Je suis
-                toujours ouvert aux nouvelles collaborations et défis techniques.
+                Do you have a project or opportunity? Feel free to contact me. I'm always open 
+                to new collaborations and technical challenges.
             </p>
             <div class="contact-grid">
                 <div class="contact-info">
@@ -375,14 +403,14 @@
                             </div>
                             <div class="contact-details">
                                 <span class="contact-label">GitHub</span>
-                                <span class="contact-value">Mes dépôts</span>
+                                <span class="contact-value">My repositories</span>
                             </div>
                         </a>
                     </div>
                 </div>
                 <form class="contact-form">
                     <div class="form-group">
-                        <label for="name">Nom</label>
+                        <label for="name">Name</label>
                         <input type="text" id="name" name="name" required />
                     </div>
                     <div class="form-group">
@@ -396,7 +424,7 @@
                     </div>
                     <div class="form-group">
                         <label for="attachment">
-                            <span>Cliquez pour ajouter des fichiers</span>
+                            <span>Click to add files</span>
                         </label>
                         <input type="file" id="attachment" name="attachment"
                             accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" multiple />
@@ -405,24 +433,18 @@
                                     font-size: 0.85rem;
                                     margin-top: 0.5rem;
                                     display: block;
-                                ">Formats acceptés : PDF, DOC, DOCX, TXT, JPG, PNG (max 5 fichiers,
-                            8MB chacun)</small>
+                                ">Accepted formats: PDF, DOC, DOCX, TXT, JPG, PNG (max 5 files,
+                            8MB each)</small>
                         <div id="file-list" class="file-list"></div>
                     </div>
                     <button type="submit" class="btn btn-primary">
-                        <span>Envoyer le message</span>
+                        <span>Send Message</span>
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </form>
             </div>
         </div>
     </section>
-
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Portfolio. Tous droits réservés.</p>
-        </div>
-    </footer>
 
     <script src="script.js"></script>
 </body>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Active Directory Audit - Portfolio</title>
+    <title>Porto Travel Blog - Portfolio</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -12,16 +12,16 @@
     <!-- Open Graph / Facebook -->
     <meta property="fb:app_id" content="966242223397117" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Active Directory Audit - Portfolio" />
+    <meta property="og:title" content="Porto Travel Blog - Portfolio" />
     <meta property="og:description"
-        content="Active Directory infrastructure and audit project with GPO, DNS and advanced security." />
+        content="Website documenting a 12-day language trip to Porto with daily blog, photo galleries and interactive music playlist." />
     <meta property="og:image" content="https://sudokipedia.github.io/portfolio/assets/og-image_en.png" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content="Active Directory Audit - Portfolio" />
+    <meta property="twitter:title" content="Porto Travel Blog - Portfolio" />
     <meta property="twitter:description"
-        content="Active Directory infrastructure and audit project with GPO, DNS and advanced security." />
+        content="Website documenting a 12-day language trip to Porto with daily blog, photo galleries and interactive music playlist." />
     <meta property="twitter:image" content="https://sudokipedia.github.io/portfolio/assets/og-image_en.png" />
 
     <link rel="stylesheet" href="style.css" />
@@ -60,7 +60,8 @@
                     <a href="index_en.html#projects" class="nav-link">← Back to Projects</a>
                 </div>
                 <div class="lang-switcher">
-                    <a href="#" class="lang-btn" onclick="switchLanguage('project_ad.html'); return false;">FR</a>
+                    <a href="#" class="lang-btn"
+                        onclick="switchLanguage('project_blog_porto.html'); return false;">FR</a>
                     <a href="#" class="lang-btn active" onclick="return false;">EN</a>
                 </div>
             </nav>
@@ -74,29 +75,68 @@
             <div class="projects-carousel-compact">
                 <div class="carousel-wrapper">
                     <div class="carousel-track-compact" id="carousel-track">
-                        <a href="project_ansible_en.html" class="carousel-item-compact" data-position="0">
-                            <img src="https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=600"
-                                alt="Ansible Automation" class="carousel-item-compact-image" />
+                        <a href="project_bot_discord_en.html" class="carousel-item-compact" data-position="0">
+                            <img src="https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=600"
+                                alt="Discord Bot" class="carousel-item-compact-image" />
                             <div class="carousel-item-compact-content">
                                 <div class="carousel-item-compact-tags">
-                                    <span>DevOps</span>
-                                    <span>Automation</span>
+                                    <span>Discord.js</span>
+                                    <span>Node.js</span>
                                 </div>
                                 <h4 class="carousel-item-compact-title">
-                                    Infrastructure Automation with Ansible
+                                    School Management Discord Bot
                                 </h4>
                             </div>
                         </a>
-                        <a href="project_infra_en.html" class="carousel-item-compact" data-position="2">
-                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600"
-                                alt="Cloud Infrastructure" class="carousel-item-compact-image" />
+                        <a href="project_portfolio_en.html" class="carousel-item-compact" data-position="1">
+                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600"
+                                alt="Portfolio" class="carousel-item-compact-image" />
                             <div class="carousel-item-compact-content">
                                 <div class="carousel-item-compact-tags">
-                                    <span>Cloud</span>
-                                    <span>Infrastructure</span>
+                                    <span>HTML/CSS/JS</span>
+                                    <span>Design</span>
                                 </div>
                                 <h4 class="carousel-item-compact-title">
-                                    AWS Cloud Infrastructure Deployment
+                                    Interactive Portfolio
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_nfs_raid_en.html" class="carousel-item-compact" data-position="2">
+                            <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600"
+                                alt="NFS RAID" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Linux</span>
+                                    <span>RAID</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    NFS Server with RAID
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_ad_automation_en.html" class="carousel-item-compact" data-position="3">
+                            <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=600"
+                                alt="AD Automation" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>PowerShell</span>
+                                    <span>Active Directory</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Active Directory Automation
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_proxmox_infra_en.html" class="carousel-item-compact" data-position="4">
+                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600"
+                                alt="Proxmox Infrastructure" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Proxmox</span>
+                                    <span>Virtualization</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Proxmox & AD Infrastructure
                                 </h4>
                             </div>
                         </a>
@@ -118,20 +158,20 @@
         <div class="container" style="max-width: 900px">
             <div style="margin-bottom: 3rem">
                 <div class="project-tags" style="margin-bottom: 1.5rem">
-                    <span>System</span>
-                    <span>Security</span>
-                    <span>Audit</span>
+                    <span>Web</span>
+                    <span>HTML/CSS/JS</span>
+                    <span>English</span>
                 </div>
                 <h1 class="section-title" style="margin-bottom: 1.5rem">
-                    Active Directory Security Audit
+                    Porto Travel Blog
                 </h1>
                 <p style="
                             font-size: 1.125rem;
                             color: var(--color-text-secondary);
                             line-height: 1.7;
                         ">
-                    Complete security audit of an enterprise Active Directory infrastructure
-                    with vulnerability identification and hardening proposals.
+                    Website created to document a 12-day language trip to Porto with the "Rocket League" team. 
+                    Daily blog with photo galleries, background videos, interactive music playlist and responsive design.
                 </p>
             </div>
 
@@ -139,9 +179,9 @@
                         margin-bottom: 3rem;
                         border-radius: 16px;
                         overflow: hidden;
-                        border: 1px solid var(--color-border);
+                    border: 1px solid var(--color-border);
                     ">
-                <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?w=1200" alt="Active Directory"
+                <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=1200" alt="Porto Blog"
                     style="width: 100%; height: 400px; object-fit: cover" />
             </div>
         </div>
@@ -172,13 +212,13 @@
                             line-height: 1.8;
                             margin-bottom: 1.5rem;
                         ">
-                    This project involved conducting a comprehensive security audit of an Active
-                    Directory infrastructure for a medium-sized company. The goal was to
-                    identify security flaws and propose corrective measures.
+                    As part of a language trip to Porto organized by IPI, creation of an English website 
+                    to share our daily experience. The project was a team effort with Alexandre and Maxence 
+                    under the name "Rocket League".
                 </p>
                 <p style="color: var(--color-text-secondary); line-height: 1.8">
-                    The audit covered GPO configuration, access rights, privileged account
-                    management, and compliance with Microsoft security best practices.
+                    The site documents 12 days of travel with daily articles, photo galleries, a looping background video, 
+                    and a personalized music playlist. Clean design with hamburger menu and subtle animations.
                 </p>
             </div>
         </div>
@@ -206,28 +246,24 @@
                             gap: 1rem;
                         ">
                     <div class="tech-card">
-                        <i class="fas fa-server"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">
-                            Windows Server
-                        </h3>
+                        <i class="fab fa-html5"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">HTML5/CSS3</h3>
                         <p style="color: var(--color-text-muted); font-size: 0.875rem">
-                            2016/2019
+                            Structure & Style
                         </p>
                     </div>
                     <div class="tech-card">
-                        <i class="fas fa-shield-alt"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">
-                            Active Directory
-                        </h3>
+                        <i class="fab fa-js"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">JavaScript</h3>
                         <p style="color: var(--color-text-muted); font-size: 0.875rem">
-                            GPO & Security
+                            Interactivity
                         </p>
                     </div>
                     <div class="tech-card">
-                        <i class="fas fa-code"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">PowerShell</h3>
+                        <i class="fas fa-music"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Media</h3>
                         <p style="color: var(--color-text-muted); font-size: 0.875rem">
-                            Audit scripts
+                            Video & Audio
                         </p>
                     </div>
                 </div>
@@ -249,7 +285,7 @@
                             font-size: 2rem;
                             margin-bottom: 1.5rem;
                         ">
-                    Results and Recommendations
+                    Key Features
                 </h2>
                 <ul style="
                             list-style: none;
@@ -265,10 +301,8 @@
                                         color: var(--color-text);
                                         display: block;
                                         margin-bottom: 0.5rem;
-                                    ">GPO Hardening</strong>
-                            <span style="color: var(--color-text-secondary)">Implementation of enhanced password
-                                policies and local rights
-                                restrictions</span>
+                                    ">12-day daily blog</strong>
+                            <span style="color: var(--color-text-secondary)">Daily articles with photo galleries (day1 to day12) documenting the Porto experience</span>
                         </div>
                     </li>
                     <li class="result-item">
@@ -278,10 +312,8 @@
                                         color: var(--color-text);
                                         display: block;
                                         margin-bottom: 0.5rem;
-                                    ">Privileged Account Management</strong>
-                            <span style="color: var(--color-text-secondary)">Implementation of PAW (Privileged Access
-                                Workstation) and
-                                rights separation</span>
+                                    ">Immersive experience</strong>
+                            <span style="color: var(--color-text-secondary)">Looping background video and interactive music playlist with play/pause/skip controls</span>
                         </div>
                     </li>
                     <li class="result-item">
@@ -291,10 +323,8 @@
                                         color: var(--color-text);
                                         display: block;
                                         margin-bottom: 0.5rem;
-                                    ">Monitoring and Logging</strong>
-                            <span style="color: var(--color-text-secondary)">Advanced audit configuration and
-                                centralization of security
-                                logs</span>
+                                    ">Responsive design</strong>
+                            <span style="color: var(--color-text-secondary)">Hamburger navigation, team members page, overview page and mobile-adaptive design</span>
                         </div>
                     </li>
                 </ul>
@@ -316,34 +346,34 @@
                     <div class="document-list">
                         <a href="#" class="document-item">
                             <div class="document-icon">
-                                <i class="fas fa-file-pdf"></i>
+                                <i class="fas fa-file-image"></i>
                             </div>
                             <div class="document-info">
-                                <h3>Complete Audit Report</h3>
-                                <p>Detailed analysis of detected vulnerabilities</p>
-                                <span class="document-meta">PDF • 2.4 MB</span>
+                                <h3>Photo Gallery</h3>
+                                <p>Complete collection of trip photos</p>
+                                <span class="document-meta">ZIP • Photos</span>
                             </div>
                             <i class="fas fa-download document-download"></i>
                         </a>
                         <a href="#" class="document-item">
                             <div class="document-icon">
-                                <i class="fas fa-file-code"></i>
+                                <i class="fas fa-file-video"></i>
                             </div>
                             <div class="document-info">
-                                <h3>PowerShell Scripts</h3>
-                                <p>Audit and AD hardening scripts</p>
-                                <span class="document-meta">ZIP • 156 KB</span>
+                                <h3>Background Videos</h3>
+                                <p>Porto city scenery video footage</p>
+                                <span class="document-meta">MP4 • Media</span>
                             </div>
                             <i class="fas fa-download document-download"></i>
                         </a>
                         <a href="#" class="document-item">
                             <div class="document-icon">
-                                <i class="fas fa-file-word"></i>
+                                <i class="fas fa-music"></i>
                             </div>
                             <div class="document-info">
-                                <h3>Hardening Procedure</h3>
-                                <p>Step-by-step guide for compliance implementation</p>
-                                <span class="document-meta">DOCX • 890 KB</span>
+                                <h3>Music Playlist</h3>
+                                <p>Custom playlist from the trip</p>
+                                <span class="document-meta">M3U • Playlist</span>
                             </div>
                             <i class="fas fa-download document-download"></i>
                         </a>
@@ -357,11 +387,11 @@
         <div class="container">
             <div class="section-header">
                 <span class="section-tag">Contact</span>
-                <h2 class="section-title">Let's work together</h2>
+                <h2 class="section-title">Let's Work Together</h2>
             </div>
             <p class="contact-intro">
-                Do you have a project or an opportunity? Feel free to contact me. I'm always
-                open to new collaborations and technical challenges.
+                Do you have a project or opportunity? Feel free to contact me. I'm always open 
+                to new collaborations and technical challenges.
             </p>
             <div class="contact-grid">
                 <div class="contact-info">
@@ -402,24 +432,18 @@
                                     font-size: 0.85rem;
                                     margin-top: 0.5rem;
                                     display: block;
-                                ">Accepted formats: PDF, DOC, DOCX, TXT, JPG, PNG (max 5 files, 8MB
-                            each)</small>
+                                ">Accepted formats: PDF, DOC, DOCX, TXT, JPG, PNG (max 5 files,
+                            8MB each)</small>
                         <div id="file-list" class="file-list"></div>
                     </div>
                     <button type="submit" class="btn btn-primary">
-                        <span>Send message</span>
+                        <span>Send Message</span>
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </form>
             </div>
         </div>
     </section>
-
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Portfolio. All rights reserved.</p>
-        </div>
-    </footer>
 
     <script src="script.js"></script>
 </body>

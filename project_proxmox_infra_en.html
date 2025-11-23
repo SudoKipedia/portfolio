@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ansible Automation - Portfolio</title>
+    <title>Proxmox & AD Infrastructure - Portfolio</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -12,16 +12,16 @@
     <!-- Open Graph / Facebook -->
     <meta property="fb:app_id" content="966242223397117" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Ansible Automation - Portfolio" />
+    <meta property="og:title" content="Proxmox & AD Infrastructure - Portfolio" />
     <meta property="og:description"
-        content="Infrastructure automation project with Ansible, playbooks and automated deployment." />
+        content="Complete virtualized infrastructure with Proxmox, Active Directory server and switch configuration with VLAN segmentation for testing environment." />
     <meta property="og:image" content="https://sudokipedia.github.io/portfolio/assets/og-image_en.png" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content="Ansible Automation - Portfolio" />
+    <meta property="twitter:title" content="Proxmox & AD Infrastructure - Portfolio" />
     <meta property="twitter:description"
-        content="Infrastructure automation project with Ansible, playbooks and automated deployment." />
+        content="Complete virtualized infrastructure with Proxmox, Active Directory server and switch configuration with VLAN segmentation for testing environment." />
     <meta property="twitter:image" content="https://sudokipedia.github.io/portfolio/assets/og-image_en.png" />
 
     <link rel="stylesheet" href="style.css" />
@@ -60,7 +60,8 @@
                     <a href="index_en.html#projects" class="nav-link">← Back to Projects</a>
                 </div>
                 <div class="lang-switcher">
-                    <a href="#" class="lang-btn" onclick="switchLanguage('project_ansible.html'); return false;">FR</a>
+                    <a href="#" class="lang-btn"
+                        onclick="switchLanguage('project_proxmox_infra.html'); return false;">FR</a>
                     <a href="#" class="lang-btn active" onclick="return false;">EN</a>
                 </div>
             </nav>
@@ -74,29 +75,68 @@
             <div class="projects-carousel-compact">
                 <div class="carousel-wrapper">
                     <div class="carousel-track-compact" id="carousel-track">
-                        <a href="project_infra_en.html" class="carousel-item-compact" data-position="0">
-                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600"
-                                alt="Cloud Infrastructure" class="carousel-item-compact-image" />
+                        <a href="project_bot_discord_en.html" class="carousel-item-compact" data-position="0">
+                            <img src="https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=600"
+                                alt="Discord Bot" class="carousel-item-compact-image" />
                             <div class="carousel-item-compact-content">
                                 <div class="carousel-item-compact-tags">
-                                    <span>Cloud</span>
-                                    <span>Infrastructure</span>
+                                    <span>Discord.js</span>
+                                    <span>Node.js</span>
                                 </div>
                                 <h4 class="carousel-item-compact-title">
-                                    AWS Cloud Infrastructure Deployment
+                                    School Management Discord Bot
                                 </h4>
                             </div>
                         </a>
-                        <a href="project_ad_en.html" class="carousel-item-compact" data-position="2">
-                            <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?w=600"
-                                alt="Active Directory" class="carousel-item-compact-image" />
+                        <a href="project_portfolio_en.html" class="carousel-item-compact" data-position="1">
+                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600"
+                                alt="Portfolio" class="carousel-item-compact-image" />
                             <div class="carousel-item-compact-content">
                                 <div class="carousel-item-compact-tags">
-                                    <span>System</span>
-                                    <span>Security</span>
+                                    <span>HTML/CSS/JS</span>
+                                    <span>Design</span>
                                 </div>
                                 <h4 class="carousel-item-compact-title">
-                                    Active Directory Security Audit
+                                    Interactive Portfolio
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_blog_porto_en.html" class="carousel-item-compact" data-position="2">
+                            <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=600"
+                                alt="Porto Blog" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Web</span>
+                                    <span>Travel</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Porto Travel Blog
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_nfs_raid_en.html" class="carousel-item-compact" data-position="3">
+                            <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600"
+                                alt="NFS RAID" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Linux</span>
+                                    <span>RAID</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    NFS RAID Server
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_ad_automation_en.html" class="carousel-item-compact" data-position="4">
+                            <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=600"
+                                alt="AD Automation" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>PowerShell</span>
+                                    <span>Active Directory</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Active Directory Automation
                                 </h4>
                             </div>
                         </a>
@@ -118,18 +158,21 @@
         <div class="container" style="max-width: 900px">
             <div style="margin-bottom: 3rem">
                 <div class="project-tags" style="margin-bottom: 1.5rem">
-                    <span>Automation</span>
-                    <span>DevOps</span>
-                    <span>IaC</span>
+                    <span>Proxmox</span>
+                    <span>Virtualization</span>
+                    <span>Active Directory</span>
+                    <span>VLAN</span>
                 </div>
-                <h1 class="section-title" style="margin-bottom: 1.5rem">Ansible Automation</h1>
+                <h1 class="section-title" style="margin-bottom: 1.5rem">
+                    Proxmox & AD Infrastructure
+                </h1>
                 <p style="
                             font-size: 1.125rem;
                             color: var(--color-text-secondary);
                             line-height: 1.7;
                         ">
-                    Automated server infrastructure deployment with Ansible to standardize
-                    configurations and accelerate deployments.
+                    Complete virtualized infrastructure on Proxmox with Active Directory server deployment, manageable switch configuration 
+                    and network segmentation via VLANs to create an isolated and secure testing environment.
                 </p>
             </div>
 
@@ -137,9 +180,9 @@
                         margin-bottom: 3rem;
                         border-radius: 16px;
                         overflow: hidden;
-                        border: 1px solid var(--color-border);
+                    border: 1px solid var(--color-border);
                     ">
-                <img src="https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=1200" alt="Ansible"
+                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200" alt="Proxmox Infrastructure"
                     style="width: 100%; height: 400px; object-fit: cover" />
             </div>
         </div>
@@ -170,13 +213,13 @@
                             line-height: 1.8;
                             margin-bottom: 1.5rem;
                         ">
-                    Implementation of an automation solution with Ansible for Linux server
-                    deployment and configuration. The goal was to reduce provisioning time and
-                    ensure configuration consistency.
+                    Implementation of a complete testing and development infrastructure based on Proxmox VE. The project includes the deployment 
+                    of an Active Directory server to manage centralized authentication and group policies.
                 </p>
                 <p style="color: var(--color-text-secondary); line-height: 1.8">
-                    The project includes creating playbooks for service installation, network
-                    configuration, and security policy application.
+                    The network infrastructure includes a manageable switch configured with multiple VLANs to segment environments 
+                    (production, testing, development). This architecture allows testing configurations in complete isolation before 
+                    production deployment and facilitates incident simulation exercises.
                 </p>
             </div>
         </div>
@@ -196,7 +239,7 @@
                             font-size: 2rem;
                             margin-bottom: 1.5rem;
                         ">
-                    Technologies used
+                    Technologies Used
                 </h2>
                 <div style="
                             display: grid;
@@ -204,24 +247,24 @@
                             gap: 1rem;
                         ">
                     <div class="tech-card">
-                        <i class="fas fa-cogs"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Ansible</h3>
+                        <i class="fas fa-server"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Proxmox VE</h3>
                         <p style="color: var(--color-text-muted); font-size: 0.875rem">
-                            Core & Tower
+                            Virtualization Platform
                         </p>
                     </div>
                     <div class="tech-card">
-                        <i class="fab fa-linux"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Linux</h3>
+                        <i class="fas fa-sitemap"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Active Directory</h3>
                         <p style="color: var(--color-text-muted); font-size: 0.875rem">
-                            Ubuntu & CentOS
+                            Windows Server 2019/2022
                         </p>
                     </div>
                     <div class="tech-card">
-                        <i class="fab fa-python"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Python</h3>
+                        <i class="fas fa-network-wired"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Switch & VLANs</h3>
                         <p style="color: var(--color-text-muted); font-size: 0.875rem">
-                            Custom modules
+                            Network Segmentation
                         </p>
                     </div>
                 </div>
@@ -243,7 +286,7 @@
                             font-size: 2rem;
                             margin-bottom: 1.5rem;
                         ">
-                    Results and Benefits
+                    Key Features
                 </h2>
                 <ul style="
                             list-style: none;
@@ -259,9 +302,8 @@
                                         color: var(--color-text);
                                         display: block;
                                         margin-bottom: 0.5rem;
-                                    ">Reduced deployment time</strong>
-                            <span style="color: var(--color-text-secondary)">From 2 hours to 15 minutes for a complete
-                                deployment</span>
+                                    ">Complete virtualization platform</strong>
+                            <span style="color: var(--color-text-secondary)">Proxmox server with VM/container management, snapshots, live migrations and high-availability clustering</span>
                         </div>
                     </li>
                     <li class="result-item">
@@ -271,9 +313,8 @@
                                         color: var(--color-text);
                                         display: block;
                                         margin-bottom: 0.5rem;
-                                    ">Configuration standardization</strong>
-                            <span style="color: var(--color-text-secondary)">Infrastructure as Code ensuring
-                                consistency</span>
+                                    ">Integrated Active Directory</strong>
+                            <span style="color: var(--color-text-secondary)">AD server with DNS, DHCP, GPO and centralized authentication for all workstations and infrastructure services</span>
                         </div>
                     </li>
                     <li class="result-item">
@@ -283,9 +324,8 @@
                                         color: var(--color-text);
                                         display: block;
                                         margin-bottom: 0.5rem;
-                                    ">Centralized management</strong>
-                            <span style="color: var(--color-text-secondary)">Version control and easy rollback with
-                                Git</span>
+                                    ">Advanced network segmentation</strong>
+                            <span style="color: var(--color-text-secondary)">Switch configuration with multiple VLANs to isolate production/testing/development with controlled inter-VLAN routing</span>
                         </div>
                     </li>
                 </ul>
@@ -307,34 +347,34 @@
                     <div class="document-list">
                         <a href="#" class="document-item">
                             <div class="document-icon">
+                                <i class="fas fa-file-image"></i>
+                            </div>
+                            <div class="document-info">
+                                <h3>Infrastructure Diagram</h3>
+                                <p>Complete architecture with VLANs and VMs</p>
+                                <span class="document-meta">PDF • 2.8 MB</span>
+                            </div>
+                            <i class="fas fa-download document-download"></i>
+                        </a>
+                        <a href="#" class="document-item">
+                            <div class="document-icon">
                                 <i class="fas fa-file-code"></i>
                             </div>
                             <div class="document-info">
-                                <h3>Ansible Playbooks</h3>
-                                <p>Complete collection of deployment playbooks</p>
-                                <span class="document-meta">ZIP • 245 KB</span>
+                                <h3>Switch Configuration</h3>
+                                <p>Config file with VLANs and trunk</p>
+                                <span class="document-meta">TXT • 8 KB</span>
                             </div>
                             <i class="fas fa-download document-download"></i>
                         </a>
                         <a href="#" class="document-item">
                             <div class="document-icon">
-                                <i class="fas fa-file-pdf"></i>
+                                <i class="fas fa-book"></i>
                             </div>
                             <div class="document-info">
-                                <h3>Architecture Documentation</h3>
-                                <p>Detailed diagram of the automated infrastructure</p>
-                                <span class="document-meta">PDF • 1.8 MB</span>
-                            </div>
-                            <i class="fas fa-download document-download"></i>
-                        </a>
-                        <a href="#" class="document-item">
-                            <div class="document-icon">
-                                <i class="fas fa-file-word"></i>
-                            </div>
-                            <div class="document-info">
-                                <h3>User Guide</h3>
-                                <p>Manual for the operations team</p>
-                                <span class="document-meta">DOCX • 670 KB</span>
+                                <h3>Technical Documentation</h3>
+                                <p>Deployment and administration guide</p>
+                                <span class="document-meta">PDF • 1.5 MB</span>
                             </div>
                             <i class="fas fa-download document-download"></i>
                         </a>
@@ -348,11 +388,11 @@
         <div class="container">
             <div class="section-header">
                 <span class="section-tag">Contact</span>
-                <h2 class="section-title">Let's work together</h2>
+                <h2 class="section-title">Let's Work Together</h2>
             </div>
             <p class="contact-intro">
-                Do you have a project or an opportunity? Feel free to contact me. I'm always
-                open to new collaborations and technical challenges.
+                Do you have a project or opportunity? Feel free to contact me. I'm always open 
+                to new collaborations and technical challenges.
             </p>
             <div class="contact-grid">
                 <div class="contact-info">
@@ -393,24 +433,18 @@
                                     font-size: 0.85rem;
                                     margin-top: 0.5rem;
                                     display: block;
-                                ">Accepted formats: PDF, DOC, DOCX, TXT, JPG, PNG (max 5 files, 8MB
-                            each)</small>
+                                ">Accepted formats: PDF, DOC, DOCX, TXT, JPG, PNG (max 5 files,
+                            8MB each)</small>
                         <div id="file-list" class="file-list"></div>
                     </div>
                     <button type="submit" class="btn btn-primary">
-                        <span>Send message</span>
+                        <span>Send Message</span>
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </form>
             </div>
         </div>
     </section>
-
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Portfolio. All rights reserved.</p>
-        </div>
-    </footer>
 
     <script src="script.js"></script>
 </body>

@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Portfolio - Portfolio</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="fb:app_id" content="966242223397117" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Interactive Portfolio - Portfolio" />
+    <meta property="og:description"
+        content="Modern interactive portfolio with neural network dashboard, smooth animations and responsive design developed in vanilla HTML/CSS/JS." />
+    <meta property="og:image" content="https://sudokipedia.github.io/portfolio/assets/og-image_en.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Interactive Portfolio - Portfolio" />
+    <meta property="twitter:description"
+        content="Modern interactive portfolio with neural network dashboard, smooth animations and responsive design developed in vanilla HTML/CSS/JS." />
+    <meta property="twitter:image" content="https://sudokipedia.github.io/portfolio/assets/og-image_en.png" />
+
+    <link rel="stylesheet" href="style.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+    <canvas id="bg-canvas"></canvas>
+
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="index_en.html#projects" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Home</span>
+                </a>
+                <a href="index_en.html" class="logo">
+                    <span class="logo-text">PORTFOLIO</span>
+                    <span class="logo-dot">.</span>
+                </a>
+                <div class="nav-current">
+                    <span class="nav-current-text">Overview</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="nav-menu">
+                    <a href="#other-projects" class="nav-link">Other projects</a>
+                    <a href="#overview" class="nav-link">Overview</a>
+                    <a href="#context" class="nav-link">Context</a>
+                    <a href="#technologies" class="nav-link">Technologies</a>
+                    <a href="#results" class="nav-link">Results</a>
+                    <a href="#documents" class="nav-link">Documents</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                    <a href="index_en.html#projects" class="nav-link">← Back to Projects</a>
+                </div>
+                <div class="lang-switcher">
+                    <a href="#" class="lang-btn"
+                        onclick="switchLanguage('project_portfolio.html'); return false;">FR</a>
+                    <a href="#" class="lang-btn active" onclick="return false;">EN</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section id="other-projects" class="section project-section">
+        <div class="container" style="max-width: 1200px">
+            <span class="section-tag">Other projects</span>
+            <h2 class="section-title">Discover my other projects</h2>
+            <div class="projects-carousel-compact">
+                <div class="carousel-wrapper">
+                    <div class="carousel-track-compact" id="carousel-track">
+                        <a href="project_bot_discord_en.html" class="carousel-item-compact" data-position="0">
+                            <img src="https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=600"
+                                alt="Discord Bot" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Discord.js</span>
+                                    <span>Node.js</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    School Management Discord Bot
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_blog_porto_en.html" class="carousel-item-compact" data-position="1">
+                            <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=600"
+                                alt="Porto Blog" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Web</span>
+                                    <span>Travel</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Porto Travel Blog
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_nfs_raid_en.html" class="carousel-item-compact" data-position="2">
+                            <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600"
+                                alt="NFS RAID" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Linux</span>
+                                    <span>RAID</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    NFS RAID Server
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_ad_automation_en.html" class="carousel-item-compact" data-position="3">
+                            <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=600"
+                                alt="AD Automation" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>PowerShell</span>
+                                    <span>Active Directory</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Active Directory Automation
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_proxmox_infra_en.html" class="carousel-item-compact" data-position="4">
+                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600"
+                                alt="Proxmox Infrastructure" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Proxmox</span>
+                                    <span>Virtualization</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Proxmox & AD Infrastructure
+                                </h4>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="carousel-controls">
+                        <button class="carousel-btn-compact" onclick="navigateCarousel(-1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="carousel-btn-compact" onclick="navigateCarousel(1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="overview" class="section project-section">
+        <div class="container" style="max-width: 900px">
+            <div style="margin-bottom: 3rem">
+                <div class="project-tags" style="margin-bottom: 1.5rem">
+                    <span>HTML/CSS/JS</span>
+                    <span>Design</span>
+                    <span>Animations</span>
+                </div>
+                <h1 class="section-title" style="margin-bottom: 1.5rem">
+                    Interactive Portfolio
+                </h1>
+                <p style="
+                            font-size: 1.125rem;
+                            color: var(--color-text-secondary);
+                            line-height: 1.7;
+                        ">
+                    Modern personal portfolio with smooth animations, interactive neural network experience dashboard, 
+                    dynamic navigation system and responsive design. Developed in vanilla HTML/CSS/JavaScript.
+                </p>
+            </div>
+
+            <div style="
+                        margin-bottom: 3rem;
+                        border-radius: 16px;
+                        overflow: hidden;
+                    border: 1px solid var(--color-border);
+                    ">
+                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200" alt="Interactive Portfolio"
+                    style="width: 100%; height: 400px; object-fit: cover" />
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <section id="context" class="section project-section">
+        <div class="container" style="max-width: 900px">
+            <div style="
+                        background: var(--color-surface);
+                        padding: 3rem;
+                        border-radius: 16px;
+                        border: 1px solid var(--color-border);
+                        margin-bottom: 3rem;
+                    ">
+                <h2 style="
+                            font-family: var(--font-display);
+                            font-size: 2rem;
+                            margin-bottom: 1.5rem;
+                        ">
+                    Project Context
+                </h2>
+                <p style="
+                            color: var(--color-text-secondary);
+                            line-height: 1.8;
+                            margin-bottom: 1.5rem;
+                        ">
+                    Development of a personal portfolio entirely in vanilla HTML/CSS/JavaScript to showcase skills and projects. 
+                    Focus on smooth animations, modern design and optimal user experience.
+                </p>
+                <p style="color: var(--color-text-secondary); line-height: 1.8">
+                    The site features an interactive neural network dashboard to visualize professional experience, 
+                    dynamic navigation with smooth scroll, animated background and responsive design for all devices.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="technologies" class="section project-section">
+        <div class="container" style="max-width: 900px">
+            <div style="
+                        background: var(--color-surface);
+                        padding: 3rem;
+                        border-radius: 16px;
+                        border: 1px solid var(--color-border);
+                        margin-bottom: 3rem;
+                    ">
+                <h2 style="
+                            font-family: var(--font-display);
+                            font-size: 2rem;
+                            margin-bottom: 1.5rem;
+                        ">
+                    Technologies Used
+                </h2>
+                <div style="
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                            gap: 1rem;
+                        ">
+                    <div class="tech-card">
+                        <i class="fab fa-html5"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">HTML5/CSS3</h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
+                            Modern Structure & Style
+                        </p>
+                    </div>
+                    <div class="tech-card">
+                        <i class="fab fa-js"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">JavaScript ES6+</h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
+                            Animations & Interactions
+                        </p>
+                    </div>
+                    <div class="tech-card">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Responsive Design</h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
+                            Multi-device Adaptation
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="results" class="section project-section">
+        <div class="container" style="max-width: 900px">
+            <div style="
+                        background: var(--color-surface);
+                        padding: 3rem;
+                        border-radius: 16px;
+                        border: 1px solid var(--color-border);
+                        margin-bottom: 3rem;
+                    ">
+                <h2 style="
+                            font-family: var(--font-display);
+                            font-size: 2rem;
+                            margin-bottom: 1.5rem;
+                        ">
+                    Key Features
+                </h2>
+                <ul style="
+                            list-style: none;
+                            padding: 0;
+                            display: flex;
+                            flex-direction: column;
+                            gap: 1rem;
+                        ">
+                    <li class="result-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong style="
+                                        color: var(--color-text);
+                                        display: block;
+                                        margin-bottom: 0.5rem;
+                                    ">Interactive neural network dashboard</strong>
+                            <span style="color: var(--color-text-secondary)">Animated visualization of professional experience with neural network effect and interactive nodes</span>
+                        </div>
+                    </li>
+                    <li class="result-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong style="
+                                        color: var(--color-text);
+                                        display: block;
+                                        margin-bottom: 0.5rem;
+                                    ">Smooth animations</strong>
+                            <span style="color: var(--color-text-secondary)">Fluid transitions, scroll effects, animated background canvas and subtle micro-interactions</span>
+                        </div>
+                    </li>
+                    <li class="result-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong style="
+                                        color: var(--color-text);
+                                        display: block;
+                                        margin-bottom: 0.5rem;
+                                    ">Dynamic navigation</strong>
+                            <span style="color: var(--color-text-secondary)">Intelligent navigation system with smooth scroll, active section detection and bilingual interface (FR/EN)</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="documents" class="section project-section">
+        <div class="container" style="max-width: 900px">
+            <div class="accordion-section">
+                <button class="accordion-toggle" data-accordion="docs-accordion">
+                    <div class="accordion-header">
+                        <i class="fas fa-file-alt accordion-icon"></i>
+                        <h2>Documents & Resources</h2>
+                    </div>
+                    <i class="fas fa-chevron-down accordion-arrow"></i>
+                </button>
+                <div class="accordion-content" id="docs-accordion">
+                    <div class="document-list">
+                        <a href="#" class="document-item">
+                            <div class="document-icon">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div class="document-info">
+                                <h3>GitHub Repository</h3>
+                                <p>Complete portfolio source code</p>
+                                <span class="document-meta">Repository</span>
+                            </div>
+                            <i class="fas fa-external-link-alt document-download"></i>
+                        </a>
+                        <a href="#" class="document-item">
+                            <div class="document-icon">
+                                <i class="fas fa-file-image"></i>
+                            </div>
+                            <div class="document-info">
+                                <h3>Design Mockups</h3>
+                                <p>UI/UX design and wireframes</p>
+                                <span class="document-meta">PNG • Design files</span>
+                            </div>
+                            <i class="fas fa-download document-download"></i>
+                        </a>
+                        <a href="#" class="document-item">
+                            <div class="document-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="document-info">
+                                <h3>Technical Documentation</h3>
+                                <p>Code structure and features</p>
+                                <span class="document-meta">MD • README.md</span>
+                            </div>
+                            <i class="fas fa-download document-download"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Contact</span>
+                <h2 class="section-title">Let's Work Together</h2>
+            </div>
+            <p class="contact-intro">
+                Do you have a project or opportunity? Feel free to contact me. I'm always open 
+                to new collaborations and technical challenges.
+            </p>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-methods">
+                        <a href="https://github.com/SudoKipedia" target="_blank" class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div class="contact-details">
+                                <span class="contact-label">GitHub</span>
+                                <span class="contact-value">My repositories</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" maxlength="1000" required></textarea>
+                        <span class="char-counter"><span id="char-count">0</span>/1000</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="attachment">
+                            <span>Click to add files</span>
+                        </label>
+                        <input type="file" id="attachment" name="attachment"
+                            accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" multiple />
+                        <small style="
+                                    color: #666;
+                                    font-size: 0.85rem;
+                                    margin-top: 0.5rem;
+                                    display: block;
+                                ">Accepted formats: PDF, DOC, DOCX, TXT, JPG, PNG (max 5 files,
+                            8MB each)</small>
+                        <div id="file-list" class="file-list"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span>Send Message</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

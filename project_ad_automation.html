@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Automatisation Ansible - Portfolio</title>
+    <title>Automatisation Active Directory - Portfolio</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -12,16 +12,16 @@
     <!-- Open Graph / Facebook -->
     <meta property="fb:app_id" content="966242223397117" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Automatisation Ansible - Portfolio" />
+    <meta property="og:title" content="Automatisation Active Directory - Portfolio" />
     <meta property="og:description"
-        content="Projet d'automatisation de déploiements et configuration avec Ansible, playbooks et rôles personnalisés." />
+        content="Scripts PowerShell pour automatiser la gestion d'Active Directory: jonction au domaine, GPO, création d'utilisateurs et groupes." />
     <meta property="og:image" content="https://sudokipedia.github.io/portfolio/assets/og-image.png" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content="Automatisation Ansible - Portfolio" />
+    <meta property="twitter:title" content="Automatisation Active Directory - Portfolio" />
     <meta property="twitter:description"
-        content="Projet d'automatisation de déploiements et configuration avec Ansible, playbooks et rôles personnalisés." />
+        content="Scripts PowerShell pour automatiser la gestion d'Active Directory: jonction au domaine, GPO, création d'utilisateurs et groupes." />
     <meta property="twitter:image" content="https://sudokipedia.github.io/portfolio/assets/og-image.png" />
 
     <link rel="stylesheet" href="style.css" />
@@ -62,7 +62,7 @@
                 <div class="lang-switcher">
                     <a href="#" class="lang-btn active" onclick="return false;">FR</a>
                     <a href="#" class="lang-btn"
-                        onclick="switchLanguage('project_ansible_en.html'); return false;">EN</a>
+                        onclick="switchLanguage('project_ad_automation_en.html'); return false;">EN</a>
                 </div>
             </nav>
         </div>
@@ -75,29 +75,68 @@
             <div class="projects-carousel-compact">
                 <div class="carousel-wrapper">
                     <div class="carousel-track-compact" id="carousel-track">
-                        <a href="project_infra.html" class="carousel-item-compact" data-position="0">
-                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600"
-                                alt="Infrastructure Cloud" class="carousel-item-compact-image" />
+                        <a href="project_bot_discord.html" class="carousel-item-compact" data-position="0">
+                            <img src="https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=600"
+                                alt="Bot Discord" class="carousel-item-compact-image" />
                             <div class="carousel-item-compact-content">
                                 <div class="carousel-item-compact-tags">
-                                    <span>Cloud</span>
-                                    <span>Infrastructure</span>
+                                    <span>Discord.js</span>
+                                    <span>Node.js</span>
                                 </div>
                                 <h4 class="carousel-item-compact-title">
-                                    Déploiement Infrastructure Cloud AWS
+                                    Bot Discord de Gestion Scolaire
                                 </h4>
                             </div>
                         </a>
-                        <a href="project_ad.html" class="carousel-item-compact" data-position="2">
-                            <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?w=600"
-                                alt="Active Directory" class="carousel-item-compact-image" />
+                        <a href="project_portfolio.html" class="carousel-item-compact" data-position="1">
+                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600"
+                                alt="Portfolio" class="carousel-item-compact-image" />
                             <div class="carousel-item-compact-content">
                                 <div class="carousel-item-compact-tags">
-                                    <span>Système</span>
-                                    <span>Sécurité</span>
+                                    <span>HTML/CSS/JS</span>
+                                    <span>Design</span>
                                 </div>
                                 <h4 class="carousel-item-compact-title">
-                                    Audit de Sécurité Active Directory
+                                    Portfolio Interactif
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_blog_porto.html" class="carousel-item-compact" data-position="2">
+                            <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=600"
+                                alt="Blog Porto" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Web</span>
+                                    <span>Voyage</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Blog de Voyage Porto
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_nfs_raid.html" class="carousel-item-compact" data-position="3">
+                            <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600"
+                                alt="NFS RAID" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Linux</span>
+                                    <span>RAID</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Serveur NFS avec RAID
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_proxmox_infra.html" class="carousel-item-compact" data-position="4">
+                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600"
+                                alt="Infrastructure Proxmox" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Proxmox</span>
+                                    <span>Virtualisation</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Infrastructure Proxmox & AD
                                 </h4>
                             </div>
                         </a>
@@ -119,20 +158,21 @@
         <div class="container" style="max-width: 900px">
             <div style="margin-bottom: 3rem">
                 <div class="project-tags" style="margin-bottom: 1.5rem">
+                    <span>PowerShell</span>
+                    <span>Active Directory</span>
                     <span>Automatisation</span>
-                    <span>DevOps</span>
-                    <span>IaC</span>
+                    <span>GPO</span>
                 </div>
                 <h1 class="section-title" style="margin-bottom: 1.5rem">
-                    Automatisation avec Ansible
+                    Automatisation Active Directory
                 </h1>
                 <p style="
                             font-size: 1.125rem;
                             color: var(--color-text-secondary);
                             line-height: 1.7;
                         ">
-                    Déploiement automatisé d'infrastructure serveur avec Ansible pour
-                    standardiser les configurations et accélérer les déploiements.
+                    Suite de scripts PowerShell pour automatiser les tâches d'administration Active Directory: 
+                    jonction automatique au domaine, configuration de GPO, création d'utilisateurs et de groupes de sécurité.
                 </p>
             </div>
 
@@ -140,9 +180,9 @@
                         margin-bottom: 3rem;
                         border-radius: 16px;
                         overflow: hidden;
-                        border: 1px solid var(--color-border);
+                    border: 1px solid var(--color-border);
                     ">
-                <img src="https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=1200" alt="Ansible"
+                <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=1200" alt="Active Directory Automation"
                     style="width: 100%; height: 400px; object-fit: cover" />
             </div>
         </div>
@@ -173,14 +213,13 @@
                             line-height: 1.8;
                             margin-bottom: 1.5rem;
                         ">
-                    Mise en place d'une solution d'automatisation avec Ansible pour le
-                    déploiement et la configuration de serveurs Linux. L'objectif était de
-                    réduire le temps de provisioning et d'assurer la cohérence des
-                    configurations.
+                    Développement d'une collection de scripts PowerShell pour automatiser les tâches répétitives d'administration 
+                    Active Directory. L'objectif était de gagner du temps et de réduire les erreurs humaines lors des opérations courantes.
                 </p>
                 <p style="color: var(--color-text-secondary); line-height: 1.8">
-                    Le projet inclut la création de playbooks pour l'installation de services,
-                    la configuration réseau, et l'application de politiques de sécurité.
+                    Les scripts couvrent quatre domaines principaux: jonction automatique de postes au domaine avec configuration réseau, 
+                    déploiement et modification de GPO, création en masse d'utilisateurs depuis CSV, et gestion automatisée des groupes de sécurité 
+                    avec attribution de permissions.
                 </p>
             </div>
         </div>
@@ -208,24 +247,24 @@
                             gap: 1rem;
                         ">
                     <div class="tech-card">
-                        <i class="fas fa-cogs"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Ansible</h3>
+                        <i class="fas fa-terminal"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">PowerShell</h3>
                         <p style="color: var(--color-text-muted); font-size: 0.875rem">
-                            Core & Tower
+                            Scripts d'automatisation
                         </p>
                     </div>
                     <div class="tech-card">
-                        <i class="fab fa-linux"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Linux</h3>
+                        <i class="fas fa-sitemap"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Active Directory</h3>
                         <p style="color: var(--color-text-muted); font-size: 0.875rem">
-                            Ubuntu & CentOS
+                            Annuaire d'entreprise
                         </p>
                     </div>
                     <div class="tech-card">
-                        <i class="fab fa-python"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Python</h3>
+                        <i class="fas fa-shield-alt"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">GPO</h3>
                         <p style="color: var(--color-text-muted); font-size: 0.875rem">
-                            Modules custom
+                            Stratégies de groupe
                         </p>
                     </div>
                 </div>
@@ -247,7 +286,7 @@
                             font-size: 2rem;
                             margin-bottom: 1.5rem;
                         ">
-                    Résultats et bénéfices
+                    Fonctionnalités principales
                 </h2>
                 <ul style="
                             list-style: none;
@@ -263,9 +302,8 @@
                                         color: var(--color-text);
                                         display: block;
                                         margin-bottom: 0.5rem;
-                                    ">Réduction du temps de déploiement</strong>
-                            <span style="color: var(--color-text-secondary)">Passage de 2h à 15 minutes pour un
-                                déploiement complet</span>
+                                    ">Jonction automatique au domaine</strong>
+                            <span style="color: var(--color-text-secondary)">Scripts pour ajouter des postes au domaine avec configuration DNS, redémarrage automatique et vérification de la connectivité</span>
                         </div>
                     </li>
                     <li class="result-item">
@@ -275,9 +313,8 @@
                                         color: var(--color-text);
                                         display: block;
                                         margin-bottom: 0.5rem;
-                                    ">Standardisation des configurations</strong>
-                            <span style="color: var(--color-text-secondary)">Infrastructure as Code garantissant la
-                                cohérence</span>
+                                    ">Gestion des utilisateurs et groupes</strong>
+                            <span style="color: var(--color-text-secondary)">Création en masse d'utilisateurs depuis CSV, génération de mots de passe, attribution automatique aux groupes de sécurité</span>
                         </div>
                     </li>
                     <li class="result-item">
@@ -287,9 +324,8 @@
                                         color: var(--color-text);
                                         display: block;
                                         margin-bottom: 0.5rem;
-                                    ">Gestion centralisée</strong>
-                            <span style="color: var(--color-text-secondary)">Contrôle version et rollback facilités avec
-                                Git</span>
+                                    ">Automatisation GPO</strong>
+                            <span style="color: var(--color-text-secondary)">Scripts de création et modification de stratégies de groupe avec application par OU, backup et restauration des GPO</span>
                         </div>
                     </li>
                 </ul>
@@ -311,34 +347,34 @@
                     <div class="document-list">
                         <a href="#" class="document-item">
                             <div class="document-icon">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div class="document-info">
+                                <h3>Dépôt GitHub</h3>
+                                <p>Collection complète des scripts PowerShell</p>
+                                <span class="document-meta">Repository</span>
+                            </div>
+                            <i class="fas fa-external-link-alt document-download"></i>
+                        </a>
+                        <a href="#" class="document-item">
+                            <div class="document-icon">
                                 <i class="fas fa-file-code"></i>
                             </div>
                             <div class="document-info">
-                                <h3>Playbooks Ansible</h3>
-                                <p>Collection complète des playbooks de déploiement</p>
-                                <span class="document-meta">ZIP • 245 KB</span>
+                                <h3>Scripts PowerShell</h3>
+                                <p>Ensemble des scripts d'automatisation AD</p>
+                                <span class="document-meta">ZIP • 45 KB</span>
                             </div>
                             <i class="fas fa-download document-download"></i>
                         </a>
                         <a href="#" class="document-item">
                             <div class="document-icon">
-                                <i class="fas fa-file-pdf"></i>
+                                <i class="fas fa-book"></i>
                             </div>
                             <div class="document-info">
-                                <h3>Documentation Architecture</h3>
-                                <p>Schéma détaillé de l'infrastructure automatisée</p>
-                                <span class="document-meta">PDF • 1.8 MB</span>
-                            </div>
-                            <i class="fas fa-download document-download"></i>
-                        </a>
-                        <a href="#" class="document-item">
-                            <div class="document-icon">
-                                <i class="fas fa-file-word"></i>
-                            </div>
-                            <div class="document-info">
-                                <h3>Guide d'utilisation</h3>
-                                <p>Manuel pour l'équipe d'exploitation</p>
-                                <span class="document-meta">DOCX • 670 KB</span>
+                                <h3>Documentation utilisateur</h3>
+                                <p>Guide d'utilisation et exemples</p>
+                                <span class="document-meta">PDF • 1.2 MB</span>
                             </div>
                             <i class="fas fa-download document-download"></i>
                         </a>
@@ -409,12 +445,6 @@
             </div>
         </div>
     </section>
-
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Portfolio. Tous droits réservés.</p>
-        </div>
-    </footer>
 
     <script src="script.js"></script>
 </body>
