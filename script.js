@@ -385,11 +385,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const heroStatsRect = heroStats.getBoundingClientRect();
                 
                 // L'animation commence SEULEMENT quand les cartes sont complètement visibles
-                // (le bas des cartes doit être à au moins 200px du bas de l'écran)
+                // (le bas des cartes doit être à au moins 10px du bas de l'écran)
                 const cardsFullyVisible = heroStatsRect.bottom < viewportHeight - 10;
                 
                 // Sauvegarder UNIQUEMENT le scroll au moment où les cartes deviennent complètement visibles
-                // La position sera capturée au premier frame de l'animation
                 if (cardsFullyVisible && !heroStats.dataset.scrollAtStart) {
                     heroStats.dataset.scrollAtStart = currentScroll.toString();
                 }
@@ -413,10 +412,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         heroStats.style.transition = '';
                         heroStats.style.boxShadow = '';
                         heroStats.style.width = '';
-                        delete heroStats.dataset.initialTop;
-                        delete heroStats.dataset.initialLeft;
+                        delete heroStats.dataset.animStartTop;
+                        delete heroStats.dataset.animStartLeft;
                         delete heroStats.dataset.scrollAtStart;
                         delete heroStats.dataset.fixedPositionSet;
+                        
+                        // Réinitialiser les ombres sur les stat-items
+                        const statItems = heroStats.querySelectorAll('.stat-item');
+                        statItems.forEach(item => {
+                            item.style.boxShadow = '';
+                        });
                         
                         // Supprimer le placeholder
                         const placeholder = document.getElementById('hero-stats-placeholder');
@@ -436,61 +441,74 @@ document.addEventListener('DOMContentLoaded', () => {
                     heroStats.style.setProperty('opacity', '0.95', 'important');
                     heroStats.style.setProperty('z-index', '999', 'important');
                     heroStats.style.setProperty('transition', 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)', 'important');
-                    heroStats.style.setProperty('box-shadow', '0 8px 25px rgba(0, 0, 0, 0.3)', 'important');
                     heroStats.style.setProperty('width', 'max-content', 'important');
+                    
+                    // Appliquer les ombres sur chaque stat-item
+                    const statItems = heroStats.querySelectorAll('.stat-item');
+                    statItems.forEach(item => {
+                        item.style.setProperty('box-shadow', '0 8px 25px rgba(0, 0, 0, 0.3)', 'important');
+                    });
                 } else {
                     // Transition progressive en ligne droite vers le coin supérieur gauche
                     const progress = (currentScroll - shrinkStart) / (shrinkEnd - shrinkStart);
                     const scale = 1 - (0.65 * progress); // De 1 à 0.35
                     const opacity = 1 - (0.05 * progress); // De 1 à 0.95
                     
-                    // Au premier frame, sauvegarder la position et créer un placeholder
+                    // Créer le placeholder une seule fois au premier frame
                     if (!heroStats.dataset.fixedPositionSet) {
                         const rect = heroStats.getBoundingClientRect();
-                        heroStats.dataset.initialTop = rect.top.toString();
-                        heroStats.dataset.initialLeft = rect.left.toString();
-                        heroStats.dataset.fixedPositionSet = 'true';
                         
-                        // Supprimer l'ancien placeholder s'il existe
-                        const oldPlaceholder = document.getElementById('hero-stats-placeholder');
-                        if (oldPlaceholder) {
-                            oldPlaceholder.remove();
-                        }
-                        
-                        // Créer un nouveau placeholder invisible pour garder l'espace
+                        // Créer le placeholder AVANT de passer en fixed
                         const placeholder = document.createElement('div');
                         placeholder.id = 'hero-stats-placeholder';
                         placeholder.style.width = rect.width + 'px';
                         placeholder.style.height = rect.height + 'px';
                         placeholder.style.margin = window.getComputedStyle(heroStats).margin;
-                        placeholder.style.padding = '0';
-                        placeholder.style.border = 'none';
                         placeholder.style.visibility = 'hidden';
                         placeholder.style.pointerEvents = 'none';
                         heroStats.parentNode.insertBefore(placeholder, heroStats);
+                        
+                        // IMPORTANT : Passer immédiatement en position fixed
+                        heroStats.style.setProperty('position', 'fixed', 'important');
+                        heroStats.style.setProperty('top', `${rect.top}px`, 'important');
+                        heroStats.style.setProperty('left', `${rect.left}px`, 'important');
+                        heroStats.style.setProperty('width', 'max-content', 'important');
+                        heroStats.style.setProperty('z-index', '999', 'important');
+                        heroStats.style.setProperty('transition', 'none', 'important');
+                        
+                        // Sauvegarder la position de DÉPART de l'animation (celle qu'on vient de fixer)
+                        // Ces valeurs NE DOIVENT JAMAIS être modifiées pendant l'animation
+                        heroStats.dataset.animStartTop = rect.top.toString();
+                        heroStats.dataset.animStartLeft = rect.left.toString();
+                        heroStats.dataset.fixedPositionSet = 'true';
                     }
                     
-                    const initialTop = parseFloat(heroStats.dataset.initialTop);
-                    const initialLeft = parseFloat(heroStats.dataset.initialLeft);
+                    // Positions de référence - LECTURE SEULE, jamais modifiées
+                    const startTop = parseFloat(heroStats.dataset.animStartTop);
+                    const startLeft = parseFloat(heroStats.dataset.animStartLeft);
                     const targetLeft = 30;
-                    const targetTop = 10; // Coin supérieur gauche (plus haut)
+                    const targetTop = 10;
                     
-                    // Mouvement linéaire direct sur les deux axes
-                    const currentLeft = initialLeft + (targetLeft - initialLeft) * progress;
-                    const currentTop = initialTop + (targetTop - initialTop) * progress;
+                    // Animation linéaire de start vers target
+                    const currentLeft = startLeft + (targetLeft - startLeft) * progress;
+                    const currentTop = startTop + (targetTop - startTop) * progress;
                     
                     // Appliquer la transformation progressive
-                    heroStats.style.setProperty('position', 'fixed', 'important');
+                    // Position fixed déjà appliquée au premier frame, on met juste à jour top/left
                     heroStats.style.setProperty('top', `${currentTop}px`, 'important');
                     heroStats.style.setProperty('left', `${currentLeft}px`, 'important');
-                    heroStats.style.setProperty('width', 'max-content', 'important');
                     
                     heroStats.style.setProperty('transform', `scale(${scale})`, 'important');
                     heroStats.style.setProperty('transform-origin', 'top left', 'important');
                     heroStats.style.setProperty('opacity', opacity.toString(), 'important');
                     heroStats.style.setProperty('z-index', '999', 'important');
                     heroStats.style.setProperty('transition', 'none', 'important');
-                    heroStats.style.setProperty('box-shadow', `0 ${8 * progress}px ${25 * progress}px rgba(0, 0, 0, ${0.3 * progress})`, 'important');
+                    
+                    // Appliquer les ombres progressives sur chaque stat-item
+                    const statItems = heroStats.querySelectorAll('.stat-item');
+                    statItems.forEach(item => {
+                        item.style.setProperty('box-shadow', `0 ${8 * progress}px ${25 * progress}px rgba(0, 0, 0, ${0.3 * progress})`, 'important');
+                    });
                 }
             }
         }
