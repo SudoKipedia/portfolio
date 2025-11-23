@@ -779,9 +779,9 @@
     pointer-events: none;
     padding-top: 0;
     transition:
-        max-height 0.4s var(--transition-smooth) 0.25s,
-        opacity 0.3s ease 0.25s,
-        padding-top 0.4s var(--transition-smooth) 0.25s;
+        max-height 0.4s var(--transition-smooth),
+        opacity 0.3s ease,
+        padding-top 0.4s var(--transition-smooth);
 }
 
 .legend-item {
@@ -837,7 +837,7 @@
 /* Animation de disparition en cascade (bas vers haut) */
 .skills-legend.collapsed .legend-item {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(0);
     transition:
         opacity 0.15s ease,
         transform 0.15s ease;
