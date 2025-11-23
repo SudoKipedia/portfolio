@@ -22,6 +22,16 @@
     --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Reset html/body background */
+html,
+body {
+    background: #000000;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+}
+
 /* Page base */
 .experience-page {
     background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #050505 100%);
@@ -838,9 +848,15 @@
 .skills-legend.collapsed .legend-item {
     opacity: 0;
     transform: translateY(0);
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
     transition:
         opacity 0.15s ease,
-        transform 0.15s ease;
+        transform 0.15s ease,
+        margin 0.15s ease,
+        padding 0.15s ease;
 }
 
 .skills-legend.collapsed .legend-item:nth-child(1) {
