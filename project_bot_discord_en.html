@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>School Management Discord Bot - Portfolio</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="fb:app_id" content="966242223397117" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="School Management Discord Bot - Portfolio" />
+    <meta property="og:description"
+        content="Complete Discord bot for automated student and teacher registration with administrative refresh system." />
+    <meta property="og:image" content="https://sudokipedia.github.io/portfolio/assets/og-image_en.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="School Management Discord Bot - Portfolio" />
+    <meta property="twitter:description"
+        content="Complete Discord bot for automated student and teacher registration with administrative refresh system." />
+    <meta property="twitter:image" content="https://sudokipedia.github.io/portfolio/assets/og-image_en.png" />
+
+    <link rel="stylesheet" href="style.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+    <canvas id="bg-canvas"></canvas>
+
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="index_en.html#projects" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Home</span>
+                </a>
+                <a href="index_en.html" class="logo">
+                    <span class="logo-text">PORTFOLIO</span>
+                    <span class="logo-dot">.</span>
+                </a>
+                <div class="nav-current">
+                    <span class="nav-current-text">Overview</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="nav-menu">
+                    <a href="#other-projects" class="nav-link">Other projects</a>
+                    <a href="#overview" class="nav-link">Overview</a>
+                    <a href="#context" class="nav-link">Context</a>
+                    <a href="#technologies" class="nav-link">Technologies</a>
+                    <a href="#results" class="nav-link">Results</a>
+                    <a href="#documents" class="nav-link">Documents</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                    <a href="index_en.html#projects" class="nav-link">← Back to Projects</a>
+                </div>
+                <div class="lang-switcher">
+                    <a href="#" class="lang-btn"
+                        onclick="switchLanguage('project_bot_discord.html'); return false;">FR</a>
+                    <a href="#" class="lang-btn active" onclick="return false;">EN</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section id="other-projects" class="section project-section">
+        <div class="container" style="max-width: 1200px">
+            <span class="section-tag">Other projects</span>
+            <h2 class="section-title">Discover my other projects</h2>
+            <div class="projects-carousel-compact">
+                <div class="carousel-wrapper">
+                    <div class="carousel-track-compact" id="carousel-track">
+                        <a href="project_portfolio_en.html" class="carousel-item-compact" data-position="0">
+                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600"
+                                alt="Portfolio" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>HTML/CSS/JS</span>
+                                    <span>Design</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Interactive Portfolio
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_blog_porto_en.html" class="carousel-item-compact" data-position="1">
+                            <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=600"
+                                alt="Porto Blog" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Web</span>
+                                    <span>Travel</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Porto Travel Blog
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_nfs_raid_en.html" class="carousel-item-compact" data-position="2">
+                            <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600"
+                                alt="NFS RAID" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Linux</span>
+                                    <span>RAID</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    NFS Server with RAID
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_ad_automation_en.html" class="carousel-item-compact" data-position="3">
+                            <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=600"
+                                alt="AD Automation" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>PowerShell</span>
+                                    <span>Active Directory</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Active Directory Automation
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_proxmox_infra_en.html" class="carousel-item-compact" data-position="4">
+                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600"
+                                alt="Proxmox Infrastructure" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Proxmox</span>
+                                    <span>Virtualization</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Proxmox & AD Infrastructure
+                                </h4>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="carousel-controls">
+                        <button class="carousel-btn-compact" onclick="navigateCarousel(-1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="carousel-btn-compact" onclick="navigateCarousel(1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="overview" class="section project-section">
+        <div class="container" style="max-width: 900px">
+            <div style="margin-bottom: 3rem">
+                <div class="project-tags" style="margin-bottom: 1.5rem">
+                    <span>Discord.js</span>
+                    <span>Node.js</span>
+                    <span>Automation</span>
+                </div>
+                <h1 class="section-title" style="margin-bottom: 1.5rem">
+                    School Management Discord Bot
+                </h1>
+                <p style="
+                            font-size: 1.125rem;
+                            color: var(--color-text-secondary);
+                            line-height: 1.7;
+                        ">
+                    Complete Discord bot developed to automate administrative management of a school Discord server: 
+                    student and teacher registration, automatic role assignment by promotion/class, 
+                    annual refresh system and full permission management.
+                </p>
+            </div>
+
+            <div style="
+                        margin-bottom: 3rem;
+                        border-radius: 16px;
+                        overflow: hidden;
+                        border: 1px solid var(--color-border);
+                    ">
+                <img src="https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=1200" alt="Discord Bot"
+                    style="width: 100%; height: 400px; object-fit: cover" />
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <section id="context" class="section project-section">
+        <div class="container" style="max-width: 900px">
+            <div style="
+                        background: var(--color-surface);
+                        padding: 3rem;
+                        border-radius: 16px;
+                        border: 1px solid var(--color-border);
+                        margin-bottom: 3rem;
+                    ">
+                <h2 style="
+                            font-family: var(--font-display);
+                            font-size: 2rem;
+                            margin-bottom: 1.5rem;
+                        ">
+                    Project Context
+                </h2>
+                <p style="
+                            color: var(--color-text-secondary);
+                            line-height: 1.8;
+                            margin-bottom: 1.5rem;
+                        ">
+                    This project involved conducting a comprehensive security audit of an Active
+                    Directory infrastructure for a medium-sized company. The goal was to
+                    identify security flaws and propose corrective measures.
+                </p>
+                <p style="color: var(--color-text-secondary); line-height: 1.8">
+                    The audit covered GPO configuration, access rights, privileged account
+                    management, and compliance with Microsoft security best practices.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="technologies" class="section project-section">
+        <div class="container" style="max-width: 900px">
+            <div style="
+                        background: var(--color-surface);
+                        padding: 3rem;
+                        border-radius: 16px;
+                        border: 1px solid var(--color-border);
+                        margin-bottom: 3rem;
+                    ">
+                <h2 style="
+                            font-family: var(--font-display);
+                            font-size: 2rem;
+                            margin-bottom: 1.5rem;
+                        ">
+                    Technologies Used
+                </h2>
+                <div style="
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                            gap: 1rem;
+                        ">
+                    <div class="tech-card">
+                        <i class="fas fa-server"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">
+                            Windows Server
+                        </h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
+                            2016/2019
+                        </p>
+                    </div>
+                    <div class="tech-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">
+                            Active Directory
+                        </h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
+                            GPO & Security
+                        </p>
+                    </div>
+                    <div class="tech-card">
+                        <i class="fas fa-code"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">PowerShell</h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
+                            Audit scripts
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="results" class="section project-section">
+        <div class="container" style="max-width: 900px">
+            <div style="
+                        background: var(--color-surface);
+                        padding: 3rem;
+                        border-radius: 16px;
+                        border: 1px solid var(--color-border);
+                        margin-bottom: 3rem;
+                    ">
+                <h2 style="
+                            font-family: var(--font-display);
+                            font-size: 2rem;
+                            margin-bottom: 1.5rem;
+                        ">
+                    Results and Recommendations
+                </h2>
+                <ul style="
+                            list-style: none;
+                            padding: 0;
+                            display: flex;
+                            flex-direction: column;
+                            gap: 1rem;
+                        ">
+                    <li class="result-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong style="
+                                        color: var(--color-text);
+                                        display: block;
+                                        margin-bottom: 0.5rem;
+                                    ">GPO Hardening</strong>
+                            <span style="color: var(--color-text-secondary)">Implementation of enhanced password
+                                policies and local rights
+                                restrictions</span>
+                        </div>
+                    </li>
+                    <li class="result-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong style="
+                                        color: var(--color-text);
+                                        display: block;
+                                        margin-bottom: 0.5rem;
+                                    ">Privileged Account Management</strong>
+                            <span style="color: var(--color-text-secondary)">Implementation of PAW (Privileged Access
+                                Workstation) and
+                                rights separation</span>
+                        </div>
+                    </li>
+                    <li class="result-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong style="
+                                        color: var(--color-text);
+                                        display: block;
+                                        margin-bottom: 0.5rem;
+                                    ">Monitoring and Logging</strong>
+                            <span style="color: var(--color-text-secondary)">Advanced audit configuration and
+                                centralization of security
+                                logs</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="documents" class="section project-section">
+        <div class="container" style="max-width: 900px">
+            <div class="accordion-section">
+                <button class="accordion-toggle" data-accordion="docs-accordion">
+                    <div class="accordion-header">
+                        <i class="fas fa-file-alt accordion-icon"></i>
+                        <h2>Documents & Resources</h2>
+                    </div>
+                    <i class="fas fa-chevron-down accordion-arrow"></i>
+                </button>
+                <div class="accordion-content" id="docs-accordion">
+                    <div class="document-list">
+                        <a href="#" class="document-item">
+                            <div class="document-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="document-info">
+                                <h3>Complete Audit Report</h3>
+                                <p>Detailed analysis of detected vulnerabilities</p>
+                                <span class="document-meta">PDF • 2.4 MB</span>
+                            </div>
+                            <i class="fas fa-download document-download"></i>
+                        </a>
+                        <a href="#" class="document-item">
+                            <div class="document-icon">
+                                <i class="fas fa-file-code"></i>
+                            </div>
+                            <div class="document-info">
+                                <h3>PowerShell Scripts</h3>
+                                <p>Audit and AD hardening scripts</p>
+                                <span class="document-meta">ZIP • 156 KB</span>
+                            </div>
+                            <i class="fas fa-download document-download"></i>
+                        </a>
+                        <a href="#" class="document-item">
+                            <div class="document-icon">
+                                <i class="fas fa-file-word"></i>
+                            </div>
+                            <div class="document-info">
+                                <h3>Hardening Procedure</h3>
+                                <p>Step-by-step guide for compliance implementation</p>
+                                <span class="document-meta">DOCX • 890 KB</span>
+                            </div>
+                            <i class="fas fa-download document-download"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Contact</span>
+                <h2 class="section-title">Let's work together</h2>
+            </div>
+            <p class="contact-intro">
+                Do you have a project or an opportunity? Feel free to contact me. I'm always
+                open to new collaborations and technical challenges.
+            </p>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-methods">
+                        <a href="https://github.com/SudoKipedia" target="_blank" class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div class="contact-details">
+                                <span class="contact-label">GitHub</span>
+                                <span class="contact-value">My repositories</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" maxlength="1000" required></textarea>
+                        <span class="char-counter"><span id="char-count">0</span>/1000</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="attachment">
+                            <span>Click to add files</span>
+                        </label>
+                        <input type="file" id="attachment" name="attachment"
+                            accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" multiple />
+                        <small style="
+                                    color: #666;
+                                    font-size: 0.85rem;
+                                    margin-top: 0.5rem;
+                                    display: block;
+                                ">Accepted formats: PDF, DOC, DOCX, TXT, JPG, PNG (max 5 files, 8MB
+                            each)</small>
+                        <div id="file-list" class="file-list"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span>Send message</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Portfolio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
