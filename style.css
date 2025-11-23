@@ -41,7 +41,6 @@
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
-    background: var(--color-bg);
 }
 
 body {
@@ -49,6 +48,7 @@ body {
     background: var(--color-bg);
     color: var(--color-text);
     line-height: 1.6;
+    min-height: 100vh;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -1886,6 +1886,7 @@ body {
 
     .hero {
         padding-top: 220px;
+        padding-bottom: 8vh;
     }
 
     .hero-stats {
