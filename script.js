@@ -1103,47 +1103,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const items = document.querySelectorAll('.carousel-item-compact');
         if (items.length === 0) return;
 
-        if (items.length === 2) {
-            // Pour 2 éléments: alterner simplement entre position 1 et 2
-            items.forEach(item => {
-                const currentPos = parseInt(item.getAttribute('data-position'));
-                if (currentPos === 1) {
-                    item.setAttribute('data-position', '2');
-                } else if (currentPos === 2) {
-                    item.setAttribute('data-position', '1');
-                }
-            });
-        } else {
-            // Pour 3+ éléments: boucler les positions (0, 1, 2)
-            const positions = [];
-            items.forEach(item => {
-                const pos = parseInt(item.getAttribute('data-position') || '0');
-                positions.push({ item, position: pos });
-            });
+        // Boucler les positions pour tous les éléments
+        const positions = [];
+        items.forEach(item => {
+            const pos = parseInt(item.getAttribute('data-position') || '0');
+            positions.push({ item, position: pos });
+        });
 
-            positions.forEach(({ item, position }) => {
-                let newPosition = position + direction;
-                if (newPosition < 0) newPosition = items.length - 1;
-                if (newPosition >= items.length) newPosition = 0;
-                item.setAttribute('data-position', newPosition);
-            });
-        }
+        positions.forEach(({ item, position }) => {
+            // Inverser la direction pour que cliquer à droite aille vers la droite
+            let newPosition = position - direction;
+            // Gérer la boucle circulaire
+            if (newPosition < 0) newPosition = items.length - 1;
+            if (newPosition >= items.length) newPosition = 0;
+            item.setAttribute('data-position', newPosition);
+        });
     };
 
     // Initialiser les positions du carrousel au chargement
     const carouselItems = document.querySelectorAll('.carousel-item-compact');
 
-    if (carouselItems.length === 2) {
-        // Pour 2 éléments: un en position 1 (centre), un en position 2 (droite)
-        carouselItems.forEach((item, index) => {
-            item.setAttribute('data-position', index === 0 ? 1 : 2);
-        });
-    } else if (carouselItems.length >= 3) {
-        // Pour 3+ éléments: positions 0, 1, 2
-        carouselItems.forEach((item, index) => {
-            item.setAttribute('data-position', index);
-        });
-    }
+    // Les positions sont déjà définies dans le HTML (0, 1, 2, 3, 4)
+    // Pas besoin de les réinitialiser, elles sont correctes
 
     // Compteur de caractères pour le champ message
     const messageTextarea = document.getElementById('message');

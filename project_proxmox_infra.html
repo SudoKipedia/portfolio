@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Infrastructure Cloud - Portfolio</title>
+    <title>Infrastructure Proxmox & AD - Portfolio</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -12,16 +12,16 @@
     <!-- Open Graph / Facebook -->
     <meta property="fb:app_id" content="966242223397117" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Infrastructure Cloud - Portfolio" />
+    <meta property="og:title" content="Infrastructure Proxmox & AD - Portfolio" />
     <meta property="og:description"
-        content="Projet d'infrastructure cloud avec Oracle Cloud, Docker et configurations avancées." />
+        content="Infrastructure virtualisée complète avec Proxmox, serveur Active Directory et configuration switch avec segmentation VLAN pour environnement de test." />
     <meta property="og:image" content="https://sudokipedia.github.io/portfolio/assets/og-image.png" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content="Infrastructure Cloud - Portfolio" />
+    <meta property="twitter:title" content="Infrastructure Proxmox & AD - Portfolio" />
     <meta property="twitter:description"
-        content="Projet d'infrastructure cloud avec Oracle Cloud, Docker et configurations avancées." />
+        content="Infrastructure virtualisée complète avec Proxmox, serveur Active Directory et configuration switch avec segmentation VLAN pour environnement de test." />
     <meta property="twitter:image" content="https://sudokipedia.github.io/portfolio/assets/og-image.png" />
 
     <link rel="stylesheet" href="style.css" />
@@ -61,7 +61,8 @@
                 </div>
                 <div class="lang-switcher">
                     <a href="#" class="lang-btn active" onclick="return false;">FR</a>
-                    <a href="#" class="lang-btn" onclick="switchLanguage('project_infra_en.html'); return false;">EN</a>
+                    <a href="#" class="lang-btn"
+                        onclick="switchLanguage('project_proxmox_infra_en.html'); return false;">EN</a>
                 </div>
             </nav>
         </div>
@@ -74,29 +75,68 @@
             <div class="projects-carousel-compact">
                 <div class="carousel-wrapper">
                     <div class="carousel-track-compact" id="carousel-track">
-                        <a href="project_ansible.html" class="carousel-item-compact" data-position="0">
-                            <img src="https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=600"
-                                alt="Automatisation Ansible" class="carousel-item-compact-image" />
+                        <a href="project_bot_discord.html" class="carousel-item-compact" data-position="0">
+                            <img src="https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=600"
+                                alt="Bot Discord" class="carousel-item-compact-image" />
                             <div class="carousel-item-compact-content">
                                 <div class="carousel-item-compact-tags">
-                                    <span>DevOps</span>
-                                    <span>Automatisation</span>
+                                    <span>Discord.js</span>
+                                    <span>Node.js</span>
                                 </div>
                                 <h4 class="carousel-item-compact-title">
-                                    Automatisation Infrastructure avec Ansible
+                                    Bot Discord de Gestion Scolaire
                                 </h4>
                             </div>
                         </a>
-                        <a href="project_ad.html" class="carousel-item-compact" data-position="2">
-                            <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?w=600"
-                                alt="Active Directory" class="carousel-item-compact-image" />
+                        <a href="project_portfolio.html" class="carousel-item-compact" data-position="1">
+                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600"
+                                alt="Portfolio" class="carousel-item-compact-image" />
                             <div class="carousel-item-compact-content">
                                 <div class="carousel-item-compact-tags">
-                                    <span>Système</span>
-                                    <span>Sécurité</span>
+                                    <span>HTML/CSS/JS</span>
+                                    <span>Design</span>
                                 </div>
                                 <h4 class="carousel-item-compact-title">
-                                    Audit de Sécurité Active Directory
+                                    Portfolio Interactif
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_blog_porto.html" class="carousel-item-compact" data-position="2">
+                            <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=600"
+                                alt="Blog Porto" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Web</span>
+                                    <span>Voyage</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Blog de Voyage Porto
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_nfs_raid.html" class="carousel-item-compact" data-position="3">
+                            <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600"
+                                alt="NFS RAID" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>Linux</span>
+                                    <span>RAID</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Serveur NFS avec RAID
+                                </h4>
+                            </div>
+                        </a>
+                        <a href="project_ad_automation.html" class="carousel-item-compact" data-position="4">
+                            <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=600"
+                                alt="AD Automation" class="carousel-item-compact-image" />
+                            <div class="carousel-item-compact-content">
+                                <div class="carousel-item-compact-tags">
+                                    <span>PowerShell</span>
+                                    <span>Active Directory</span>
+                                </div>
+                                <h4 class="carousel-item-compact-title">
+                                    Automatisation Active Directory
                                 </h4>
                             </div>
                         </a>
@@ -118,20 +158,21 @@
         <div class="container" style="max-width: 900px">
             <div style="margin-bottom: 3rem">
                 <div class="project-tags" style="margin-bottom: 1.5rem">
-                    <span>Réseau</span>
-                    <span>Architecture</span>
-                    <span>Cisco</span>
+                    <span>Proxmox</span>
+                    <span>Virtualisation</span>
+                    <span>Active Directory</span>
+                    <span>VLAN</span>
                 </div>
                 <h1 class="section-title" style="margin-bottom: 1.5rem">
-                    Infrastructure Réseau Complète
+                    Infrastructure Proxmox & AD
                 </h1>
                 <p style="
                             font-size: 1.125rem;
                             color: var(--color-text-secondary);
                             line-height: 1.7;
                         ">
-                    Conception et déploiement d'une infrastructure réseau sécurisée avec
-                    segmentation VLAN, haute disponibilité et redondance.
+                    Infrastructure complète virtualisée sur Proxmox avec déploiement d'un serveur Active Directory, configuration d'un switch 
+                    manageable et segmentation réseau via VLANs pour créer un environnement de test isolé et sécurisé.
                 </p>
             </div>
 
@@ -141,7 +182,7 @@
                         overflow: hidden;
                     border: 1px solid var(--color-border);
                     ">
-                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200" alt="Infrastructure"
+                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200" alt="Infrastructure Proxmox"
                     style="width: 100%; height: 400px; object-fit: cover" />
             </div>
         </div>
@@ -172,13 +213,13 @@
                             line-height: 1.8;
                             margin-bottom: 1.5rem;
                         ">
-                    Conception et mise en place d'une infrastructure réseau complète pour un
-                    site multi-étages. Le projet comprenait la segmentation réseau, la sécurité
-                    périmétrique et la haute disponibilité.
+                    Mise en place d'une infrastructure complète de test et développement basée sur Proxmox VE. Le projet inclut le déploiement 
+                    d'un serveur Active Directory pour gérer l'authentification centralisée et les stratégies de groupe.
                 </p>
                 <p style="color: var(--color-text-secondary); line-height: 1.8">
-                    L'architecture inclut des switchs Cisco empilés, routage inter-VLAN,
-                    redondance des liens, et mise en place de politiques de sécurité avec ACL.
+                    L'infrastructure réseau comprend un switch manageable configuré avec plusieurs VLANs pour segmenter les environnements 
+                    (production, test, développement). Cette architecture permet de tester des configurations en isolation complète avant 
+                    déploiement en production et facilite les exercices de simulation d'incidents.
                 </p>
             </div>
         </div>
@@ -206,24 +247,24 @@
                             gap: 1rem;
                         ">
                     <div class="tech-card">
+                        <i class="fas fa-server"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Proxmox VE</h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
+                            Plateforme de virtualisation
+                        </p>
+                    </div>
+                    <div class="tech-card">
+                        <i class="fas fa-sitemap"></i>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Active Directory</h3>
+                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
+                            Windows Server 2019/2022
+                        </p>
+                    </div>
+                    <div class="tech-card">
                         <i class="fas fa-network-wired"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Cisco</h3>
+                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Switch & VLANs</h3>
                         <p style="color: var(--color-text-muted); font-size: 0.875rem">
-                            Catalyst & ASA
-                        </p>
-                    </div>
-                    <div class="tech-card">
-                        <i class="fas fa-project-diagram"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">VLAN</h3>
-                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
-                            Segmentation
-                        </p>
-                    </div>
-                    <div class="tech-card">
-                        <i class="fas fa-shield-alt"></i>
-                        <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem">Firewall</h3>
-                        <p style="color: var(--color-text-muted); font-size: 0.875rem">
-                            pfSense
+                            Segmentation réseau
                         </p>
                     </div>
                 </div>
@@ -245,7 +286,7 @@
                             font-size: 2rem;
                             margin-bottom: 1.5rem;
                         ">
-                    Résultats techniques
+                    Fonctionnalités principales
                 </h2>
                 <ul style="
                             list-style: none;
@@ -261,9 +302,8 @@
                                         color: var(--color-text);
                                         display: block;
                                         margin-bottom: 0.5rem;
-                                    ">Segmentation réseau</strong>
-                            <span style="color: var(--color-text-secondary)">8 VLANs avec routage inter-VLAN et
-                                isolation des flux</span>
+                                    ">Plateforme de virtualisation complète</strong>
+                            <span style="color: var(--color-text-secondary)">Serveur Proxmox avec gestion des VMs/containers, snapshots, migrations à chaud et clustering haute disponibilité</span>
                         </div>
                     </li>
                     <li class="result-item">
@@ -273,9 +313,8 @@
                                         color: var(--color-text);
                                         display: block;
                                         margin-bottom: 0.5rem;
-                                    ">Haute disponibilité</strong>
-                            <span style="color: var(--color-text-secondary)">Redondance des liens avec HSRP et stack de
-                                switchs</span>
+                                    ">Active Directory intégré</strong>
+                            <span style="color: var(--color-text-secondary)">Serveur AD avec DNS, DHCP, GPO et authentification centralisée pour tous les postes et services de l'infrastructure</span>
                         </div>
                     </li>
                     <li class="result-item">
@@ -285,10 +324,8 @@
                                         color: var(--color-text);
                                         display: block;
                                         margin-bottom: 0.5rem;
-                                    ">Sécurité périmétrique</strong>
-                            <span style="color: var(--color-text-secondary)">Firewall avec DMZ, VPN site-to-site et
-                                filtrage
-                                applicatif</span>
+                                    ">Segmentation réseau avancée</strong>
+                            <span style="color: var(--color-text-secondary)">Configuration switch avec VLANs multiples pour isoler production/test/développement avec routage inter-VLAN contrôlé</span>
                         </div>
                     </li>
                 </ul>
@@ -313,9 +350,9 @@
                                 <i class="fas fa-file-image"></i>
                             </div>
                             <div class="document-info">
-                                <h3>Schéma réseau complet</h3>
-                                <p>Topologie détaillée avec VLANs et adressage IP</p>
-                                <span class="document-meta">PDF • 3.2 MB</span>
+                                <h3>Schéma d'infrastructure</h3>
+                                <p>Architecture complète avec VLANs et VMs</p>
+                                <span class="document-meta">PDF • 2.8 MB</span>
                             </div>
                             <i class="fas fa-download document-download"></i>
                         </a>
@@ -324,20 +361,20 @@
                                 <i class="fas fa-file-code"></i>
                             </div>
                             <div class="document-info">
-                                <h3>Configurations équipements</h3>
-                                <p>Fichiers de config switchs et routeurs</p>
-                                <span class="document-meta">ZIP • 89 KB</span>
+                                <h3>Configuration switch</h3>
+                                <p>Fichier de config avec VLANs et trunk</p>
+                                <span class="document-meta">TXT • 8 KB</span>
                             </div>
                             <i class="fas fa-download document-download"></i>
                         </a>
                         <a href="#" class="document-item">
                             <div class="document-icon">
-                                <i class="fas fa-file-alt"></i>
+                                <i class="fas fa-book"></i>
                             </div>
                             <div class="document-info">
-                                <h3>Plan d'adressage IP</h3>
-                                <p>Documentation complète du schéma d'adressage</p>
-                                <span class="document-meta">XLSX • 124 KB</span>
+                                <h3>Documentation technique</h3>
+                                <p>Guide de déploiement et administration</p>
+                                <span class="document-meta">PDF • 1.5 MB</span>
                             </div>
                             <i class="fas fa-download document-download"></i>
                         </a>
@@ -408,12 +445,6 @@
             </div>
         </div>
     </section>
-
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Portfolio. Tous droits réservés.</p>
-        </div>
-    </footer>
 
     <script src="script.js"></script>
 </body>
