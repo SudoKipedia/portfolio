@@ -465,13 +465,83 @@ class CardExpander {
         this._scrollHandler = handleScroll;
 
         this.cards.forEach(card => {
+            // Variables pour détecter si c'est un tap ou un scroll
+            let touchStartY = 0;
+            let touchStartTime = 0;
+            let hasMoved = false;
+
             // Retirer l'ancien listener s'il existe
             if (card._clickHandler) {
                 card.removeEventListener('click', card._clickHandler);
             }
+            if (card._touchStartHandler) {
+                card.removeEventListener('touchstart', card._touchStartHandler);
+            }
+            if (card._touchMoveHandler) {
+                card.removeEventListener('touchmove', card._touchMoveHandler);
+            }
+            if (card._touchEndHandler) {
+                card.removeEventListener('touchend', card._touchEndHandler);
+            }
 
-            // Créer le nouveau handler
+            // Handler pour touchstart
+            card._touchStartHandler = e => {
+                touchStartY = e.touches[0].clientY;
+                touchStartTime = Date.now();
+                hasMoved = false;
+            };
+
+            // Handler pour touchmove
+            card._touchMoveHandler = e => {
+                const touchY = e.touches[0].clientY;
+                const diff = Math.abs(touchY - touchStartY);
+                if (diff > 10) { // Plus de 10px de mouvement = scroll
+                    hasMoved = true;
+                }
+            };
+
+            // Handler pour touchend
+            card._touchEndHandler = e => {
+                const touchDuration = Date.now() - touchStartTime;
+                
+                // Si pas de mouvement et durée courte = tap
+                if (!hasMoved && touchDuration < 300) {
+                    // Empêcher le click event de se déclencher
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const isExpanded = card.classList.contains('expanded');
+
+                    if (isExpanded) {
+                        // Replier
+                        card.classList.remove('expanded');
+                        card.classList.add('collapsed');
+                    } else {
+                        // Déployer
+                        card.classList.add('expanded');
+                        card.classList.remove('collapsed');
+                    }
+
+                    // Recalculer la position du menu après l'animation
+                    setTimeout(() => {
+                        const manager = getLegendManager();
+                        if (manager) manager.updatePosition();
+                    }, 100);
+                    setTimeout(() => {
+                        const manager = getLegendManager();
+                        if (manager) manager.updatePosition();
+                    }, 400);
+                }
+            };
+
+            // Créer le handler de clic pour les clics souris (non-touch)
             card._clickHandler = e => {
+                // Sur appareil tactile, ignorer complètement le click
+                if (e.pointerType === 'touch' || e.sourceCapabilities?.firesTouchEvents) {
+                    e.preventDefault();
+                    return;
+                }
+
                 // Ignorer le clic si on est en train de scroller
                 if (isScrolling) {
                     e.preventDefault();
@@ -501,6 +571,10 @@ class CardExpander {
                 }, 400);
             };
 
+            // Ajouter les listeners touch et click
+            card.addEventListener('touchstart', card._touchStartHandler, { passive: true });
+            card.addEventListener('touchmove', card._touchMoveHandler, { passive: true });
+            card.addEventListener('touchend', card._touchEndHandler);
             card.addEventListener('click', card._clickHandler);
 
             // Commencer repliées
@@ -521,6 +595,18 @@ class CardExpander {
             if (card._clickHandler) {
                 card.removeEventListener('click', card._clickHandler);
                 card._clickHandler = null;
+            }
+            if (card._touchStartHandler) {
+                card.removeEventListener('touchstart', card._touchStartHandler);
+                card._touchStartHandler = null;
+            }
+            if (card._touchMoveHandler) {
+                card.removeEventListener('touchmove', card._touchMoveHandler);
+                card._touchMoveHandler = null;
+            }
+            if (card._touchEndHandler) {
+                card.removeEventListener('touchend', card._touchEndHandler);
+                card._touchEndHandler = null;
             }
             card.classList.remove('collapsed');
             card.classList.remove('expanded');
