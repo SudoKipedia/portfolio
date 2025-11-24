@@ -2460,3 +2460,67 @@ body {
         align-self: stretch;
     }
 }
+
+/* ===================================
+   FLOATING CONTACT BUTTON
+   =================================== */
+.floating-contact-btn {
+    position: fixed;
+    left: 2rem;
+    bottom: 2rem;
+    width: 60px;
+    height: 60px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    text-decoration: none;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
+    transition: all var(--transition-base);
+    cursor: pointer;
+}
+
+.floating-contact-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 30px rgba(239, 68, 68, 0.6);
+    background: var(--color-primary-dark);
+}
+
+.floating-contact-btn:active {
+    transform: translateY(-1px) scale(1);
+}
+
+.floating-contact-btn i {
+    pointer-events: none;
+}
+
+/* Animation d'apparition */
+@keyframes floatIn {
+    from {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.floating-contact-btn {
+    animation: floatIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s backwards;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .floating-contact-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+        left: 1rem;
+        bottom: 1rem;
+    }
+}
