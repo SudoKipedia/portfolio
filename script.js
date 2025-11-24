@@ -295,6 +295,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
     console.log('heroStats trouvé:', heroStats);
 
+    // Fonction d'initialisation au chargement de la page
+    function initHeroStatsPosition() {
+        if (!heroStats) return;
+        
+        const currentScroll = window.scrollY || window.pageYOffset;
+        const viewportHeight = window.innerHeight;
+        const isMobile = window.innerWidth <= 768;
+        
+        // Ne rien faire sur mobile
+        if (isMobile) return;
+        
+        // Calculer la position du bas des hero stats
+        const heroStatsRect = heroStats.getBoundingClientRect();
+        const heroStatsBottom = heroStatsRect.bottom + currentScroll;
+        
+        // Calculer où l'animation se termine : position des stats + 50vh
+        const animationEndScroll = heroStatsBottom + (viewportHeight * 0.5);
+        
+        // Si on a déjà scrollé au-delà de la fin de l'animation
+        if (currentScroll > animationEndScroll) {
+            // Appliquer directement le style final sans animation
+            heroStats.style.position = 'fixed';
+            heroStats.style.top = '10px';
+            heroStats.style.left = '30px';
+            heroStats.style.transform = 'scale(0.35)';
+            heroStats.style.transformOrigin = 'top left';
+            heroStats.style.opacity = '0.95';
+            heroStats.style.zIndex = '999';
+            heroStats.style.width = 'max-content';
+            heroStats.style.transition = 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            
+            const statItems = heroStats.querySelectorAll('.stat-item');
+            statItems.forEach(item => {
+                item.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.3)';
+            });
+            
+            // Marquer comme étant en mini mode MAIS avec le bon scrollAtStart
+            heroStats.dataset.miniMode = 'true';
+            heroStats.dataset.scrollAtStart = heroStatsBottom.toString();
+            heroStats.dataset.fixedPositionSet = 'true';
+        }
+    }
+    
+    // Initialiser la position au chargement
+    initHeroStatsPosition();
+
     function updateScrollIndicator() {
         const currentScroll = window.scrollY || window.pageYOffset;
 
@@ -591,7 +637,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         counter.innerText = Math.ceil(count + increment);
                         setTimeout(updateCount, 10);
                     } else {
-                        counter.innerText = target + '+';
+                        counter.innerText = target;
                     }
                 };
 
@@ -994,15 +1040,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Close all accordions
             accordionToggles.forEach(t => {
-                t.classList.remove('active');
                 const c = document.getElementById(t.getAttribute('data-accordion'));
-                if (c) c.classList.remove('active');
+                if (c && t.classList.contains('active')) {
+                    c.style.maxHeight = '0px';
+                    c.style.opacity = '0';
+                    setTimeout(() => {
+                        t.classList.remove('active');
+                        c.classList.remove('active');
+                    }, 500);
+                }
             });
 
             // Toggle current accordion
             if (!isActive) {
                 this.classList.add('active');
                 content.classList.add('active');
+                content.style.opacity = '0';
+                content.style.maxHeight = '0px';
+                
+                setTimeout(() => {
+                    content.style.opacity = '1';
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                }, 10);
             }
         });
     });
