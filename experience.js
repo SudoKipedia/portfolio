@@ -183,6 +183,27 @@ class SkillHighlighter {
         this.activeFilter = null;
 
         this.initListeners();
+        this.restoreFilter();
+    }
+
+    restoreFilter() {
+        const savedFilter = localStorage.getItem('experienceActiveFilter');
+        if (savedFilter) {
+            const item = document.querySelector(`.legend-item[data-skill="${savedFilter}"]`);
+            if (item) {
+                this.activeFilter = savedFilter;
+                item.classList.add('active');
+                this.applyFilter(item);
+            }
+        }
+    }
+
+    saveFilter() {
+        if (this.activeFilter) {
+            localStorage.setItem('experienceActiveFilter', this.activeFilter);
+        } else {
+            localStorage.removeItem('experienceActiveFilter');
+        }
     }
 
     initListeners() {
@@ -200,6 +221,7 @@ class SkillHighlighter {
             this.activeFilter = null;
             this.legendItems.forEach(i => i.classList.remove('active'));
             this.removeHighlight();
+            this.saveFilter();
             return;
         }
 
@@ -214,40 +236,34 @@ class SkillHighlighter {
         });
 
         this.applyFilter(item);
+        this.saveFilter();
     }
 
     applyFilter(item) {
         const skill = item.getAttribute('data-skill');
 
-        // Récupérer la couleur de la compétence
+        // Récupérer la couleur de la compétence - dégradé bordeaux → rouge pâle
         const skillColors = {
-            cybersecurity: { rgb: '127, 29, 29', color: '#7f1d1d' },
-            automation: { rgb: '153, 27, 27', color: '#991b1b' },
-            'incident-response': { rgb: '185, 28, 28', color: '#b91c1c' },
-            devops: { rgb: '220, 38, 38', color: '#dc2626' },
-            infrastructure: { rgb: '239, 68, 68', color: '#ef4444' },
-            networking: { rgb: '252, 165, 165', color: '#fca5a5' },
-            systems: { rgb: '254, 202, 202', color: '#fecaca' },
+            communication: { rgb: '127, 29, 29', color: '#7f1d1d' }, // Bordeaux foncé
+            teamwork: { rgb: '220, 38, 38', color: '#dc2626' }, // Rouge medium
+            adaptability: { rgb: '252, 165, 165', color: '#fca5a5' }, // Rouge pâle
         };
 
-        const skillColor = skillColors[skill] || { rgb: '239, 68, 68', color: '#ef4444' };
+        const skillColor = skillColors[skill] || { rgb: '220, 38, 38', color: '#dc2626' };
 
         this.cards.forEach(card => {
             const cardSkills = card.getAttribute('data-skills');
 
             if (cardSkills && cardSkills.includes(skill)) {
-                card.style.display = '';
-                card.style.borderColor = `rgba(${skillColor.rgb}, 0.8)`;
+                card.classList.remove('filtered-hidden');
                 card.style.boxShadow = `
                     0 8px 32px rgba(${skillColor.rgb}, 0.5),
-                    0 0 80px rgba(${skillColor.rgb}, 0.3),
+                    0 0 80px rgba(${skillColor.rgb}, 0.4),
                     inset 0 2px 4px rgba(255, 255, 255, 0.1),
                     inset 0 -2px 4px rgba(0, 0, 0, 0.1)
                 `;
-                card.style.transform = '';
-                card.style.opacity = '';
             } else {
-                card.style.display = 'none';
+                card.classList.add('filtered-hidden');
             }
         });
     }
@@ -255,27 +271,22 @@ class SkillHighlighter {
     highlightSkill(item) {
         const skill = item.getAttribute('data-skill');
 
-        // Récupérer la couleur de la compétence survolée
+        // Récupérer la couleur de la compétence survolée - dégradé bordeaux → rouge pâle
         const skillColors = {
-            cybersecurity: { rgb: '127, 29, 29', color: '#7f1d1d' },
-            automation: { rgb: '153, 27, 27', color: '#991b1b' },
-            'incident-response': { rgb: '185, 28, 28', color: '#b91c1c' },
-            devops: { rgb: '220, 38, 38', color: '#dc2626' },
-            infrastructure: { rgb: '239, 68, 68', color: '#ef4444' },
-            networking: { rgb: '252, 165, 165', color: '#fca5a5' },
-            systems: { rgb: '254, 202, 202', color: '#fecaca' },
+            communication: { rgb: '127, 29, 29', color: '#7f1d1d' }, // Bordeaux foncé
+            teamwork: { rgb: '220, 38, 38', color: '#dc2626' }, // Rouge medium
+            adaptability: { rgb: '252, 165, 165', color: '#fca5a5' }, // Rouge pâle
         };
 
-        const skillColor = skillColors[skill] || { rgb: '239, 68, 68', color: '#ef4444' };
+        const skillColor = skillColors[skill] || { rgb: '220, 38, 38', color: '#dc2626' };
 
         this.cards.forEach(card => {
             const cardSkills = card.getAttribute('data-skills');
 
             if (cardSkills && cardSkills.includes(skill)) {
-                card.style.borderColor = `rgba(${skillColor.rgb}, 0.8)`;
                 card.style.boxShadow = `
                     0 8px 32px rgba(${skillColor.rgb}, 0.5),
-                    0 0 80px rgba(${skillColor.rgb}, 0.3)
+                    0 0 80px rgba(${skillColor.rgb}, 0.4)
                 `;
                 card.style.transform = 'translateY(-10px) scale(1.03)';
             } else {
@@ -286,11 +297,10 @@ class SkillHighlighter {
 
     removeHighlight() {
         this.cards.forEach(card => {
+            card.classList.remove('filtered-hidden');
             card.style.borderColor = '';
             card.style.boxShadow = '';
             card.style.transform = '';
-            card.style.opacity = '';
-            card.style.display = '';
         });
     }
 }
@@ -445,24 +455,10 @@ class CardExpander {
     }
 
     setupMobileClick() {
-        // Sur mobile : déploiement au clic
-        let scrollTimeout;
-        let isScrolling = false;
-
+        // Sur mobile : déploiement au clic uniquement
+        
         // Référence au LegendPositionManager (sera définie plus tard)
         const getLegendManager = () => window.legendPositionManager;
-
-        // Détecter le scroll pour désactiver l'interaction
-        const handleScroll = () => {
-            isScrolling = true;
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                isScrolling = false;
-            }, 150);
-        };
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        this._scrollHandler = handleScroll;
 
         this.cards.forEach(card => {
             // Variables pour détecter si c'est un tap ou un scroll
@@ -542,12 +538,6 @@ class CardExpander {
                     return;
                 }
 
-                // Ignorer le clic si on est en train de scroller
-                if (isScrolling) {
-                    e.preventDefault();
-                    return;
-                }
-
                 const isExpanded = card.classList.contains('expanded');
 
                 if (isExpanded) {
@@ -584,12 +574,6 @@ class CardExpander {
     }
 
     cleanupMobileClick() {
-        // Retirer le listener de scroll
-        if (this._scrollHandler) {
-            window.removeEventListener('scroll', this._scrollHandler);
-            this._scrollHandler = null;
-        }
-
         // Retirer les listeners de clic et classes sur desktop
         this.cards.forEach(card => {
             if (card._clickHandler) {

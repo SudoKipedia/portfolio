@@ -44,14 +44,14 @@
     <header class="neural-header">
         <div class="header-content">
             <h1 class="neural-title">Professional Experience</h1>
-            <p class="neural-subtitle">A structured and innovative journey</p>
+            <p class="neural-subtitle">Here is my experience and professional background</p>
         </div>
     </header>
 
     <!-- Main container with experience nodes -->
     <main class="neural-container">
         <!-- Experience Node 1 -->
-        <article class="neural-node" data-node="1" data-skills="service,communication,teamwork">
+        <article class="neural-node" data-node="1" data-skills="communication,teamwork,adaptability">
             <div class="node-core">
                 <div class="node-pulse"></div>
                 <div class="node-icon">
@@ -63,7 +63,7 @@
                     <h2 class="node-title">Waiter</h2>
                     <span class="node-period">2023 - 2025</span>
                 </div>
-                <h3 class="node-company">La Ferme d'Espiau</h3>
+                <h3 class="node-company">La Ferme d'Espiau • Billière, 31110</h3>
                 <div class="node-details">
                     <div class="node-missions">
                         <h4><i class="fas fa-tasks"></i> Main Responsibilities</h4>
@@ -99,7 +99,7 @@
         </article>
 
         <!-- Experience Node 2 -->
-        <article class="neural-node" data-node="2" data-skills="observation,industry,discovery">
+        <article class="neural-node" data-node="2" data-skills="teamwork">
             <div class="node-core">
                 <div class="node-pulse"></div>
                 <div class="node-icon">
@@ -111,7 +111,7 @@
                     <h2 class="node-title">Observation Internship</h2>
                     <span class="node-period">February 2019</span>
                 </div>
-                <h3 class="node-company">Bonna Sabla</h3>
+                <h3 class="node-company">Bonna Sabla • Colomiers, 31772</h3>
                 <div class="node-details">
                     <div class="node-missions">
                         <h4><i class="fas fa-tasks"></i> Internship Objectives</h4>
@@ -149,46 +149,30 @@
         <h3 onclick="if(window.innerWidth <= 768) toggleSkillsLegend()">
             <span class="legend-title-left">
                 <i class="fas fa-link"></i>
-                <span>Transferable Skills</span>
+                <span>Technical Domains</span>
             </span>
             <button class="toggle-legend" onclick="event.stopPropagation(); toggleSkillsLegend()">
                 <i class="fas fa-chevron-up"></i>
             </button>
         </h3>
         <div class="legend-items">
-            <div class="legend-item" data-skill="cybersecurity">
+            <div class="legend-item" data-skill="communication">
                 <span class="legend-dot"></span>
-                <span>Cybersecurity</span>
+                <span>Communication</span>
             </div>
-            <div class="legend-item" data-skill="automation">
+            <div class="legend-item" data-skill="teamwork">
                 <span class="legend-dot"></span>
-                <span>Automation</span>
+                <span>Teamwork</span>
             </div>
-            <div class="legend-item" data-skill="incident-response">
+            <div class="legend-item" data-skill="adaptability">
                 <span class="legend-dot"></span>
-                <span>Incident Response</span>
-            </div>
-            <div class="legend-item" data-skill="devops">
-                <span class="legend-dot"></span>
-                <span>DevOps</span>
-            </div>
-            <div class="legend-item" data-skill="infrastructure">
-                <span class="legend-dot"></span>
-                <span>Infrastructure</span>
-            </div>
-            <div class="legend-item" data-skill="networking">
-                <span class="legend-dot"></span>
-                <span>Networking</span>
-            </div>
-            <div class="legend-item" data-skill="systems">
-                <span class="legend-dot"></span>
-                <span>Systems</span>
+                <span>Adaptability</span>
             </div>
         </div>
     </aside>
 
     <!-- Contact Section -->
-    <section class="neural-contact">
+    <section id="contact" class="neural-contact">
         <div class="container" style="max-width: 900px">
             <div class="contact-header">
                 <h2 class="neural-title" style="font-size: 2.5rem">Let's Work Together</h2>
@@ -250,6 +234,48 @@
             </div>
         </div>
     </section>
+
+    <!-- Footer Glassmorphism 3D -->
+    <footer class="neural-footer">
+        <div class="footer-glass-container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <div class="footer-logo">
+                        <span class="logo-text">PORTFOLIO</span>
+                        <span class="logo-dot">.</span>
+                    </div>
+                    <p class="footer-tagline">Systems, Networks & Security</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index_en.html" class="footer-link">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="index_en.html#projects" class="footer-link">
+                        <i class="fas fa-folder-open"></i>
+                        <span>Projects</span>
+                    </a>
+                    <a href="#contact" class="footer-link">
+                        <i class="fas fa-envelope"></i>
+                        <span>Contact</span>
+                    </a>
+                    <a href="https://github.com/SudoKipedia" target="_blank" class="footer-link">
+                        <i class="fab fa-github"></i>
+                        <span>GitHub</span>
+                    </a>
+                </div>
+                <div class="footer-right">
+                    <p class="footer-copyright">&copy; 2025 Portfolio</p>
+                    <p class="footer-rights">All rights reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Contact Button -->
+    <a href="#contact" class="floating-contact-btn" aria-label="Contact">
+        <i class="fas fa-envelope"></i>
+    </a>
 
     <script src="script.js"></script>
     <script src="experience.js"></script>
