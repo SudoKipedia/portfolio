@@ -1038,30 +1038,35 @@ document.addEventListener('DOMContentLoaded', () => {
             const content = document.getElementById(targetId);
             const isActive = this.classList.contains('active');
 
-            // Close all accordions
-            accordionToggles.forEach(t => {
-                const c = document.getElementById(t.getAttribute('data-accordion'));
-                if (c && t.classList.contains('active')) {
-                    c.style.maxHeight = '0px';
-                    c.style.opacity = '0';
-                    setTimeout(() => {
-                        t.classList.remove('active');
-                        c.classList.remove('active');
-                    }, 500);
-                }
-            });
+            if (isActive) {
+                // Fermer l'accordéon actuel
+                content.style.maxHeight = '0px';
+                content.style.opacity = '0';
+                this.classList.remove('active');
+                content.classList.remove('active');
+            } else {
+                // Fermer tous les autres accordéons
+                accordionToggles.forEach(t => {
+                    if (t !== this) {
+                        const c = document.getElementById(t.getAttribute('data-accordion'));
+                        if (c && t.classList.contains('active')) {
+                            c.style.maxHeight = '0px';
+                            c.style.opacity = '0';
+                            t.classList.remove('active');
+                            c.classList.remove('active');
+                        }
+                    }
+                });
 
-            // Toggle current accordion
-            if (!isActive) {
+                // Ouvrir l'accordéon actuel
                 this.classList.add('active');
                 content.classList.add('active');
-                content.style.opacity = '0';
-                content.style.maxHeight = '0px';
                 
-                setTimeout(() => {
+                // Forcer le recalcul pour que la transition fonctionne
+                requestAnimationFrame(() => {
                     content.style.opacity = '1';
                     content.style.maxHeight = content.scrollHeight + 'px';
-                }, 10);
+                });
             }
         });
     });
