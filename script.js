@@ -1238,6 +1238,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialiser les positions du carrousel au chargement
     const carouselItems = document.querySelectorAll('.carousel-item-compact');
 
+    // Vérifier si on est sur une page index
+    const currentPath = window.location.pathname.split('/').pop();
+    const isIndexPage = currentPath === 'index.html' || currentPath === 'index_en.html' || currentPath === '';
+    
+    // Si on est sur une page index, vider le sessionStorage du carousel
+    if (isIndexPage) {
+        sessionStorage.removeItem('carousel_positions');
+        sessionStorage.removeItem('carousel_page');
+        console.log('Index page detected, clearing carousel storage');
+    }
+
     // Restaurer la position sauvegardée si elle existe
     if (carouselItems.length > 0) {
         // Récupérer la page actuelle (sans _en.html ou .html)
