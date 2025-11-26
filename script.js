@@ -1177,13 +1177,104 @@ document.addEventListener('DOMContentLoaded', () => {
             if (newPosition >= items.length) newPosition = 0;
             item.setAttribute('data-position', newPosition);
         });
+        
+        // Forcer le recalcul du style pour éviter les problèmes de rendu
+        items.forEach(item => {
+            void item.offsetHeight;
+        });
+
+        // Sauvegarder la position actuelle dans le sessionStorage (seulement pour la session en cours)
+        saveCarouselPosition();
     };
+
+    // Fonction pour sauvegarder la position du carousel
+    function saveCarouselPosition() {
+        const items = document.querySelectorAll('.carousel-item-compact');
+        const positions = {};
+        items.forEach(item => {
+            const href = item.getAttribute('href');
+            const position = item.getAttribute('data-position');
+            if (href) {
+                positions[href] = position;
+            }
+        });
+        // Sauvegarder dans sessionStorage pour garder entre FR/EN mais pas entre pages
+        sessionStorage.setItem('carousel_positions', JSON.stringify(positions));
+    }
+
+    // Fonction pour restaurer la position du carousel
+    function restoreCarouselPosition() {
+        const savedData = sessionStorage.getItem('carousel_positions');
+        const items = document.querySelectorAll('.carousel-item-compact');
+        
+        // Ne rien faire s'il n'y a pas de données sauvegardées
+        if (!savedData || items.length === 0) {
+            return;
+        }
+        
+        try {
+            const positions = JSON.parse(savedData);
+            
+            // Appliquer les positions sauvegardées uniquement aux items qui ont une correspondance
+            items.forEach(item => {
+                const href = item.getAttribute('href');
+                if (href && positions[href] !== undefined) {
+                    const pos = parseInt(positions[href]);
+                    item.setAttribute('data-position', pos);
+                }
+                // Sinon, on garde la position HTML d'origine
+            });
+            
+        } catch (e) {
+            console.error('Error restoring carousel position:', e);
+        }
+    }
 
     // Initialiser les positions du carrousel au chargement
     const carouselItems = document.querySelectorAll('.carousel-item-compact');
 
-    // Les positions sont déjà définies dans le HTML (0, 1, 2, 3, 4)
-    // Pas besoin de les réinitialiser, elles sont correctes
+    // Restaurer la position sauvegardée si elle existe
+    if (carouselItems.length > 0) {
+        // Récupérer la page actuelle (sans _en.html ou .html)
+        const currentPage = window.location.pathname.replace(/_(en)?\.html$/, '').split('/').pop();
+        const savedPage = sessionStorage.getItem('carousel_page');
+        const savedData = sessionStorage.getItem('carousel_positions');
+        
+        // Vider le sessionStorage si on change de page de projet
+        if (savedPage && savedPage !== currentPage) {
+            sessionStorage.removeItem('carousel_positions');
+            sessionStorage.removeItem('carousel_page');
+        }
+        // Ne restaurer que s'il y a vraiment des données sauvegardées ET qu'on est sur la même page
+        else if (savedData && savedPage === currentPage) {
+            // Désactiver les transitions pour éviter l'animation lors de la restauration
+            const carouselTrack = document.querySelector('.carousel-track-compact');
+            if (carouselTrack) {
+                carouselTrack.style.transition = 'none';
+            }
+            carouselItems.forEach(item => {
+                item.style.transition = 'none';
+            });
+            
+            // Restaurer la position
+            restoreCarouselPosition();
+            
+            // Réactiver les transitions après le prochain frame
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    if (carouselTrack) {
+                        carouselTrack.style.transition = '';
+                    }
+                    carouselItems.forEach(item => {
+                        item.style.transition = '';
+                    });
+                });
+            });
+        }
+        
+        // Sauvegarder la page actuelle
+        sessionStorage.setItem('carousel_page', currentPage);
+    }
 
     // Compteur de caractères pour le champ message
     const messageTextarea = document.getElementById('message');
@@ -1199,9 +1290,29 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('%cSystèmes, Réseaux & Sécurité', 'font-size: 14px; color: #a0a0a0;');
 });
 
-// Fonction pour changer de langue en conservant la position de scroll
+// Fonction pour changer de langue en conservant la position de scroll et du carousel
 function switchLanguage(url) {
     sessionStorage.setItem('scrollPosition', window.pageYOffset);
+    
+    // Sauvegarder la position du carousel avant de changer de page
+    const items = document.querySelectorAll('.carousel-item-compact');
+    if (items.length > 0) {
+        const positions = {};
+        items.forEach(item => {
+            const href = item.getAttribute('href');
+            const position = item.getAttribute('data-position');
+            if (href) {
+                // Convertir le href FR en EN et vice versa pour la correspondance
+                const convertedHref = href.includes('_en.html') 
+                    ? href.replace('_en.html', '.html')
+                    : href.replace('.html', '_en.html');
+                positions[href] = position;
+                positions[convertedHref] = position;
+            }
+        });
+        sessionStorage.setItem('carousel_positions', JSON.stringify(positions));
+    }
+    
     window.location.href = url;
 }
 

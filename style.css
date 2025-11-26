@@ -1210,7 +1210,7 @@ body {
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 2.5rem;
 }
 
@@ -1319,6 +1319,10 @@ body {
 /* ===================================
    CONTACT SECTION
    =================================== */
+.section.contact .container {
+    max-width: 1000px;
+}
+
 .contact-intro {
     font-size: 1.125rem;
     line-height: 1.7;
@@ -1932,6 +1936,7 @@ body {
     flex-direction: column;
     position: relative;
     z-index: 1;
+    overflow: visible;
 }
 
 .carousel-wrapper {
@@ -1943,6 +1948,7 @@ body {
     perspective: 1200px;
     z-index: 10;
     padding-bottom: 10px;
+    overflow: visible;
 }
 
 .carousel-track-compact {
