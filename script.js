@@ -1236,17 +1236,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // Restaurer la position sauvegardée si elle existe
     if (carouselItems.length > 0) {
         // Récupérer la page actuelle (sans _en.html ou .html)
-        const currentPage = window.location.pathname.replace(/_(en)?\.html$/, '').split('/').pop();
+        const currentPage = window.location.pathname.split('/').pop().replace('_en.html', '').replace('.html', '');
         const savedPage = sessionStorage.getItem('carousel_page');
         const savedData = sessionStorage.getItem('carousel_positions');
         
+        console.log('Current page:', currentPage, 'Saved page:', savedPage);
+        
         // Vider le sessionStorage si on change de page de projet
         if (savedPage && savedPage !== currentPage) {
+            console.log('Different page detected, clearing storage');
             sessionStorage.removeItem('carousel_positions');
             sessionStorage.removeItem('carousel_page');
         }
         // Ne restaurer que s'il y a vraiment des données sauvegardées ET qu'on est sur la même page
         else if (savedData && savedPage === currentPage) {
+            console.log('Same page, restoring carousel positions');
             // Désactiver les transitions pour éviter l'animation lors de la restauration
             const carouselTrack = document.querySelector('.carousel-track-compact');
             if (carouselTrack) {
@@ -1311,6 +1315,11 @@ function switchLanguage(url) {
             }
         });
         sessionStorage.setItem('carousel_positions', JSON.stringify(positions));
+        
+        // Sauvegarder aussi la page actuelle (sans la langue) pour que la vérification fonctionne
+        const currentPage = window.location.pathname.split('/').pop().replace('_en.html', '').replace('.html', '');
+        sessionStorage.setItem('carousel_page', currentPage);
+        console.log('Switching language, saving page:', currentPage);
     }
     
     window.location.href = url;
