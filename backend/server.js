@@ -7,13 +7,114 @@ const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const multer = require('multer');
 const { exec } = require('child_process');
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 
 const app = express();
 const PORT = process.env.ADMIN_PORT || 3001;
 
-// Middleware
+// ===================================
+// SÉCURITÉ
+// ===================================
+
+// Helmet - Headers de sécurité
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"],
+            fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
+            scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+            scriptSrcAttr: ["'unsafe-inline'"], // Autoriser onclick inline
+            imgSrc: ["'self'", "data:", "blob:", "http://localhost:3001", "https:"],
+            connectSrc: ["'self'", "http://localhost:3001", "https:"],
+        },
+    },
+    crossOriginEmbedderPolicy: false,
+}));
+
+// Rate limiting global
+const globalLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Max 100 requêtes par IP
+    message: { error: 'Trop de requêtes, réessayez plus tard' },
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+// Rate limiting strict pour le login (anti brute-force)
+const loginLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 5, // Max 5 tentatives de login
+    message: { error: 'Trop de tentatives de connexion. Réessayez dans 15 minutes.' },
+    standardHeaders: true,
+    legacyHeaders: false,
+    skipSuccessfulRequests: true, // Ne compte pas les succès
+});
+
+// Rate limiting pour les actions sensibles (publish, upload)
+const sensitiveLimiter = rateLimit({
+    windowMs: 60 * 1000, // 1 minute
+    max: 10, // Max 10 actions par minute
+    message: { error: 'Trop d\'actions, patientez un moment' },
+});
+
+// Appliquer le rate limiting
+app.use('/api/', globalLimiter);
+app.use('/api/auth/login', loginLimiter);
+app.use('/api/publish', sensitiveLimiter);
+app.use('/api/upload', sensitiveLimiter);
+
+// Stockage des tentatives échouées (anti brute-force avancé)
+const failedAttempts = new Map();
+const LOCKOUT_TIME = 30 * 60 * 1000; // 30 minutes de blocage
+const MAX_FAILED_ATTEMPTS = 10; // Après 10 échecs
+
+function checkBruteForce(ip) {
+    const attempts = failedAttempts.get(ip);
+    if (!attempts) return false;
+    
+    if (attempts.count >= MAX_FAILED_ATTEMPTS && Date.now() - attempts.lastAttempt < LOCKOUT_TIME) {
+        return true; // IP bloquée
+    }
+    
+    // Reset si le temps est passé
+    if (Date.now() - attempts.lastAttempt >= LOCKOUT_TIME) {
+        failedAttempts.delete(ip);
+    }
+    
+    return false;
+}
+
+function recordFailedAttempt(ip) {
+    const attempts = failedAttempts.get(ip) || { count: 0, lastAttempt: 0 };
+    attempts.count++;
+    attempts.lastAttempt = Date.now();
+    failedAttempts.set(ip, attempts);
+    console.log(`⚠️ Tentative échouée depuis ${ip} (${attempts.count}/${MAX_FAILED_ATTEMPTS})`);
+}
+
+function clearFailedAttempts(ip) {
+    failedAttempts.delete(ip);
+}
+
+// CORS sécurisé
+const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS 
+    ? process.env.ALLOWED_ORIGINS.split(',') 
+    : ['http://localhost:3001', 'http://127.0.0.1:3001'];
+
 app.use(cors({
-    origin: true, // Autorise toutes les origines pour le développement
+    origin: (origin, callback) => {
+        // Autoriser les requêtes sans origin (Postman, curl, etc.) en dev seulement
+        if (!origin && process.env.NODE_ENV !== 'production') {
+            return callback(null, true);
+        }
+        if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('CORS non autorisé'));
+        }
+    },
     credentials: true
 }));
 app.use(express.json());
@@ -94,8 +195,25 @@ async function compressAndConvertImage(inputPath) {
 // ===================================
 // AUTHENTIFICATION
 // ===================================
-const JWT_SECRET = process.env.JWT_SECRET || 'votre_secret_jwt_super_securise_changez_moi';
+const JWT_SECRET = process.env.JWT_SECRET;
 const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH;
+
+// Vérification des variables d'environnement critiques
+if (!JWT_SECRET || JWT_SECRET === 'votre_secret_jwt_super_securise_changez_moi') {
+    console.error('❌ ERREUR CRITIQUE: JWT_SECRET non configuré ou valeur par défaut !');
+    console.error('   Modifiez le fichier .env avec un secret sécurisé.');
+    if (process.env.NODE_ENV === 'production') {
+        process.exit(1);
+    }
+}
+
+if (!ADMIN_PASSWORD_HASH) {
+    console.error('❌ ERREUR CRITIQUE: ADMIN_PASSWORD_HASH non configuré !');
+    console.error('   Générez un hash avec: node -e "console.log(require(\'bcryptjs\').hashSync(\'votre_mot_de_passe\', 10))"');
+    if (process.env.NODE_ENV === 'production') {
+        process.exit(1);
+    }
+}
 
 // Middleware d'authentification
 function authenticateToken(req, res, next) {
@@ -108,6 +226,9 @@ function authenticateToken(req, res, next) {
 
     jwt.verify(token, JWT_SECRET, (err, user) => {
         if (err) {
+            if (err.name === 'TokenExpiredError') {
+                return res.status(401).json({ error: 'Session expirée, reconnectez-vous' });
+            }
             return res.status(403).json({ error: 'Token invalide' });
         }
         req.user = user;
@@ -115,23 +236,47 @@ function authenticateToken(req, res, next) {
     });
 }
 
-// Route de login
+// Route de login sécurisée
 app.post('/api/auth/login', async (req, res) => {
+    const clientIP = req.ip || req.connection.remoteAddress;
     const { password } = req.body;
+
+    // Vérifier si l'IP est bloquée
+    if (checkBruteForce(clientIP)) {
+        console.log(`🚫 IP bloquée: ${clientIP}`);
+        return res.status(429).json({ 
+            error: 'Compte temporairement bloqué. Réessayez dans 30 minutes.' 
+        });
+    }
 
     if (!password) {
         return res.status(400).json({ error: 'Mot de passe requis' });
     }
 
+    // Délai artificiel pour ralentir les attaques (100-300ms)
+    await new Promise(resolve => setTimeout(resolve, 100 + Math.random() * 200));
+
     try {
         const isValid = await bcrypt.compare(password, ADMIN_PASSWORD_HASH);
         
         if (!isValid) {
-            return res.status(401).json({ error: 'Mot de passe incorrect' });
+            recordFailedAttempt(clientIP);
+            // Message générique pour ne pas révéler si le compte existe
+            return res.status(401).json({ error: 'Identifiants incorrects' });
         }
 
-        const token = jwt.sign({ role: 'admin' }, JWT_SECRET, { expiresIn: '24h' });
-        res.json({ token, expiresIn: 86400 });
+        // Connexion réussie - reset les tentatives
+        clearFailedAttempts(clientIP);
+        console.log(`✅ Connexion réussie depuis ${clientIP}`);
+
+        // Token avec expiration courte (4h au lieu de 24h)
+        const token = jwt.sign(
+            { role: 'admin', ip: clientIP }, 
+            JWT_SECRET, 
+            { expiresIn: '4h' }
+        );
+        
+        res.json({ token, expiresIn: 14400 }); // 4 heures
     } catch (error) {
         console.error('Erreur login:', error);
         res.status(500).json({ error: 'Erreur serveur' });
