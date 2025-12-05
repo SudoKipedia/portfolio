@@ -147,8 +147,11 @@ function updateProjects(projects) {
     const projectsGrid = document.querySelector('.projects-grid');
     if (!projectsGrid || projects.length === 0) return;
 
-    projectsGrid.innerHTML = projects.map(project => `
-        <a href="${project.link}" class="project-card">
+    projectsGrid.innerHTML = projects.map(project => {
+        // Construire le lien à partir du slug ou utiliser link si disponible
+        const projectLink = project.link || (project.slug ? `${project.slug}.html` : '#');
+        return `
+        <a href="${projectLink}" class="project-card">
             <div class="project-image">
                 <img src="${project.image}" alt="${project.title}" />
                 <div class="project-overlay">
@@ -163,7 +166,7 @@ function updateProjects(projects) {
                 <p>${project.description}</p>
             </div>
         </a>
-    `).join('');
+    `}).join('');
 }
 
 function updateRecommendations(recommendations) {
