@@ -129,6 +129,10 @@
                 if (response.ok) {
                     localStorage.setItem('adminToken', data.token);
                     localStorage.setItem('adminRole', data.role || 'viewer');
+                    // Stocker le token CSRF pour les requêtes sécurisées
+                    if (data.csrfToken) {
+                        localStorage.setItem('csrfToken', data.csrfToken);
+                    }
                     window.location.href = 'index.html';
                 } else {
                     errorDiv.querySelector('span').textContent = data.error || 'Erreur de connexion';
