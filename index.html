@@ -1,226 +1,654 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Portfolio</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="admin.css">
-    <style>
-        /* Cacher le contenu tant que l'auth n'est pas vérifiée */
-        .admin-layout { display: none; }
-        .auth-loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: var(--color-bg-dark, #0a0a0a);
-            color: var(--color-text, #fff);
-            font-family: 'Inter', sans-serif;
-        }
-        .auth-loading i { font-size: 2rem; }
-    </style>
-</head>
-<body>
-    <!-- Écran de chargement -->
-    <div class="auth-loading" id="auth-loading">
-        <i class="fas fa-spinner fa-spin"></i>
-    </div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Accueil - Portfolio</title>
 
-    <div class="admin-layout" id="admin-layout">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <a href="../index.html" class="sidebar-logo" target="_blank">
-                    <i class="fas fa-briefcase"></i>
-                    <span>Portfolio Admin</span>
-                </a>
+        <!-- Favicon -->
+        <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+        <!-- Open Graph / Facebook -->
+        <meta property="fb:app_id" content="966242223397117" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://sudokipedia.github.io/portfolio/" />
+        <meta property="og:title" content="Portfolio" />
+        <meta
+            property="og:description"
+            content="Découvrez mes projets en infrastructure, cybersécurité et automatisation."
+        />
+        <meta
+            property="og:image"
+            content="https://sudokipedia.github.io/portfolio/assets/og-image_v2.png"
+        />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://sudokipedia.github.io/portfolio/" />
+        <meta property="twitter:title" content="Portfolio" />
+        <meta
+            property="twitter:description"
+            content="Découvrez mes projets en infrastructure, cybersécurité et automatisation."
+        />
+        <meta
+            property="twitter:image"
+            content="https://sudokipedia.github.io/portfolio/assets/og-image_v2.png"
+        />
+
+        <link rel="stylesheet" href="style.css" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+    </head>
+
+    <body>
+        <canvas id="bg-canvas"></canvas>
+
+        <header class="header">
+            <div class="container">
+                <nav class="nav">
+                    <a href="#home" class="logo">
+                        <span class="logo-text">PORTFOLIO</span>
+                        <span class="logo-dot">.</span>
+                    </a>
+                    <div class="nav-current">
+                        <span class="nav-current-text">Accueil</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="nav-menu">
+                        <a href="#home" class="nav-link">Accueil</a>
+                        <a href="#about" class="nav-link">À propos</a>
+                        <a href="#skills" class="nav-link">Compétences Techniques</a>
+                        <a href="#projects" class="nav-link">Projets</a>
+                        <a href="#recommendations" class="nav-link">Recommandations</a>
+                    </div>
+                    <div class="lang-switcher">
+                        <a href="#" class="lang-btn active" onclick="return false;">FR</a>
+                        <a
+                            href="#"
+                            class="lang-btn"
+                            onclick="switchLanguage('index_en.html'); return false;"
+                            >EN</a
+                        >
+                    </div>
+                </nav>
             </div>
-            
-            <nav class="sidebar-nav">
-                <div class="nav-section">
-                    <div class="nav-section-title">Contenu</div>
-                    <button class="nav-item active" data-section="stats">
-                        <i class="fas fa-chart-bar"></i>
-                        <span>Statistiques</span>
-                    </button>
-                    <button class="nav-item" data-section="formations">
+        </header>
+
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-badge animate-in">
                         <i class="fas fa-graduation-cap"></i>
-                        <span>Formations</span>
-                    </button>
-                    <button class="nav-item" data-section="skills">
-                        <i class="fas fa-code"></i>
-                        <span>Compétences</span>
-                    </button>
-                    <button class="nav-item" data-section="projects">
-                        <i class="fas fa-folder-open"></i>
-                        <span>Projets</span>
-                    </button>
+                        <span>Étudiant IPI Blagnac</span>
+                    </div>
+                    <h1 class="hero-title">
+                        <span class="line animate-in" style="--delay: 0.1s">Systèmes,</span>
+                        <span class="line animate-in" style="--delay: 0.2s">Réseaux &</span>
+                        <span class="line highlight animate-in" style="--delay: 0.3s"
+                            >Sécurité</span
+                        >
+                    </h1>
+                    <p class="hero-subtitle animate-in" style="--delay: 0.4s">
+                        Passionné par l'infrastructure IT, la cybersécurité et l'automatisation.<br />
+                        Je conçois des solutions techniques robustes et sécurisées.
+                    </p>
+                    <div class="hero-cta animate-in" style="--delay: 0.5s">
+                        <a href="#projects" class="btn btn-primary">
+                            <span>Découvrir mes projets</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="#contact" class="btn btn-secondary">
+                            <span>Me contacter</span>
+                        </a>
+                    </div>
                 </div>
-                
-                <div class="nav-section">
-                    <div class="nav-section-title">Documents</div>
-                    <button class="nav-item" data-section="recommendations">
-                        <i class="fas fa-star"></i>
-                        <span>Recommandations</span>
-                    </button>
-                    <button class="nav-item" data-section="documents">
-                        <i class="fas fa-file-alt"></i>
-                        <span>Documents</span>
-                    </button>
+                <div class="hero-stats animate-in" style="--delay: 0.6s">
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="2">0</span>
+                        <span class="stat-label">Années d'études</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="6">0</span>
+                        <span class="stat-label">Projets réalisés</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="0">0</span>
+                        <span class="stat-label">Certifications</span>
+                    </div>
                 </div>
-            </nav>
-            
-            <div class="sidebar-footer">
-                <button class="btn-logout" onclick="logout()">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Déconnexion</span>
-                </button>
             </div>
-        </aside>
+            <div class="scroll-indicator">
+                <span>Scroll</span>
+                <div class="scroll-line"></div>
+            </div>
+        </section>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <header class="content-header">
-                <div>
-                    <h1 id="section-title">Statistiques</h1>
-                    <p id="section-desc">Gérez les statistiques affichées sur votre page d'accueil</p>
+        <section id="about" class="section about">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">À propos</span>
+                    <h2 class="section-title">Qui suis-je ?</h2>
                 </div>
-                <div class="header-actions">
-                    <button class="btn btn-secondary" onclick="publishToGitHub()">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <span>Publier</span>
+                <div class="about-grid">
+                    <div class="about-text">
+                        <p class="lead">
+                            Actuellement en formation à l'<strong>IPI Blagnac</strong> en Systèmes,
+                            Réseaux et Sécurité, je me spécialise dans la conception
+                            d'infrastructures IT performantes et sécurisées.
+                        </p>
+                        <p>
+                            Mon parcours m'a permis de développer des compétences solides en
+                            administration système, configuration réseau, sécurité informatique et
+                            automatisation. Je suis constamment à la recherche de nouveaux défis
+                            techniques.
+                        </p>
+                        <p>
+                            Au-delà des compétences techniques, je valorise le <strong>travail
+                            d'équipe</strong>, la <strong>communication</strong> claire, l'<strong>adaptabilité</strong>
+                            face aux nouvelles technologies, la <strong>rigueur</strong> dans mes
+                            réalisations et l'<strong>autonomie</strong> dans la résolution de problèmes.
+                        </p>
+                        <div class="about-highlights">
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Administration Windows Server & Linux</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Configuration réseau Cisco & virtualisation</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Sécurité d'infrastructure</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Automatisation PowerShell</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-visual">
+                        <div class="timeline">
+                            <h3 class="timeline-title">Parcours Académique</h3>
+                            <div class="timeline-items">
+                                <div class="timeline-item" data-year="2024-2027">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <span class="timeline-date">2024 - 2027</span>
+                                        <h4>Administrateur - Systèmes, Réseaux & Sécurité</h4>
+                                        <p class="timeline-school">IPI - Blagnac</p>
+                                        <p class="timeline-desc">
+                                            Spécialisation en Administration Système et Réseau
+                                        </p>
+                                        <div class="timeline-extra">
+                                            <ul>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Administration
+                                                    avancée Windows Server & Linux
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Architecture réseau
+                                                    d'entreprise et sécurité
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Virtualisation Proxmox et
+                                                    conteneurisation
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Automatisation avec
+                                                    PowerShell et scripts
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Gestion de NFS, LDAP et
+                                                    services réseau
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item" data-year="2022-2024">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <span class="timeline-date">2022 - 2024</span>
+                                        <h4>Licence Informatique (2 ans)</h4>
+                                        <p class="timeline-school">Université Paul Sabatier - Toulouse</p>
+                                        <p class="timeline-desc">
+                                            Fondamentaux en informatique et programmation
+                                        </p>
+                                        <div class="timeline-extra">
+                                            <ul>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Programmation Python et
+                                                    algorithmique
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Structures de données et
+                                                    bases de données
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Réseaux et systèmes
+                                                    d'exploitation
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Mathématiques pour
+                                                    l'informatique
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Développement web et
+                                                    gestion de projets
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item" data-year="2022">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <span class="timeline-date">2022</span>
+                                        <h4>Baccalauréat Général</h4>
+                                        <p class="timeline-school">Lycée Pierre Paul Riquet - Saint-Orens</p>
+                                        <p class="timeline-desc">
+                                            Spécialités Physique-Chimie et Sciences de l'Ingénieur
+                                        </p>
+                                        <div class="timeline-extra">
+                                            <ul>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Fondamentaux en physique
+                                                    et chimie
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Sciences de l'ingénieur et
+                                                    modélisation
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Mathématiques appliquées
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-check"></i> Méthodologie et analyse
+                                                    scientifique
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Link to Experience Page -->
+                <div class="experience-link-container">
+                    <a href="experience.html" class="experience-link">
+                        <div class="experience-link-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="experience-link-content">
+                            <h3>Découvrez mon expérience professionnelle</h3>
+                            <p>
+                                Dashboard de supervision de carrière avec métriques et réalisations
+                                détaillées
+                            </p>
+                        </div>
+                        <div class="experience-link-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="section skills">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Compétences Techniques</span>
+                    <h2 class="section-title">Compétences Techniques</h2>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h3>Windows Server</h3>
+                        <p>
+                            Maîtrise de l'environnement Windows Server : Active Directory (AD),
+                            DNS, DHCP, GPO (Group Policy Objects), WSUS, gestion des certificats et
+                            automatisation PowerShell.
+                        </p>
+                        <div class="skill-tags">
+                            <span>Active Directory</span>
+                            <span>DNS/DHCP</span>
+                            <span>GPO/WSUS</span>
+                            <span>PowerShell</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <i class="fab fa-linux"></i>
+                        </div>
+                        <h3>Linux & Virtualisation</h3>
+                        <p>
+                            Administration systèmes Linux (Debian/Ubuntu). Configuration DHCP/DNS,
+                            gestion des permissions POSIX et ACLs, OPNsense, Proxmox, NFS, LDAP,
+                            scripts Shell et SSH.
+                        </p>
+                        <div class="skill-tags">
+                            <span>Linux</span>
+                            <span>Proxmox</span>
+                            <span>NFS/LDAP</span>
+                            <span>Shell</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <h3>Réseaux & Sécurité</h3>
+                        <p>
+                            Configuration et diagnostic réseaux avec Cisco Packet Tracer, analyse de
+                            trafic avec Wireshark, mise en place de pare-feu et gestion de la
+                            sécurité réseau.
+                        </p>
+                        <div class="skill-tags">
+                            <span>Cisco Packet Tracer</span>
+                            <span>Wireshark</span>
+                            <span>OPNsense</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3>Stockage & Bases de données</h3>
+                        <p>
+                            Configuration RAID et LVM pour optimiser le stockage. Maîtrise des
+                            bases de données relationnelles avec SQL, MariaDB et phpMyAdmin.
+                            Conception de modèles avec JMerise.
+                        </p>
+                        <div class="skill-tags">
+                            <span>RAID/LVM</span>
+                            <span>SQL/MariaDB</span>
+                            <span>phpMyAdmin</span>
+                            <span>JMerise</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section projects">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Réalisations</span>
+                    <h2 class="section-title">Mes projets</h2>
+                </div>
+                <div class="projects-grid">
+                    <a href="project_nfs_raid.html" class="project-card">
+                        <div class="project-image">
+                            <img
+                                src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800"
+                                alt="NFS RAID"
+                            />
+                            <div class="project-overlay">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-tags">
+                                <span>Linux</span>
+                                <span>Stockage</span>
+                            </div>
+                            <h3>Serveur NFS avec RAID Multi-Configuration</h3>
+                            <p>
+                                Mise en place d'un serveur de fichiers NFS avec 3 configurations
+                                RAID : 1×RAID1 (450GB), 6×RAID6 (600GB) et 4×RAID6 (2TB) gérés par
+                                LVM pour optimiser stockage et redondance.
+                            </p>
+                        </div>
+                    </a>
+                    <a href="project_ad_automation.html" class="project-card">
+                        <div class="project-image">
+                            <img
+                                src="https://images.unsplash.com/photo-1633265486064-086b219458ec?w=800"
+                                alt="AD Automation"
+                            />
+                            <div class="project-overlay">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-tags">
+                                <span>PowerShell</span>
+                                <span>Active Directory</span>
+                            </div>
+                            <h3>Automatisation Domaine Active Directory</h3>
+                            <p>
+                                Scripts PowerShell pour automatiser la jointure de machines au
+                                domaine AD, configuration des GPO, création d'utilisateurs et gestion
+                                des groupes de sécurité.
+                            </p>
+                        </div>
+                    </a>
+                    <a href="project_proxmox_infra.html" class="project-card">
+                        <div class="project-image">
+                            <img
+                                src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800"
+                                alt="Proxmox Infrastructure"
+                            />
+                            <div class="project-overlay">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-tags">
+                                <span>Proxmox</span>
+                                <span>Réseau</span>
+                            </div>
+                            <h3>Infrastructure Proxmox + AD + Switch</h3>
+                            <p>
+                                Déploiement complet d'une infrastructure virtualisée sur Proxmox avec
+                                serveur Active Directory, configuration réseau du switch et
+                                segmentation VLAN pour un environnement de test.
+                            </p>
+                        </div>
+                    </a>
+                    <a href="project_bot_discord.html" class="project-card">
+                        <div class="project-image">
+                            <img
+                                src="https://images.unsplash.com/photo-1639322537228-f710d846310a?w=800"
+                                alt="Bot Discord"
+                            />
+                            <div class="project-overlay">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-tags">
+                                <span>Discord.js</span>
+                                <span>Automatisation</span>
+                            </div>
+                            <h3>Bot Discord de Gestion Scolaire</h3>
+                            <p>
+                                Bot Discord complet pour gérer l'inscription automatique des
+                                étudiants et enseignants avec attribution de rôles par promo/classe
+                                et système de refonte administrative annuelle.
+                            </p>
+                        </div>
+                    </a>
+                    <a href="project_portfolio.html" class="project-card">
+                        <div class="project-image">
+                            <img
+                                src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800"
+                                alt="Portfolio"
+                            />
+                            <div class="project-overlay">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-tags">
+                                <span>HTML/CSS/JS</span>
+                                <span>Design</span>
+                            </div>
+                            <h3>Portfolio Interactif</h3>
+                            <p>
+                                Site portfolio personnel avec animations fluides, dashboard
+                                d'expérience professionnelle, système de navigation dynamique et
+                                design responsive moderne.
+                            </p>
+                        </div>
+                    </a>
+                    <a href="project_blog_porto.html" class="project-card">
+                        <div class="project-image">
+                            <img
+                                src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=800"
+                                alt="Blog Porto"
+                            />
+                            <div class="project-overlay">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-tags">
+                                <span>Web</span>
+                                <span>Anglais</span>
+                            </div>
+                            <h3>Blog de Voyage Porto</h3>
+                            <p>
+                                Site web documentant un voyage linguistique de 12 jours à Porto avec
+                                blog quotidien, galeries photos, vidéos en fond et playlist musicale
+                                interactive.
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="recommendations" class="section project-section">
+            <div class="container" style="max-width: 900px">
+                <div class="section-header">
+                    <span class="section-tag">Recommandations</span>
+                    <h2 class="section-title">Ce qu'ils disent de moi</h2>
+                </div>
+                <div class="accordion-section">
+                    <button class="accordion-toggle" data-accordion="recommendations-accordion">
+                        <div class="accordion-header">
+                            <i class="fas fa-quote-left accordion-icon"></i>
+                            <h2>Témoignages & Recommandations</h2>
+                        </div>
+                        <i class="fas fa-chevron-down accordion-arrow"></i>
                     </button>
-                    <button class="btn btn-primary" onclick="saveCurrentSection()">
-                        <i class="fas fa-save"></i>
-                        <span>Sauvegarder</span>
-                    </button>
+                    <div class="accordion-content" id="recommendations-accordion">
+                        <div class="document-list">
+                            <div class="document-placeholder">
+                                <i class="fas fa-folder-open"></i>
+                                <p>Recommandations à venir...</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </header>
+            </div>
+        </section>
 
-            <div class="content-body">
-                <!-- Alert container -->
-                <div id="alert-container"></div>
-
-                <!-- Language Tabs -->
-                <div class="lang-tabs">
-                    <button class="lang-tab active" data-lang="fr">FR Francais</button>
-                    <button class="lang-tab" data-lang="en">GB English</button>
+        <section id="contact" class="section contact">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Contact</span>
+                    <h2 class="section-title">Travaillons ensemble</h2>
                 </div>
-
-                <!-- Stats Section -->
-                <section id="section-stats" class="admin-section">
-                    <div class="section-card">
-                        <div class="section-card-header">
-                            <h2><i class="fas fa-chart-bar"></i> Statistiques du Hero</h2>
-                        </div>
-                        <div class="section-card-body">
-                            <div id="stats-container"></div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Formations Section -->
-                <section id="section-formations" class="admin-section" style="display: none;">
-                    <div class="section-card">
-                        <div class="section-card-header">
-                            <h2><i class="fas fa-graduation-cap"></i> Formations</h2>
-                            <button class="btn btn-primary btn-sm" onclick="addFormation()">
-                                <i class="fas fa-plus"></i> Ajouter
-                            </button>
-                        </div>
-                        <div class="section-card-body">
-                            <div id="formations-container" class="item-list"></div>
+                <p class="contact-intro">
+                    Vous avez un projet ou une opportunité ? N'hésitez pas à me contacter. Je suis
+                    toujours ouvert aux nouvelles collaborations et défis techniques.
+                </p>
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <div class="contact-methods">
+                            <a
+                                href="https://github.com/SudoKipedia"
+                                target="_blank"
+                                class="contact-item"
+                            >
+                                <div class="contact-icon">
+                                    <i class="fab fa-github"></i>
+                                </div>
+                                <div class="contact-details">
+                                    <span class="contact-label">GitHub</span>
+                                    <span class="contact-value">Mes dépôts</span>
+                                </div>
+                            </a>
                         </div>
                     </div>
-                </section>
-
-                <!-- Skills Section -->
-                <section id="section-skills" class="admin-section" style="display: none;">
-                    <div class="section-card">
-                        <div class="section-card-header">
-                            <h2><i class="fas fa-code"></i> Compétences</h2>
-                            <button class="btn btn-primary btn-sm" onclick="addSkill()">
-                                <i class="fas fa-plus"></i> Ajouter
-                            </button>
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Nom</label>
+                            <input type="text" id="name" name="name" required />
                         </div>
-                        <div class="section-card-body">
-                            <div id="skills-container" class="item-list"></div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required />
                         </div>
-                    </div>
-                </section>
-
-                <!-- Projects Section -->
-                <section id="section-projects" class="admin-section" style="display: none;">
-                    <div class="section-card">
-                        <div class="section-card-header">
-                            <h2><i class="fas fa-folder-open"></i> Projets</h2>
-                            <button class="btn btn-primary btn-sm" onclick="addProject()">
-                                <i class="fas fa-plus"></i> Ajouter
-                            </button>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea
+                                id="message"
+                                name="message"
+                                rows="5"
+                                maxlength="1000"
+                                required
+                            ></textarea>
+                            <span class="char-counter"><span id="char-count">0</span>/1000</span>
                         </div>
-                        <div class="section-card-body">
-                            <div id="projects-container" class="item-list"></div>
+                        <div class="form-group">
+                            <label for="attachment">
+                                <span>Cliquez pour ajouter des fichiers</span>
+                            </label>
+                            <input
+                                type="file"
+                                id="attachment"
+                                name="attachment"
+                                accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png"
+                                multiple
+                            />
+                            <small
+                                style="
+                                    color: #666;
+                                    font-size: 0.85rem;
+                                    margin-top: 0.5rem;
+                                    display: block;
+                                "
+                                >Formats acceptés : PDF, DOC, DOCX, TXT, JPG, PNG (max 5 fichiers,
+                                8MB chacun)</small
+                            >
+                            <div id="file-list" class="file-list"></div>
                         </div>
-                    </div>
-                </section>
-
-                <!-- Recommendations Section -->
-                <section id="section-recommendations" class="admin-section" style="display: none;">
-                    <div class="section-card">
-                        <div class="section-card-header">
-                            <h2><i class="fas fa-star"></i> Recommandations</h2>
-                            <button class="btn btn-primary btn-sm" onclick="addRecommendation()">
-                                <i class="fas fa-plus"></i> Ajouter
-                            </button>
-                        </div>
-                        <div class="section-card-body">
-                            <div id="recommendations-container" class="item-list"></div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Documents Section -->
-                <section id="section-documents" class="admin-section" style="display: none;">
-                    <div class="section-card">
-                        <div class="section-card-header">
-                            <h2><i class="fas fa-file-alt"></i> Documents</h2>
-                            <button class="btn btn-primary btn-sm" onclick="addDocument()">
-                                <i class="fas fa-plus"></i> Ajouter
-                            </button>
-                        </div>
-                        <div class="section-card-body">
-                            <div id="documents-container" class="item-list"></div>
-                        </div>
-                    </div>
-                </section>
+                        <button type="submit" class="btn btn-primary">
+                            <span>Envoyer le message</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
             </div>
-        </main>
-    </div>
+        </section>
 
-    <!-- Modal pour édition -->
-    <div id="modal-overlay" class="modal-overlay">
-        <div class="modal">
-            <div class="modal-header">
-                <h3 id="modal-title">Éditer</h3>
-                <button class="modal-close" onclick="closeModal()">
-                    <i class="fas fa-times"></i>
-                </button>
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2025 Portfolio. Tous droits réservés.</p>
             </div>
-            <div class="modal-body" id="modal-body">
-                <!-- Contenu dynamique -->
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeModal()">Annuler</button>
-                <button class="btn btn-primary" id="modal-save-btn">Sauvegarder</button>
-            </div>
-        </div>
-    </div>
+        </footer>
 
-    <script src="admin.js"></script>
-</body>
+        <!-- Bouton flottant Contact -->
+        <a href="#contact" class="floating-contact-btn" aria-label="Contact">
+            <i class="fas fa-envelope"></i>
+        </a>
+
+        <script src="script.js"></script>
+    </body>
 </html>
