@@ -5,8 +5,25 @@ const API_URL = '/api';
 let currentSection = 'stats';
 let currentLang = 'fr';
 let userRole = 'viewer'; // Par défaut, rôle restreint
+let csrfToken = null; // Token CSRF pour les requêtes sécurisées
 let inactivityTimer = null;
 const INACTIVITY_TIMEOUT = 10 * 60 * 1000; // 10 minutes en ms
+
+// Helper pour les requêtes sécurisées avec CSRF
+async function securedFetch(url, options = {}) {
+    const token = localStorage.getItem('adminToken');
+    const headers = {
+        ...options.headers,
+        'Authorization': `Bearer ${token}`
+    };
+    
+    // Ajouter le token CSRF pour les requêtes de modification
+    if (options.method && options.method !== 'GET' && csrfToken) {
+        headers['X-CSRF-Token'] = csrfToken;
+    }
+    
+    return fetch(url, { ...options, headers });
+}
 
 let data = {
     stats: null,
@@ -42,13 +59,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
     
-    // Récupérer le rôle stocké
+    // Récupérer le rôle et le token CSRF stockés
     userRole = localStorage.getItem('adminRole') || 'viewer';
+    csrfToken = localStorage.getItem('csrfToken') || null;
     
     verifyToken(token).then(valid => {
         if (!valid) {
             localStorage.removeItem('adminToken');
             localStorage.removeItem('adminRole');
+            localStorage.removeItem('csrfToken');
             window.location.href = 'login.html';
         } else {
             // Afficher le layout et cacher le loading
@@ -864,11 +883,8 @@ function addProject() {
             formData.append('file', fileInput.files[0]);
             
             try {
-                const response = await fetch('/api/upload', {
+                const response = await securedFetch('/api/upload', {
                     method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
-                    },
                     body: formData
                 });
                 
@@ -967,11 +983,8 @@ function editProject(index) {
             formData.append('file', fileInput.files[0]);
             
             try {
-                const response = await fetch('/api/upload', {
+                const response = await securedFetch('/api/upload', {
                     method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
-                    },
                     body: formData
                 });
                 
@@ -1055,12 +1068,8 @@ function addRecommendation() {
             formData.append('file', file);
             
             try {
-                const token = localStorage.getItem('adminToken');
-                const uploadResponse = await fetch('/api/admin/upload', {
+                const uploadResponse = await securedFetch('/api/admin/upload', {
                     method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    },
                     body: formData
                 });
                 
@@ -1141,12 +1150,8 @@ function editRecommendation(index) {
             formData.append('file', file);
             
             try {
-                const token = localStorage.getItem('adminToken');
-                const uploadResponse = await fetch('/api/admin/upload', {
+                const uploadResponse = await securedFetch('/api/admin/upload', {
                     method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    },
                     body: formData
                 });
                 
@@ -1221,10 +1226,8 @@ function addDocument() {
             formData.append('file', fileInput.files[0]);
             
             try {
-                const token = localStorage.getItem('adminToken');
-                const response = await fetch(`${API_URL}/admin/upload`, {
+                const response = await securedFetch(`${API_URL}/admin/upload`, {
                     method: 'POST',
-                    headers: { 'Authorization': `Bearer ${token}` },
                     body: formData
                 });
                 
@@ -1293,10 +1296,8 @@ function editDocument(index) {
             formData.append('file', fileInput.files[0]);
             
             try {
-                const token = localStorage.getItem('adminToken');
-                const response = await fetch(`${API_URL}/admin/upload`, {
+                const response = await securedFetch(`${API_URL}/admin/upload`, {
                     method: 'POST',
-                    headers: { 'Authorization': `Bearer ${token}` },
                     body: formData
                 });
                 
@@ -1339,14 +1340,11 @@ async function saveCurrentSection() {
         return;
     }
     
-    const token = localStorage.getItem('adminToken');
-    
     try {
-        const response = await fetch(`${API_URL}/admin/${currentSection}`, {
+        const response = await securedFetch(`${API_URL}/admin/${currentSection}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data[currentSection])
         });
@@ -1371,8 +1369,6 @@ async function publishToGitHub() {
         return;
     }
     
-    const token = localStorage.getItem('adminToken');
-    
     if (!confirm('Publier les modifications sur GitHub Pages ?\n\nCela va exporter les données et faire un git push.')) {
         return;
     }
@@ -1381,11 +1377,10 @@ async function publishToGitHub() {
     showAlert('Publication en cours...', 'info');
     
     try {
-        const response = await fetch(`${API_URL}/publish`, {
+        const response = await securedFetch(`${API_URL}/publish`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 message: `Mise à jour depuis le panel admin - ${new Date().toLocaleString('fr-FR')}`
@@ -1440,5 +1435,6 @@ function logout() {
     if (inactivityTimer) clearTimeout(inactivityTimer);
     localStorage.removeItem('adminToken');
     localStorage.removeItem('adminRole');
+    localStorage.removeItem('csrfToken');
     window.location.href = 'login.html';
 }
