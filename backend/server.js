@@ -98,17 +98,18 @@ function clearFailedAttempts(ip) {
     failedAttempts.delete(ip);
 }
 
-// CORS sécurisé
+// CORS - Configuration simple pour dev, sécurisée pour prod
 const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS 
     ? process.env.ALLOWED_ORIGINS.split(',') 
     : ['http://localhost:3001', 'http://127.0.0.1:3001'];
 
 app.use(cors({
     origin: (origin, callback) => {
-        // Autoriser les requêtes sans origin (Postman, curl, etc.) en dev seulement
-        if (!origin && process.env.NODE_ENV !== 'production') {
+        // En développement, autoriser toutes les requêtes
+        if (process.env.NODE_ENV !== 'production') {
             return callback(null, true);
         }
+        // En production, vérifier l'origine
         if (!origin || ALLOWED_ORIGINS.includes(origin)) {
             callback(null, true);
         } else {
