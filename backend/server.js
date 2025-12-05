@@ -55,6 +55,42 @@ function writeJsonFile(filename, data) {
 }
 
 // ===================================
+// COMPRESSION D'IMAGES (Sharp)
+// ===================================
+const sharp = require('sharp');
+
+async function compressAndConvertImage(inputPath) {
+    const ext = path.extname(inputPath).toLowerCase();
+    const isImage = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff'].includes(ext);
+    
+    if (!isImage) {
+        return inputPath; // Pas une image, retourner le chemin original
+    }
+    
+    try {
+        const outputFilename = path.basename(inputPath, ext) + '.webp';
+        const outputPath = path.join(path.dirname(inputPath), outputFilename);
+        
+        await sharp(inputPath)
+            .resize(1920, 1080, { 
+                fit: 'inside', 
+                withoutEnlargement: true 
+            })
+            .webp({ quality: 80 })
+            .toFile(outputPath);
+        
+        // Supprimer l'original
+        fs.unlinkSync(inputPath);
+        
+        console.log(`📸 Image compressée: ${outputFilename}`);
+        return outputPath;
+    } catch (error) {
+        console.error('Erreur compression image:', error);
+        return inputPath; // Retourner l'original en cas d'erreur
+    }
+}
+
+// ===================================
 // AUTHENTIFICATION
 // ===================================
 const JWT_SECRET = process.env.JWT_SECRET || 'votre_secret_jwt_super_securise_changez_moi';
@@ -210,20 +246,36 @@ app.put('/api/admin/documents', authenticateToken, (req, res) => {
     }
 });
 
-// Upload de fichiers (PDF, images)
-app.post('/api/admin/upload', authenticateToken, upload.single('file'), (req, res) => {
+// Upload de fichiers (PDF, images) avec compression automatique
+app.post('/api/admin/upload', authenticateToken, upload.single('file'), async (req, res) => {
     if (!req.file) {
         return res.status(400).json({ error: 'Aucun fichier uploadé' });
     }
     
-    const fileUrl = `/uploads/${req.file.filename}`;
-    res.json({ 
-        success: true, 
-        url: fileUrl,
-        filename: req.file.filename,
-        originalName: req.file.originalname,
-        size: req.file.size
-    });
+    try {
+        // Compresser et convertir en WebP si c'est une image
+        const processedPath = await compressAndConvertImage(req.file.path);
+        const processedFilename = path.basename(processedPath);
+        
+        const fileUrl = `/uploads/${processedFilename}`;
+        res.json({ 
+            success: true, 
+            url: fileUrl,
+            filename: processedFilename,
+            originalName: req.file.originalname,
+            size: fs.statSync(processedPath).size
+        });
+    } catch (error) {
+        console.error('Upload error:', error);
+        const fileUrl = `/uploads/${req.file.filename}`;
+        res.json({ 
+            success: true, 
+            url: fileUrl,
+            filename: req.file.filename,
+            originalName: req.file.originalname,
+            size: req.file.size
+        });
+    }
 });
 
 // ===================================
