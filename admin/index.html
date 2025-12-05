@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="sidebar-logo" target="_blank">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Portfolio Admin</span>
+                </a>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Contenu</div>
+                    <button class="nav-item active" data-section="stats">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Statistiques</span>
+                    </button>
+                    <button class="nav-item" data-section="formations">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Formations</span>
+                    </button>
+                    <button class="nav-item" data-section="skills">
+                        <i class="fas fa-code"></i>
+                        <span>Compétences</span>
+                    </button>
+                    <button class="nav-item" data-section="projects">
+                        <i class="fas fa-folder-open"></i>
+                        <span>Projets</span>
+                    </button>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Documents</div>
+                    <button class="nav-item" data-section="recommendations">
+                        <i class="fas fa-star"></i>
+                        <span>Recommandations</span>
+                    </button>
+                    <button class="nav-item" data-section="documents">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Documents</span>
+                    </button>
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Déconnexion</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="content-header">
+                <div>
+                    <h1 id="section-title">Statistiques</h1>
+                    <p id="section-desc">Gérez les statistiques affichées sur votre page d'accueil</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="saveCurrentSection()">
+                        <i class="fas fa-save"></i>
+                        <span>Sauvegarder</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="content-body">
+                <!-- Alert container -->
+                <div id="alert-container"></div>
+
+                <!-- Language Tabs -->
+                <div class="lang-tabs">
+                    <button class="lang-tab active" data-lang="fr">🇫🇷 Français</button>
+                    <button class="lang-tab" data-lang="en">🇬🇧 English</button>
+                </div>
+
+                <!-- Stats Section -->
+                <section id="section-stats" class="admin-section">
+                    <div class="section-card">
+                        <div class="section-card-header">
+                            <h2><i class="fas fa-chart-bar"></i> Statistiques du Hero</h2>
+                        </div>
+                        <div class="section-card-body">
+                            <div id="stats-container"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Formations Section -->
+                <section id="section-formations" class="admin-section" style="display: none;">
+                    <div class="section-card">
+                        <div class="section-card-header">
+                            <h2><i class="fas fa-graduation-cap"></i> Formations</h2>
+                            <button class="btn btn-primary btn-sm" onclick="addFormation()">
+                                <i class="fas fa-plus"></i> Ajouter
+                            </button>
+                        </div>
+                        <div class="section-card-body">
+                            <div id="formations-container" class="item-list"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Skills Section -->
+                <section id="section-skills" class="admin-section" style="display: none;">
+                    <div class="section-card">
+                        <div class="section-card-header">
+                            <h2><i class="fas fa-code"></i> Compétences</h2>
+                            <button class="btn btn-primary btn-sm" onclick="addSkill()">
+                                <i class="fas fa-plus"></i> Ajouter
+                            </button>
+                        </div>
+                        <div class="section-card-body">
+                            <div id="skills-container" class="item-list"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Projects Section -->
+                <section id="section-projects" class="admin-section" style="display: none;">
+                    <div class="section-card">
+                        <div class="section-card-header">
+                            <h2><i class="fas fa-folder-open"></i> Projets</h2>
+                            <button class="btn btn-primary btn-sm" onclick="addProject()">
+                                <i class="fas fa-plus"></i> Ajouter
+                            </button>
+                        </div>
+                        <div class="section-card-body">
+                            <div id="projects-container" class="item-list"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Recommendations Section -->
+                <section id="section-recommendations" class="admin-section" style="display: none;">
+                    <div class="section-card">
+                        <div class="section-card-header">
+                            <h2><i class="fas fa-star"></i> Recommandations</h2>
+                            <button class="btn btn-primary btn-sm" onclick="addRecommendation()">
+                                <i class="fas fa-plus"></i> Ajouter
+                            </button>
+                        </div>
+                        <div class="section-card-body">
+                            <div id="recommendations-container" class="item-list"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Documents Section -->
+                <section id="section-documents" class="admin-section" style="display: none;">
+                    <div class="section-card">
+                        <div class="section-card-header">
+                            <h2><i class="fas fa-file-alt"></i> Documents</h2>
+                            <button class="btn btn-primary btn-sm" onclick="addDocument()">
+                                <i class="fas fa-plus"></i> Ajouter
+                            </button>
+                        </div>
+                        <div class="section-card-body">
+                            <div id="documents-container" class="item-list"></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal pour édition -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modal-title">Éditer</h3>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Contenu dynamique -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Annuler</button>
+                <button class="btn btn-primary" id="modal-save-btn">Sauvegarder</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
