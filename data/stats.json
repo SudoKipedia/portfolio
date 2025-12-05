@@ -1,0 +1,40 @@
+{
+    "fr": {
+        "stats": [
+            {
+                "id": "years",
+                "value": 2,
+                "label": "Années d'études"
+            },
+            {
+                "id": "projects",
+                "value": 6,
+                "label": "Projets réalisés"
+            },
+            {
+                "id": "certifications",
+                "value": "1",
+                "label": "Certifications"
+            }
+        ]
+    },
+    "en": {
+        "stats": [
+            {
+                "id": "years",
+                "value": 2,
+                "label": "Years of study"
+            },
+            {
+                "id": "projects",
+                "value": 6,
+                "label": "Completed projects"
+            },
+            {
+                "id": "certifications",
+                "value": 0,
+                "label": "Certifications"
+            }
+        ]
+    }
+}

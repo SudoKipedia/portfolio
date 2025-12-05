@@ -2,18 +2,24 @@
 // CHARGEMENT DYNAMIQUE DES DONNÉES
 // ===================================
 const API_BASE_URL = 'http://localhost:3001/api';
+const STATIC_DATA_URL = './data'; // Fichiers JSON statiques pour GitHub Pages
 const CURRENT_LANG = document.documentElement.lang || 'fr';
 
 async function loadDynamicData() {
+    // Essayer d'abord l'API locale, sinon les fichiers statiques
+    const useApi = await checkApiAvailable();
+    const baseUrl = useApi ? API_BASE_URL : STATIC_DATA_URL;
+    const suffix = useApi ? '' : '.json';
+    
     try {
         // Charger toutes les données en parallèle
         const [statsRes, formationsRes, skillsRes, projectsRes, recommendationsRes, documentsRes] = await Promise.all([
-            fetch(`${API_BASE_URL}/stats`).catch(() => null),
-            fetch(`${API_BASE_URL}/formations`).catch(() => null),
-            fetch(`${API_BASE_URL}/skills`).catch(() => null),
-            fetch(`${API_BASE_URL}/projects`).catch(() => null),
-            fetch(`${API_BASE_URL}/recommendations`).catch(() => null),
-            fetch(`${API_BASE_URL}/documents`).catch(() => null)
+            fetch(`${baseUrl}/stats${suffix}`).catch(() => null),
+            fetch(`${baseUrl}/formations${suffix}`).catch(() => null),
+            fetch(`${baseUrl}/skills${suffix}`).catch(() => null),
+            fetch(`${baseUrl}/projects${suffix}`).catch(() => null),
+            fetch(`${baseUrl}/recommendations${suffix}`).catch(() => null),
+            fetch(`${baseUrl}/documents${suffix}`).catch(() => null)
         ]);
 
         // Stats
@@ -55,7 +61,20 @@ async function loadDynamicData() {
         // Les documents sont affichés sur les pages de projets individuels
 
     } catch (error) {
-        console.log('API non disponible, utilisation des données statiques');
+        console.log('Erreur lors du chargement des données:', error);
+    }
+}
+
+// Vérifier si l'API locale est disponible
+async function checkApiAvailable() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/stats`, { 
+            method: 'HEAD',
+            signal: AbortSignal.timeout(1000) // Timeout 1 seconde
+        });
+        return response.ok;
+    } catch {
+        return false;
     }
 }
 
