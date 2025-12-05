@@ -1,0 +1,118 @@
+{
+    "fr": {
+        "projects": [
+            {
+                "id": "nfs-raid",
+                "slug": "project_nfs_raid",
+                "image": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800",
+                "imageAlt": "NFS RAID",
+                "tags": ["Linux", "Stockage"],
+                "title": "Serveur NFS avec RAID Multi-Configuration",
+                "description": "Mise en place d'un serveur de fichiers NFS avec 3 configurations RAID : 1×RAID1 (450GB), 6×RAID6 (600GB) et 4×RAID6 (2TB) gérés par LVM pour optimiser stockage et redondance."
+            },
+            {
+                "id": "ad-automation",
+                "slug": "project_ad_automation",
+                "image": "https://images.unsplash.com/photo-1633265486064-086b219458ec?w=800",
+                "imageAlt": "AD Automation",
+                "tags": ["PowerShell", "Active Directory"],
+                "title": "Automatisation Domaine Active Directory",
+                "description": "Scripts PowerShell pour automatiser la jointure de machines au domaine AD, configuration des GPO, création d'utilisateurs et gestion des groupes de sécurité."
+            },
+            {
+                "id": "proxmox-infra",
+                "slug": "project_proxmox_infra",
+                "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800",
+                "imageAlt": "Proxmox Infrastructure",
+                "tags": ["Proxmox", "Réseau"],
+                "title": "Infrastructure Proxmox + AD + Switch",
+                "description": "Déploiement complet d'une infrastructure virtualisée sur Proxmox avec serveur Active Directory, configuration réseau du switch et segmentation VLAN pour un environnement de test."
+            },
+            {
+                "id": "bot-discord",
+                "slug": "project_bot_discord",
+                "image": "https://images.unsplash.com/photo-1639322537228-f710d846310a?w=800",
+                "imageAlt": "Bot Discord",
+                "tags": ["Discord.js", "Automatisation"],
+                "title": "Bot Discord de Gestion Scolaire",
+                "description": "Bot Discord complet pour gérer l'inscription automatique des étudiants et enseignants avec attribution de rôles par promo/classe et système de refonte administrative annuelle."
+            },
+            {
+                "id": "portfolio",
+                "slug": "project_portfolio",
+                "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800",
+                "imageAlt": "Portfolio",
+                "tags": ["HTML/CSS/JS", "Design"],
+                "title": "Portfolio Interactif",
+                "description": "Site portfolio personnel avec animations fluides, dashboard d'expérience professionnelle, système de navigation dynamique et design responsive moderne."
+            },
+            {
+                "id": "blog-porto",
+                "slug": "project_blog_porto",
+                "image": "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=800",
+                "imageAlt": "Blog Porto",
+                "tags": ["Web", "Anglais"],
+                "title": "Blog de Voyage Porto",
+                "description": "Site web documentant un voyage linguistique de 12 jours à Porto avec blog quotidien, galeries photos, vidéos en fond et playlist musicale interactive."
+            }
+        ]
+    },
+    "en": {
+        "projects": [
+            {
+                "id": "nfs-raid",
+                "slug": "project_nfs_raid_en",
+                "image": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800",
+                "imageAlt": "NFS RAID",
+                "tags": ["Linux", "Storage"],
+                "title": "NFS Server with Multi-RAID Configuration",
+                "description": "NFS file server setup with 3 RAID configurations: 1×RAID1 (450GB), 6×RAID6 (600GB) and 4×RAID6 (2TB) managed by LVM to optimize storage and redundancy."
+            },
+            {
+                "id": "ad-automation",
+                "slug": "project_ad_automation_en",
+                "image": "https://images.unsplash.com/photo-1633265486064-086b219458ec?w=800",
+                "imageAlt": "AD Automation",
+                "tags": ["PowerShell", "Active Directory"],
+                "title": "Active Directory Domain Automation",
+                "description": "PowerShell scripts to automate machine domain joining, GPO configuration, user creation and security group management."
+            },
+            {
+                "id": "proxmox-infra",
+                "slug": "project_proxmox_infra_en",
+                "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800",
+                "imageAlt": "Proxmox Infrastructure",
+                "tags": ["Proxmox", "Network"],
+                "title": "Proxmox + AD + Switch Infrastructure",
+                "description": "Complete virtualized infrastructure deployment on Proxmox with Active Directory server, switch network configuration and VLAN segmentation for a test environment."
+            },
+            {
+                "id": "bot-discord",
+                "slug": "project_bot_discord_en",
+                "image": "https://images.unsplash.com/photo-1639322537228-f710d846310a?w=800",
+                "imageAlt": "Discord Bot",
+                "tags": ["Discord.js", "Automation"],
+                "title": "School Management Discord Bot",
+                "description": "Complete Discord bot for automating student and teacher registration with role assignment by promotion/class and annual administrative refresh system."
+            },
+            {
+                "id": "portfolio",
+                "slug": "project_portfolio_en",
+                "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800",
+                "imageAlt": "Portfolio",
+                "tags": ["HTML/CSS/JS", "Design"],
+                "title": "Interactive Portfolio",
+                "description": "Personal portfolio website with smooth animations, professional experience dashboard, dynamic navigation system and modern responsive design."
+            },
+            {
+                "id": "blog-porto",
+                "slug": "project_blog_porto_en",
+                "image": "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=800",
+                "imageAlt": "Porto Blog",
+                "tags": ["Web", "English"],
+                "title": "Porto Travel Blog",
+                "description": "Website documenting a 12-day language trip to Porto with daily blog posts, photo galleries, background videos and interactive music playlist."
+            }
+        ]
+    }
+}

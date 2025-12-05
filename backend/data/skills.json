@@ -1,0 +1,66 @@
+{
+    "fr": {
+        "skills": [
+            {
+                "id": "windows-server",
+                "icon": "fas fa-server",
+                "title": "Windows Server",
+                "description": "Maîtrise de l'environnement Windows Server : Active Directory (AD), DNS, DHCP, GPO (Group Policy Objects), WSUS, gestion des certificats et automatisation PowerShell.",
+                "tags": ["Active Directory", "DNS/DHCP", "GPO/WSUS", "PowerShell"]
+            },
+            {
+                "id": "linux-virtualisation",
+                "icon": "fab fa-linux",
+                "title": "Linux & Virtualisation",
+                "description": "Administration systèmes Linux (Debian/Ubuntu). Configuration DHCP/DNS, gestion des permissions POSIX et ACLs, OPNsense, Proxmox, NFS, LDAP, scripts Shell et SSH.",
+                "tags": ["Linux", "Proxmox", "NFS/LDAP", "Shell"]
+            },
+            {
+                "id": "reseaux-securite",
+                "icon": "fas fa-network-wired",
+                "title": "Réseaux & Sécurité",
+                "description": "Configuration et diagnostic réseaux avec Cisco Packet Tracer, analyse de trafic avec Wireshark, mise en place de pare-feu et gestion de la sécurité réseau.",
+                "tags": ["Cisco Packet Tracer", "Wireshark", "OPNsense"]
+            },
+            {
+                "id": "stockage-bdd",
+                "icon": "fas fa-database",
+                "title": "Stockage & Bases de données",
+                "description": "Configuration RAID et LVM pour optimiser le stockage. Maîtrise des bases de données relationnelles avec SQL, MariaDB et phpMyAdmin. Conception de modèles avec JMerise.",
+                "tags": ["RAID/LVM", "SQL/MariaDB", "phpMyAdmin", "JMerise"]
+            }
+        ]
+    },
+    "en": {
+        "skills": [
+            {
+                "id": "windows-server",
+                "icon": "fas fa-server",
+                "title": "Windows Server",
+                "description": "Mastery of Windows Server environment: Active Directory (AD), DNS, DHCP, GPO (Group Policy Objects), WSUS, certificate management and PowerShell automation.",
+                "tags": ["Active Directory", "DNS/DHCP", "GPO/WSUS", "PowerShell"]
+            },
+            {
+                "id": "linux-virtualisation",
+                "icon": "fab fa-linux",
+                "title": "Linux & Virtualization",
+                "description": "Linux systems administration (Debian/Ubuntu). DHCP/DNS configuration, POSIX permissions and ACLs management, OPNsense, Proxmox, NFS, LDAP, Shell scripts and SSH.",
+                "tags": ["Linux", "Proxmox", "NFS/LDAP", "Shell"]
+            },
+            {
+                "id": "reseaux-securite",
+                "icon": "fas fa-network-wired",
+                "title": "Networks & Security",
+                "description": "Network configuration and diagnostics with Cisco Packet Tracer, traffic analysis with Wireshark, firewall setup and network security management.",
+                "tags": ["Cisco Packet Tracer", "Wireshark", "OPNsense"]
+            },
+            {
+                "id": "stockage-bdd",
+                "icon": "fas fa-database",
+                "title": "Storage & Databases",
+                "description": "RAID and LVM configuration to optimize storage. Mastery of relational databases with SQL, MariaDB and phpMyAdmin. Model design with JMerise.",
+                "tags": ["RAID/LVM", "SQL/MariaDB", "phpMyAdmin", "JMerise"]
+            }
+        ]
+    }
+}

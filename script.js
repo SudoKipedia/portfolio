@@ -1,4 +1,189 @@
+// ===================================
+// CHARGEMENT DYNAMIQUE DES DONNÉES
+// ===================================
+const API_BASE_URL = 'http://localhost:3001/api';
+const CURRENT_LANG = document.documentElement.lang || 'fr';
+
+async function loadDynamicData() {
+    try {
+        // Charger toutes les données en parallèle
+        const [statsRes, formationsRes, skillsRes, projectsRes, recommendationsRes, documentsRes] = await Promise.all([
+            fetch(`${API_BASE_URL}/stats`).catch(() => null),
+            fetch(`${API_BASE_URL}/formations`).catch(() => null),
+            fetch(`${API_BASE_URL}/skills`).catch(() => null),
+            fetch(`${API_BASE_URL}/projects`).catch(() => null),
+            fetch(`${API_BASE_URL}/recommendations`).catch(() => null),
+            fetch(`${API_BASE_URL}/documents`).catch(() => null)
+        ]);
+
+        // Stats
+        if (statsRes?.ok) {
+            const statsData = await statsRes.json();
+            const stats = statsData[CURRENT_LANG]?.stats || [];
+            updateStats(stats);
+        }
+
+        // Formations
+        if (formationsRes?.ok) {
+            const formationsData = await formationsRes.json();
+            const formations = formationsData[CURRENT_LANG]?.formations || [];
+            updateFormations(formations);
+        }
+
+        // Skills
+        if (skillsRes?.ok) {
+            const skillsData = await skillsRes.json();
+            const skills = skillsData[CURRENT_LANG]?.skills || [];
+            updateSkills(skills);
+        }
+
+        // Projects
+        if (projectsRes?.ok) {
+            const projectsData = await projectsRes.json();
+            const projects = projectsData[CURRENT_LANG]?.projects || [];
+            updateProjects(projects);
+        }
+
+        // Recommendations
+        if (recommendationsRes?.ok) {
+            const recommendationsData = await recommendationsRes.json();
+            const recommendations = recommendationsData[CURRENT_LANG]?.recommendations || [];
+            updateRecommendations(recommendations);
+        }
+
+        // Documents (pour la page index, on ne les affiche pas directement)
+        // Les documents sont affichés sur les pages de projets individuels
+
+    } catch (error) {
+        console.log('API non disponible, utilisation des données statiques');
+    }
+}
+
+function updateStats(stats) {
+    const statItems = document.querySelectorAll('.hero-stats .stat-item');
+    stats.forEach((stat, index) => {
+        if (statItems[index]) {
+            const numberEl = statItems[index].querySelector('.stat-number');
+            const labelEl = statItems[index].querySelector('.stat-label');
+            if (numberEl) {
+                numberEl.setAttribute('data-target', stat.value);
+                numberEl.textContent = '0';
+            }
+            if (labelEl) {
+                labelEl.textContent = stat.label;
+            }
+        }
+    });
+}
+
+function updateFormations(formations) {
+    const timelineContainer = document.querySelector('.timeline-items');
+    if (!timelineContainer || formations.length === 0) return;
+
+    timelineContainer.innerHTML = formations.map(formation => {
+        const period = formation.year || formation.period || '';
+        const school = formation.school || formation.institution || '';
+        const skills = formation.skills || [];
+        
+        return `
+            <div class="timeline-item" data-year="${period}">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">${period}</span>
+                    <h4>${formation.title}</h4>
+                    <p class="timeline-school">${school}</p>
+                    <p class="timeline-desc">${formation.description || ''}</p>
+                    <div class="timeline-extra">
+                        <ul>
+                            ${skills.map(skill => `
+                                <li><i class="fas fa-check"></i> ${skill}</li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function updateSkills(skills) {
+    const skillsGrid = document.querySelector('.skills-grid');
+    if (!skillsGrid || skills.length === 0) return;
+
+    skillsGrid.innerHTML = skills.map(skill => `
+        <div class="skill-card">
+            <div class="skill-icon">
+                <i class="${skill.icon}"></i>
+            </div>
+            <h3>${skill.title}</h3>
+            <p>${skill.description}</p>
+            <div class="skill-tags">
+                ${skill.tags.map(tag => `<span>${tag}</span>`).join('')}
+            </div>
+        </div>
+    `).join('');
+}
+
+function updateProjects(projects) {
+    const projectsGrid = document.querySelector('.projects-grid');
+    if (!projectsGrid || projects.length === 0) return;
+
+    projectsGrid.innerHTML = projects.map(project => `
+        <a href="${project.link}" class="project-card">
+            <div class="project-image">
+                <img src="${project.image}" alt="${project.title}" />
+                <div class="project-overlay">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+            <div class="project-info">
+                <div class="project-tags">
+                    ${project.tags.map(tag => `<span>${tag}</span>`).join('')}
+                </div>
+                <h3>${project.title}</h3>
+                <p>${project.description}</p>
+            </div>
+        </a>
+    `).join('');
+}
+
+function updateRecommendations(recommendations) {
+    const recommendationsContainer = document.querySelector('#recommendations-accordion .document-list');
+    if (!recommendationsContainer) return;
+
+    if (recommendations.length === 0) {
+        recommendationsContainer.innerHTML = `
+            <div class="document-placeholder">
+                <i class="fas fa-folder-open"></i>
+                <p>${CURRENT_LANG === 'fr' ? 'Recommandations à venir...' : 'Recommendations coming soon...'}</p>
+            </div>
+        `;
+        return;
+    }
+
+    recommendationsContainer.innerHTML = recommendations.map(rec => `
+        <div class="recommendation-card">
+            <div class="recommendation-header">
+                <div class="recommendation-author">
+                    <i class="fas fa-user-circle"></i>
+                    <div>
+                        <h4>${rec.author}</h4>
+                        <p>${rec.role} - ${rec.company}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="recommendation-content">
+                <i class="fas fa-quote-left quote-icon"></i>
+                <p>${rec.content}</p>
+            </div>
+        </div>
+    `).join('');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    // Charger les données dynamiques
+    loadDynamicData();
+    
     // ===================================
     // CANVAS PARTICLES BACKGROUND
     // ===================================
