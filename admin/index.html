@@ -4,18 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | Portfolio</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="admin.css">
+    <style>
+        /* Cacher le contenu tant que l'auth n'est pas vérifiée */
+        .admin-layout { display: none; }
+        .auth-loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: var(--color-bg-dark, #0a0a0a);
+            color: var(--color-text, #fff);
+            font-family: 'Inter', sans-serif;
+        }
+        .auth-loading i { font-size: 2rem; }
+    </style>
 </head>
 <body>
-    <div class="admin-layout">
+    <!-- Écran de chargement -->
+    <div class="auth-loading" id="auth-loading">
+        <i class="fas fa-spinner fa-spin"></i>
+    </div>
+
+    <div class="admin-layout" id="admin-layout">
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-header">
-                <a href="../index.html" class="sidebar-logo" target="_blank">
+                <a href="index.html" class="sidebar-logo">
                     <i class="fas fa-briefcase"></i>
                     <span>Portfolio Admin</span>
                 </a>
@@ -88,8 +108,8 @@
 
                 <!-- Language Tabs -->
                 <div class="lang-tabs">
-                    <button class="lang-tab active" data-lang="fr">🇫🇷 Français</button>
-                    <button class="lang-tab" data-lang="en">🇬🇧 English</button>
+                    <button class="lang-tab active" data-lang="fr">FR Francais</button>
+                    <button class="lang-tab" data-lang="en">GB English</button>
                 </div>
 
                 <!-- Stats Section -->
