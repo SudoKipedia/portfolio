@@ -617,27 +617,10 @@ function openModal(title, content, saveCallback) {
     document.getElementById('modal-body').innerHTML = content;
     document.getElementById('modal-overlay').classList.add('active');
     
-    const saveBtn = document.getElementById('modal-save-btn');
-    
-    // Désactiver le bouton de sauvegarde pour les viewers
-    if (userRole !== 'admin') {
-        saveBtn.disabled = true;
-        saveBtn.style.opacity = '0.5';
-        saveBtn.style.cursor = 'not-allowed';
-        saveBtn.title = 'Mode lecture seule';
-        saveBtn.onclick = () => {
-            showAlert('Mode lecture seule - sauvegarde non autorisée', 'error');
-        };
-    } else {
-        saveBtn.disabled = false;
-        saveBtn.style.opacity = '1';
-        saveBtn.style.cursor = 'pointer';
-        saveBtn.title = '';
-        saveBtn.onclick = () => {
-            saveCallback();
-            closeModal();
-        };
-    }
+    document.getElementById('modal-save-btn').onclick = () => {
+        saveCallback();
+        closeModal();
+    };
     
     // Fermer le modal en cliquant sur l'overlay (en dehors du contenu)
     document.getElementById('modal-overlay').onclick = (e) => {
@@ -653,6 +636,10 @@ function closeModal() {
 
 // Formation CRUD
 function addFormation() {
+    if (userRole !== 'admin') {
+        showAlert('Mode lecture seule - ajout non autorisé', 'error');
+        return;
+    }
     const content = `
         <div class="form-group">
             <label>Période</label>
@@ -695,6 +682,10 @@ function addFormation() {
 }
 
 function editFormation(index) {
+    if (userRole !== 'admin') {
+        showAlert('Mode lecture seule - modification non autorisée', 'error');
+        return;
+    }
     const formation = data.formations[currentLang].formations[index];
     
     const content = `
@@ -746,6 +737,10 @@ function deleteFormation(index) {
 
 // Skill CRUD
 function addSkill() {
+    if (userRole !== 'admin') {
+        showAlert('Mode lecture seule - ajout non autorisé', 'error');
+        return;
+    }
     const content = `
         <div class="form-group">
             <label>Titre</label>
@@ -782,6 +777,10 @@ function addSkill() {
 }
 
 function editSkill(index) {
+    if (userRole !== 'admin') {
+        showAlert('Mode lecture seule - modification non autorisée', 'error');
+        return;
+    }
     const skill = data.skills[currentLang].skills[index];
     
     const content = `
@@ -827,6 +826,10 @@ function deleteSkill(index) {
 
 // Project CRUD
 function addProject() {
+    if (userRole !== 'admin') {
+        showAlert('Mode lecture seule - ajout non autorisé', 'error');
+        return;
+    }
     const content = `
         <div class="form-group">
             <label>Titre</label>
@@ -904,6 +907,10 @@ function addProject() {
 }
 
 function editProject(index) {
+    if (userRole !== 'admin') {
+        showAlert('Mode lecture seule - modification non autorisée', 'error');
+        return;
+    }
     const project = data.projects[currentLang].projects[index];
     
     // Afficher l'image actuelle si elle existe
@@ -1014,6 +1021,10 @@ function deleteProject(index) {
 
 // Recommendation CRUD
 function addRecommendation() {
+    if (userRole !== 'admin') {
+        showAlert('Mode lecture seule - ajout non autorisé', 'error');
+        return;
+    }
     const content = `
         <div class="form-group">
             <label>Auteur</label>
@@ -1096,6 +1107,10 @@ function addRecommendation() {
 }
 
 function editRecommendation(index) {
+    if (userRole !== 'admin') {
+        showAlert('Mode lecture seule - modification non autorisée', 'error');
+        return;
+    }
     const rec = data.recommendations[currentLang].recommendations[index];
     
     const content = `
@@ -1189,6 +1204,10 @@ function deleteRecommendation(index) {
 
 // Document CRUD
 function addDocument() {
+    if (userRole !== 'admin') {
+        showAlert('Mode lecture seule - ajout non autorisé', 'error');
+        return;
+    }
     const projectOptions = data.projects?.fr?.projects?.map(p => 
         `<option value="${p.slug}">${p.title}</option>`
     ).join('') || '';
@@ -1258,6 +1277,10 @@ function addDocument() {
 }
 
 function editDocument(index) {
+    if (userRole !== 'admin') {
+        showAlert('Mode lecture seule - modification non autorisée', 'error');
+        return;
+    }
     const doc = data.documents[currentLang].documents[index];
     const projectOptions = data.projects?.fr?.projects?.map(p => 
         `<option value="${p.slug}" ${p.slug === doc.projectSlug ? 'selected' : ''}>${p.title}</option>`
