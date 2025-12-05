@@ -17,20 +17,13 @@ const PORT = process.env.ADMIN_PORT || 3001;
 // SÉCURITÉ
 // ===================================
 
-// Helmet - Headers de sécurité
+// Helmet - Headers de sécurité (désactivé pour HTTP en dev, activer en HTTPS prod)
 app.use(helmet({
-    contentSecurityPolicy: {
-        directives: {
-            defaultSrc: ["'self'"],
-            styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"],
-            fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
-            scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-            scriptSrcAttr: ["'unsafe-inline'"], // Autoriser onclick inline
-            imgSrc: ["'self'", "data:", "blob:", "http://localhost:3001", "https:"],
-            connectSrc: ["'self'", "http://localhost:3001", "https:"],
-        },
-    },
+    contentSecurityPolicy: false, // Désactivé pour éviter les problèmes HTTP
     crossOriginEmbedderPolicy: false,
+    crossOriginOpenerPolicy: false,
+    crossOriginResourcePolicy: false,
+    originAgentCluster: false,
 }));
 
 // Rate limiting global
@@ -119,7 +112,7 @@ app.use(cors({
     credentials: true
 }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../admin')));
+app.use('/admin', express.static(path.join(__dirname, '../admin')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Configuration multer pour upload de fichiers
@@ -240,7 +233,7 @@ function authenticateToken(req, res, next) {
 // Route de login sécurisée
 app.post('/api/auth/login', async (req, res) => {
     const clientIP = req.ip || req.connection.remoteAddress;
-    const { password } = req.body;
+    const { username, password } = req.body;
 
     // Vérifier si l'IP est bloquée
     if (checkBruteForce(clientIP)) {
@@ -250,8 +243,15 @@ app.post('/api/auth/login', async (req, res) => {
         });
     }
 
-    if (!password) {
-        return res.status(400).json({ error: 'Mot de passe requis' });
+    if (!username || !password) {
+        return res.status(400).json({ error: 'Nom d\'utilisateur et mot de passe requis' });
+    }
+
+    // Vérifier le nom d'utilisateur
+    const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'Admin';
+    if (username !== ADMIN_USERNAME) {
+        recordFailedAttempt(clientIP);
+        return res.status(401).json({ error: 'Identifiants incorrects' });
     }
 
     // Délai artificiel pour ralentir les attaques (100-300ms)
@@ -509,7 +509,11 @@ app.post('/api/publish', authenticateToken, async (req, res) => {
 // ROUTE ADMIN PAGE
 // ===================================
 app.get('/admin', (req, res) => {
-    res.sendFile(path.join(__dirname, '../admin/index.html'));
+    res.redirect('/admin/login.html');
+});
+
+app.get('/admin/', (req, res) => {
+    res.redirect('/admin/login.html');
 });
 
 app.get('/admin/login', (req, res) => {
