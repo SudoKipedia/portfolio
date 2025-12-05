@@ -1,7 +1,7 @@
-// Configuration
+﻿// Configuration
 const API_URL = 'http://localhost:3001/api';
 
-// État global
+// Ã‰tat global
 let currentSection = 'stats';
 let currentLang = 'fr';
 let data = {
@@ -13,7 +13,7 @@ let data = {
     documents: null
 };
 
-// Vérification de l'authentification au chargement
+// VÃ©rification de l'authentification au chargement
 document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('adminToken');
     if (!token) {
@@ -47,7 +47,7 @@ function init() {
     setupLanguageTabs();
     loadAllData();
     
-    // Restaurer la section sauvegardée
+    // Restaurer la section sauvegardÃ©e
     const savedSection = localStorage.getItem('adminCurrentSection');
     if (savedSection && ['stats', 'formations', 'skills', 'projects', 'recommendations', 'documents'].includes(savedSection)) {
         switchSection(savedSection);
@@ -58,8 +58,8 @@ function init() {
 // UI COMPONENTS HELPERS
 // ================================
 
-// Génère un select custom stylisé
-function createStyledSelect(id, options, selectedValue = '', placeholder = '-- Sélectionner --') {
+// GÃ©nÃ¨re un select custom stylisÃ©
+function createStyledSelect(id, options, selectedValue = '', placeholder = '-- SÃ©lectionner --') {
     // Parser les options pour extraire valeurs et textes
     const optionRegex = /<option\s+value="([^"]*)"[^>]*>([^<]*)<\/option>/gi;
     const parsedOptions = [];
@@ -110,7 +110,7 @@ function toggleCustomSelect(id) {
     container.classList.toggle('open');
 }
 
-// Sélectionner une option
+// SÃ©lectionner une option
 function selectCustomOption(id, value, text) {
     const input = document.getElementById(id);
     const container = document.getElementById(`${id}-container`);
@@ -119,14 +119,14 @@ function selectCustomOption(id, value, text) {
     input.value = value;
     valueDisplay.textContent = text;
     
-    // Gérer la classe placeholder
+    // GÃ©rer la classe placeholder
     if (!value) {
         valueDisplay.classList.add('placeholder');
     } else {
         valueDisplay.classList.remove('placeholder');
     }
     
-    // Mettre à jour la classe selected
+    // Mettre Ã  jour la classe selected
     container.querySelectorAll('.custom-select-option').forEach(opt => {
         opt.classList.toggle('selected', opt.dataset.value === value);
     });
@@ -143,7 +143,7 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Génère un champ d'upload stylisé
+// GÃ©nÃ¨re un champ d'upload stylisÃ©
 function createFileUpload(id, accept = '.pdf,.doc,.docx,.png,.jpg,.jpeg', hint = 'PDF, Word, Images (max 5MB)') {
     return `
         <div class="file-upload-wrapper" id="${id}-wrapper">
@@ -153,7 +153,7 @@ function createFileUpload(id, accept = '.pdf,.doc,.docx,.png,.jpg,.jpeg', hint =
                     <i class="fas fa-cloud-upload-alt"></i>
                 </div>
                 <div class="file-upload-text">
-                    <span>Cliquez pour choisir</span> ou glissez-déposez
+                    <span>Cliquez pour choisir</span> ou glissez-dÃ©posez
                 </div>
                 <div class="file-upload-hint">${hint}</div>
             </div>
@@ -173,7 +173,7 @@ function createFileUpload(id, accept = '.pdf,.doc,.docx,.png,.jpg,.jpeg', hint =
     `;
 }
 
-// Génère l'affichage d'une pièce jointe existante
+// GÃ©nÃ¨re l'affichage d'une piÃ¨ce jointe existante
 function createCurrentAttachment(url, onRemove) {
     if (!url) return '';
     const filename = url.split('/').pop();
@@ -194,7 +194,7 @@ function createCurrentAttachment(url, onRemove) {
     `;
 }
 
-// Gestion de la sélection de fichier
+// Gestion de la sÃ©lection de fichier
 function handleFileSelect(input) {
     const wrapper = input.closest('.file-upload-wrapper');
     const preview = wrapper.querySelector('.file-upload-preview');
@@ -209,7 +209,7 @@ function handleFileSelect(input) {
         nameEl.textContent = file.name;
         sizeEl.textContent = formatFileSize(file.size);
         
-        // Icône selon le type
+        // IcÃ´ne selon le type
         if (file.type.includes('pdf')) {
             iconEl.className = 'fas fa-file-pdf';
         } else if (file.type.includes('image')) {
@@ -225,7 +225,7 @@ function handleFileSelect(input) {
     }
 }
 
-// Effacer le fichier sélectionné
+// Effacer le fichier sÃ©lectionnÃ©
 function clearFileUpload(inputId) {
     const input = document.getElementById(inputId);
     const wrapper = input.closest('.file-upload-wrapper');
@@ -246,7 +246,7 @@ function formatFileSize(bytes) {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
 }
 
-// Supprimer l'affichage de la pièce jointe existante
+// Supprimer l'affichage de la piÃ¨ce jointe existante
 function removeCurrentAttachment() {
     const el = document.getElementById('current-attachment');
     if (el) el.remove();
@@ -280,12 +280,12 @@ function switchSection(section) {
     
     // Update header
     const titles = {
-        stats: { title: 'Statistiques', desc: 'Gérez les statistiques affichées sur votre page d\'accueil' },
-        formations: { title: 'Formations', desc: 'Gérez votre parcours académique et professionnel' },
-        skills: { title: 'Compétences', desc: 'Gérez vos cartes de compétences' },
-        projects: { title: 'Projets', desc: 'Gérez vos projets et leur affichage' },
-        recommendations: { title: 'Recommandations', desc: 'Gérez les lettres de recommandation' },
-        documents: { title: 'Documents', desc: 'Gérez les documents téléchargeables par projet' }
+        stats: { title: 'Statistiques', desc: 'GÃ©rez les statistiques affichÃ©es sur votre page d\'accueil' },
+        formations: { title: 'Formations', desc: 'GÃ©rez votre parcours acadÃ©mique et professionnel' },
+        skills: { title: 'CompÃ©tences', desc: 'GÃ©rez vos cartes de compÃ©tences' },
+        projects: { title: 'Projets', desc: 'GÃ©rez vos projets et leur affichage' },
+        recommendations: { title: 'Recommandations', desc: 'GÃ©rez les lettres de recommandation' },
+        documents: { title: 'Documents', desc: 'GÃ©rez les documents tÃ©lÃ©chargeables par projet' }
     };
     
     document.getElementById('section-title').textContent = titles[section].title;
@@ -331,7 +331,7 @@ async function loadAllData() {
         
         renderCurrentSection();
     } catch (error) {
-        showAlert('Erreur lors du chargement des données', 'error');
+        showAlert('Erreur lors du chargement des donnÃ©es', 'error');
         console.error(error);
     }
 }
@@ -367,7 +367,7 @@ function renderStats() {
                        value="${stat.value}" placeholder="Valeur (ex: 2+)">
                 <input type="text" class="form-control" 
                        data-field="label" data-index="${index}"
-                       value="${stat.label}" placeholder="Label (ex: Années d'expérience)">
+                       value="${stat.label}" placeholder="Label (ex: AnnÃ©es d'expÃ©rience)">
             </div>
         </div>
     `).join('');
@@ -387,7 +387,7 @@ function renderFormations() {
     const langData = data.formations?.[currentLang]?.formations || [];
     
     if (langData.length === 0) {
-        container.innerHTML = '<p class="empty-state">Aucune formation ajoutée</p>';
+        container.innerHTML = '<p class="empty-state">Aucune formation ajoutÃ©e</p>';
         return;
     }
     
@@ -423,7 +423,7 @@ function renderSkills() {
     const langData = data.skills?.[currentLang]?.skills || [];
     
     if (langData.length === 0) {
-        container.innerHTML = '<p class="empty-state">Aucune compétence ajoutée</p>';
+        container.innerHTML = '<p class="empty-state">Aucune compÃ©tence ajoutÃ©e</p>';
         return;
     }
     
@@ -457,7 +457,7 @@ function renderProjects() {
     const langData = data.projects?.[currentLang]?.projects || [];
     
     if (langData.length === 0) {
-        container.innerHTML = '<p class="empty-state">Aucun projet ajouté</p>';
+        container.innerHTML = '<p class="empty-state">Aucun projet ajoutÃ©</p>';
         return;
     }
     
@@ -492,7 +492,7 @@ function renderRecommendations() {
     const langData = data.recommendations?.[currentLang]?.recommendations || [];
     
     if (langData.length === 0) {
-        container.innerHTML = '<p class="empty-state">Aucune recommandation ajoutée. Cliquez sur "Ajouter" pour commencer.</p>';
+        container.innerHTML = '<p class="empty-state">Aucune recommandation ajoutÃ©e. Cliquez sur "Ajouter" pour commencer.</p>';
         return;
     }
     
@@ -525,7 +525,7 @@ function renderDocuments() {
     const langData = data.documents?.[currentLang]?.documents || [];
     
     if (langData.length === 0) {
-        container.innerHTML = '<p class="empty-state">Aucun document ajouté. Cliquez sur "Ajouter" pour commencer.</p>';
+        container.innerHTML = '<p class="empty-state">Aucun document ajoutÃ©. Cliquez sur "Ajouter" pour commencer.</p>';
         return;
     }
     
@@ -577,24 +577,24 @@ function closeModal() {
 function addFormation() {
     const content = `
         <div class="form-group">
-            <label>Période</label>
-            <input type="text" class="form-control" id="formation-year" placeholder="2024 - Présent">
+            <label>PÃ©riode</label>
+            <input type="text" class="form-control" id="formation-year" placeholder="2024 - PrÃ©sent">
         </div>
         <div class="form-group">
             <label>Titre</label>
             <input type="text" class="form-control" id="formation-title" placeholder="Bachelor Informatique">
         </div>
         <div class="form-group">
-            <label>Établissement</label>
+            <label>Ã‰tablissement</label>
             <input type="text" class="form-control" id="formation-school" placeholder="IPI Blagnac - Toulouse">
         </div>
         <div class="form-group">
             <label>Description</label>
-            <input type="text" class="form-control" id="formation-description" placeholder="Spécialisation en...">
+            <input type="text" class="form-control" id="formation-description" placeholder="SpÃ©cialisation en...">
         </div>
         <div class="form-group">
-            <label>Compétences acquises (séparées par des virgules)</label>
-            <textarea class="form-control" id="formation-skills" rows="3" placeholder="Administration Windows Server, Configuration réseau..."></textarea>
+            <label>CompÃ©tences acquises (sÃ©parÃ©es par des virgules)</label>
+            <textarea class="form-control" id="formation-skills" rows="3" placeholder="Administration Windows Server, Configuration rÃ©seau..."></textarea>
         </div>
     `;
     
@@ -621,7 +621,7 @@ function editFormation(index) {
     
     const content = `
         <div class="form-group">
-            <label>Période</label>
+            <label>PÃ©riode</label>
             <input type="text" class="form-control" id="formation-year" value="${formation.year || formation.period || ''}">
         </div>
         <div class="form-group">
@@ -629,7 +629,7 @@ function editFormation(index) {
             <input type="text" class="form-control" id="formation-title" value="${formation.title || ''}">
         </div>
         <div class="form-group">
-            <label>Établissement</label>
+            <label>Ã‰tablissement</label>
             <input type="text" class="form-control" id="formation-school" value="${formation.school || formation.institution || ''}">
         </div>
         <div class="form-group">
@@ -637,7 +637,7 @@ function editFormation(index) {
             <input type="text" class="form-control" id="formation-description" value="${formation.description || ''}">
         </div>
         <div class="form-group">
-            <label>Compétences acquises (séparées par des virgules)</label>
+            <label>CompÃ©tences acquises (sÃ©parÃ©es par des virgules)</label>
             <textarea class="form-control" id="formation-skills" rows="3">${formation.skills ? formation.skills.join(', ') : ''}</textarea>
         </div>
     `;
@@ -656,7 +656,7 @@ function editFormation(index) {
 }
 
 function deleteFormation(index) {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cette formation ?')) {
+    if (confirm('ÃŠtes-vous sÃ»r de vouloir supprimer cette formation ?')) {
         data.formations[currentLang].formations.splice(index, 1);
         renderFormations();
     }
@@ -667,23 +667,23 @@ function addSkill() {
     const content = `
         <div class="form-group">
             <label>Titre</label>
-            <input type="text" class="form-control" id="skill-title" placeholder="Développement Web">
+            <input type="text" class="form-control" id="skill-title" placeholder="DÃ©veloppement Web">
         </div>
         <div class="form-group">
-            <label>Icône (classe Font Awesome)</label>
+            <label>IcÃ´ne (classe Font Awesome)</label>
             <input type="text" class="form-control" id="skill-icon" placeholder="fas fa-code">
         </div>
         <div class="form-group">
             <label>Description</label>
-            <textarea class="form-control" id="skill-description" rows="3" placeholder="Description de la compétence..."></textarea>
+            <textarea class="form-control" id="skill-description" rows="3" placeholder="Description de la compÃ©tence..."></textarea>
         </div>
         <div class="form-group">
-            <label>Tags (séparés par des virgules)</label>
+            <label>Tags (sÃ©parÃ©s par des virgules)</label>
             <input type="text" class="form-control" id="skill-tags" placeholder="HTML, CSS, JavaScript">
         </div>
     `;
     
-    openModal('Ajouter une compétence', content, () => {
+    openModal('Ajouter une compÃ©tence', content, () => {
         const skill = {
             title: document.getElementById('skill-title').value,
             icon: document.getElementById('skill-icon').value,
@@ -708,7 +708,7 @@ function editSkill(index) {
             <input type="text" class="form-control" id="skill-title" value="${skill.title}">
         </div>
         <div class="form-group">
-            <label>Icône (classe Font Awesome)</label>
+            <label>IcÃ´ne (classe Font Awesome)</label>
             <input type="text" class="form-control" id="skill-icon" value="${skill.icon}">
         </div>
         <div class="form-group">
@@ -716,12 +716,12 @@ function editSkill(index) {
             <textarea class="form-control" id="skill-description" rows="3">${skill.description}</textarea>
         </div>
         <div class="form-group">
-            <label>Tags (séparés par des virgules)</label>
+            <label>Tags (sÃ©parÃ©s par des virgules)</label>
             <input type="text" class="form-control" id="skill-tags" value="${skill.tags.join(', ')}">
         </div>
     `;
     
-    openModal('Modifier la compétence', content, () => {
+    openModal('Modifier la compÃ©tence', content, () => {
         data.skills[currentLang].skills[index] = {
             title: document.getElementById('skill-title').value,
             icon: document.getElementById('skill-icon').value,
@@ -733,7 +733,7 @@ function editSkill(index) {
 }
 
 function deleteSkill(index) {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cette compétence ?')) {
+    if (confirm('ÃŠtes-vous sÃ»r de vouloir supprimer cette compÃ©tence ?')) {
         data.skills[currentLang].skills.splice(index, 1);
         renderSkills();
     }
@@ -763,7 +763,7 @@ function addProject() {
             <input type="text" class="form-control" id="project-link" placeholder="project_mon_projet.html">
         </div>
         <div class="form-group">
-            <label>Tags (séparés par des virgules)</label>
+            <label>Tags (sÃ©parÃ©s par des virgules)</label>
             <input type="text" class="form-control" id="project-tags" placeholder="Web, JavaScript, Node.js">
         </div>
     `;
@@ -772,7 +772,7 @@ function addProject() {
         let imageUrl = '';
         const fileInput = document.getElementById('project-image');
         
-        // Uploader l'image si un fichier est sélectionné
+        // Uploader l'image si un fichier est sÃ©lectionnÃ©
         if (fileInput && fileInput.files.length > 0) {
             const formData = new FormData();
             formData.append('file', fileInput.files[0]);
@@ -781,7 +781,7 @@ function addProject() {
                 const response = await fetch('/api/upload', {
                     method: 'POST',
                     headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
                     },
                     body: formData
                 });
@@ -790,12 +790,12 @@ function addProject() {
                     const result = await response.json();
                     imageUrl = result.url;
                 } else {
-                    showAlert('Erreur lors du téléchargement de l\'image', 'error');
+                    showAlert('Erreur lors du tÃ©lÃ©chargement de l\'image', 'error');
                     return;
                 }
             } catch (error) {
                 console.error('Erreur upload:', error);
-                showAlert('Erreur lors du téléchargement de l\'image', 'error');
+                showAlert('Erreur lors du tÃ©lÃ©chargement de l\'image', 'error');
                 return;
             }
         }
@@ -860,7 +860,7 @@ function editProject(index) {
             <input type="text" class="form-control" id="project-link" value="${project.link}">
         </div>
         <div class="form-group">
-            <label>Tags (séparés par des virgules)</label>
+            <label>Tags (sÃ©parÃ©s par des virgules)</label>
             <input type="text" class="form-control" id="project-tags" value="${project.tags.join(', ')}">
         </div>
     `;
@@ -870,12 +870,12 @@ function editProject(index) {
         const fileInput = document.getElementById('project-image');
         const removeImage = document.getElementById('remove-project-image');
         
-        // Vérifier si on veut supprimer l'image
+        // VÃ©rifier si on veut supprimer l'image
         if (removeImage && removeImage.value === 'true') {
             imageUrl = '';
         }
         
-        // Uploader la nouvelle image si un fichier est sélectionné
+        // Uploader la nouvelle image si un fichier est sÃ©lectionnÃ©
         if (fileInput && fileInput.files.length > 0) {
             const formData = new FormData();
             formData.append('file', fileInput.files[0]);
@@ -884,7 +884,7 @@ function editProject(index) {
                 const response = await fetch('/api/upload', {
                     method: 'POST',
                     headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
                     },
                     body: formData
                 });
@@ -893,12 +893,12 @@ function editProject(index) {
                     const result = await response.json();
                     imageUrl = result.url;
                 } else {
-                    showAlert('Erreur lors du téléchargement de l\'image', 'error');
+                    showAlert('Erreur lors du tÃ©lÃ©chargement de l\'image', 'error');
                     return;
                 }
             } catch (error) {
                 console.error('Erreur upload:', error);
-                showAlert('Erreur lors du téléchargement de l\'image', 'error');
+                showAlert('Erreur lors du tÃ©lÃ©chargement de l\'image', 'error');
                 return;
             }
         }
@@ -916,7 +916,7 @@ function editProject(index) {
 }
 
 function deleteProject(index) {
-    if (confirm('Êtes-vous sûr de vouloir supprimer ce projet ?')) {
+    if (confirm('ÃŠtes-vous sÃ»r de vouloir supprimer ce projet ?')) {
         data.projects[currentLang].projects.splice(index, 1);
         renderProjects();
     }
@@ -930,7 +930,7 @@ function addRecommendation() {
             <input type="text" class="form-control" id="rec-author" placeholder="Jean Dupont">
         </div>
         <div class="form-group">
-            <label>Rôle</label>
+            <label>RÃ´le</label>
             <input type="text" class="form-control" id="rec-role" placeholder="Manager">
         </div>
         <div class="form-group">
@@ -939,7 +939,7 @@ function addRecommendation() {
         </div>
         <div class="form-group">
             <label>Description</label>
-            <input type="text" class="form-control" id="rec-description" placeholder="Brève description de la recommandation">
+            <input type="text" class="form-control" id="rec-description" placeholder="BrÃ¨ve description de la recommandation">
         </div>
         <div class="form-group">
             <label>Document joint (lettre de recommandation)</label>
@@ -951,11 +951,11 @@ function addRecommendation() {
         const fileInput = document.getElementById('rec-attachment');
         let attachmentUrl = null;
         
-        // Upload du fichier si présent
+        // Upload du fichier si prÃ©sent
         if (fileInput.files.length > 0) {
             const file = fileInput.files[0];
             
-            // Vérifier la taille (max 5MB)
+            // VÃ©rifier la taille (max 5MB)
             if (file.size > 5 * 1024 * 1024) {
                 showAlert('Le fichier est trop volumineux (max 5MB)', 'error');
                 return;
@@ -978,12 +978,12 @@ function addRecommendation() {
                     const uploadResult = await uploadResponse.json();
                     attachmentUrl = uploadResult.url;
                 } else {
-                    showAlert('Erreur lors du téléchargement du fichier', 'error');
+                    showAlert('Erreur lors du tÃ©lÃ©chargement du fichier', 'error');
                     return;
                 }
             } catch (error) {
                 console.error('Erreur upload:', error);
-                showAlert('Erreur lors du téléchargement du fichier', 'error');
+                showAlert('Erreur lors du tÃ©lÃ©chargement du fichier', 'error');
                 return;
             }
         }
@@ -1014,7 +1014,7 @@ function editRecommendation(index) {
             <input type="text" class="form-control" id="rec-author" value="${rec.author || ''}">
         </div>
         <div class="form-group">
-            <label>Rôle</label>
+            <label>RÃ´le</label>
             <input type="text" class="form-control" id="rec-role" value="${rec.role || ''}">
         </div>
         <div class="form-group">
@@ -1037,11 +1037,11 @@ function editRecommendation(index) {
         const removeAttachment = document.getElementById('remove-attachment')?.value === 'true';
         let attachmentUrl = removeAttachment ? null : rec.attachment;
         
-        // Upload du nouveau fichier si présent
+        // Upload du nouveau fichier si prÃ©sent
         if (fileInput.files.length > 0) {
             const file = fileInput.files[0];
             
-            // Vérifier la taille (max 5MB)
+            // VÃ©rifier la taille (max 5MB)
             if (file.size > 5 * 1024 * 1024) {
                 showAlert('Le fichier est trop volumineux (max 5MB)', 'error');
                 return;
@@ -1064,12 +1064,12 @@ function editRecommendation(index) {
                     const uploadResult = await uploadResponse.json();
                     attachmentUrl = uploadResult.url;
                 } else {
-                    showAlert('Erreur lors du téléchargement du fichier', 'error');
+                    showAlert('Erreur lors du tÃ©lÃ©chargement du fichier', 'error');
                     return;
                 }
             } catch (error) {
                 console.error('Erreur upload:', error);
-                showAlert('Erreur lors du téléchargement du fichier', 'error');
+                showAlert('Erreur lors du tÃ©lÃ©chargement du fichier', 'error');
                 return;
             }
         }
@@ -1087,7 +1087,7 @@ function editRecommendation(index) {
 }
 
 function deleteRecommendation(index) {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cette recommandation ?')) {
+    if (confirm('ÃŠtes-vous sÃ»r de vouloir supprimer cette recommandation ?')) {
         data.recommendations[currentLang].recommendations.splice(index, 1);
         renderRecommendations();
     }
@@ -1101,8 +1101,8 @@ function addDocument() {
     
     const content = `
         <div class="form-group">
-            <label>Projet associé</label>
-            ${createStyledSelect('doc-project', projectOptions, '', '-- Sélectionner un projet --')}
+            <label>Projet associÃ©</label>
+            ${createStyledSelect('doc-project', projectOptions, '', '-- SÃ©lectionner un projet --')}
         </div>
         <div class="form-group">
             <label>Titre du document</label>
@@ -1110,7 +1110,7 @@ function addDocument() {
         </div>
         <div class="form-group">
             <label>Description</label>
-            <input type="text" class="form-control" id="doc-description" placeholder="Brève description du document">
+            <input type="text" class="form-control" id="doc-description" placeholder="BrÃ¨ve description du document">
         </div>
         <div class="form-group">
             <label>Fichier PDF</label>
@@ -1171,8 +1171,8 @@ function editDocument(index) {
     
     const content = `
         <div class="form-group">
-            <label>Projet associé</label>
-            ${createStyledSelect('doc-project', projectOptions, doc.projectSlug, '-- Sélectionner un projet --')}
+            <label>Projet associÃ©</label>
+            ${createStyledSelect('doc-project', projectOptions, doc.projectSlug, '-- SÃ©lectionner un projet --')}
         </div>
         <div class="form-group">
             <label>Titre du document</label>
@@ -1227,7 +1227,7 @@ function editDocument(index) {
 }
 
 function deleteDocument(index) {
-    if (confirm('Êtes-vous sûr de vouloir supprimer ce document ?')) {
+    if (confirm('ÃŠtes-vous sÃ»r de vouloir supprimer ce document ?')) {
         data.documents[currentLang].documents.splice(index, 1);
         renderDocuments();
     }
@@ -1248,7 +1248,7 @@ async function saveCurrentSection() {
         });
         
         if (response.ok) {
-            showAlert('Modifications sauvegardées avec succès !', 'success');
+            showAlert('Modifications sauvegardÃ©es avec succÃ¨s !', 'success');
         } else {
             const error = await response.json();
             showAlert(error.error || 'Erreur lors de la sauvegarde', 'error');
@@ -1263,7 +1263,7 @@ async function saveCurrentSection() {
 async function publishToGitHub() {
     const token = localStorage.getItem('adminToken');
     
-    if (!confirm('Publier les modifications sur GitHub Pages ?\n\nCela va exporter les données et faire un git push.')) {
+    if (!confirm('Publier les modifications sur GitHub Pages ?\n\nCela va exporter les donnÃ©es et faire un git push.')) {
         return;
     }
     
@@ -1278,18 +1278,18 @@ async function publishToGitHub() {
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({
-                message: `Mise à jour depuis le panel admin - ${new Date().toLocaleString('fr-FR')}`
+                message: `Mise Ã  jour depuis le panel admin - ${new Date().toLocaleString('fr-FR')}`
             })
         });
         
         const result = await response.json();
         
         if (response.ok && result.success) {
-            showAlert(result.message || 'Publication réussie ! 🚀', 'success');
+            showAlert(result.message || 'Publication rÃ©ussie ! ðŸš€', 'success');
         } else {
             showAlert(result.message || 'Erreur lors de la publication', 'error');
             if (result.error) {
-                console.error('Détails:', result.error);
+                console.error('DÃ©tails:', result.error);
             }
         }
     } catch (error) {
@@ -1304,7 +1304,7 @@ function showAlert(message, type = 'info') {
     const alert = document.createElement('div');
     alert.className = `alert alert-${type}`;
     
-    // Choisir l'icône selon le type
+    // Choisir l'icÃ´ne selon le type
     let iconClass = 'fas fa-info-circle';
     if (type === 'success') iconClass = 'fas fa-check-circle';
     else if (type === 'error') iconClass = 'fas fa-exclamation-circle';
