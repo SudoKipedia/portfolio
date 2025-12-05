@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const multer = require('multer');
+const { exec } = require('child_process');
 
 const app = express();
 const PORT = process.env.ADMIN_PORT || 3001;
@@ -274,6 +275,86 @@ app.post('/api/admin/upload', authenticateToken, upload.single('file'), async (r
             filename: req.file.filename,
             originalName: req.file.originalname,
             size: req.file.size
+        });
+    }
+});
+
+// ===================================
+// PUBLICATION - Export des données et Git Push
+// ===================================
+const PORTFOLIO_ROOT = path.join(__dirname, '..');
+const STATIC_DATA_DIR = path.join(PORTFOLIO_ROOT, 'data');
+
+// Copier les fichiers JSON vers le dossier data/ à la racine
+function exportStaticData() {
+    // Créer le dossier data/ s'il n'existe pas
+    if (!fs.existsSync(STATIC_DATA_DIR)) {
+        fs.mkdirSync(STATIC_DATA_DIR, { recursive: true });
+    }
+    
+    // Liste des fichiers à copier
+    const files = ['stats.json', 'formations.json', 'skills.json', 'projects.json', 'recommendations.json', 'documents.json'];
+    
+    files.forEach(file => {
+        const src = path.join(DATA_DIR, file);
+        const dest = path.join(STATIC_DATA_DIR, file);
+        if (fs.existsSync(src)) {
+            fs.copyFileSync(src, dest);
+        }
+    });
+    
+    return true;
+}
+
+// Exécuter une commande git
+function runGitCommand(command, cwd) {
+    return new Promise((resolve, reject) => {
+        exec(command, { cwd }, (error, stdout, stderr) => {
+            if (error) {
+                reject({ error, stderr });
+            } else {
+                resolve(stdout);
+            }
+        });
+    });
+}
+
+// Endpoint pour publier (export + git push)
+app.post('/api/publish', authenticateToken, async (req, res) => {
+    try {
+        const commitMessage = req.body.message || `Mise à jour du portfolio - ${new Date().toLocaleString('fr-FR')}`;
+        
+        // 1. Exporter les données statiques
+        exportStaticData();
+        console.log('✅ Données exportées vers /data');
+        
+        // 2. Git add
+        await runGitCommand('git add -A', PORTFOLIO_ROOT);
+        console.log('✅ Git add');
+        
+        // 3. Git commit
+        try {
+            await runGitCommand(`git commit -m "${commitMessage}"`, PORTFOLIO_ROOT);
+            console.log('✅ Git commit');
+        } catch (commitError) {
+            // Si rien à commiter, ce n'est pas une erreur
+            if (commitError.stderr && commitError.stderr.includes('nothing to commit')) {
+                return res.json({ success: true, message: 'Aucune modification à publier' });
+            }
+            throw commitError;
+        }
+        
+        // 4. Git push
+        await runGitCommand('git push', PORTFOLIO_ROOT);
+        console.log('✅ Git push');
+        
+        res.json({ success: true, message: 'Publication réussie !' });
+    } catch (error) {
+        console.error('Erreur publication:', error);
+        res.status(500).json({ 
+            success: false, 
+            message: 'Erreur lors de la publication',
+            error: error.stderr || error.message 
         });
     }
 });

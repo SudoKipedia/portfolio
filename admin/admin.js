@@ -1259,6 +1259,45 @@ async function saveCurrentSection() {
     }
 }
 
+// Publish to GitHub function
+async function publishToGitHub() {
+    const token = localStorage.getItem('adminToken');
+    
+    if (!confirm('Publier les modifications sur GitHub Pages ?\n\nCela va exporter les données et faire un git push.')) {
+        return;
+    }
+    
+    // Afficher un indicateur de chargement
+    showAlert('Publication en cours...', 'info');
+    
+    try {
+        const response = await fetch(`${API_URL}/publish`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                message: `Mise à jour depuis le panel admin - ${new Date().toLocaleString('fr-FR')}`
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok && result.success) {
+            showAlert(result.message || 'Publication réussie ! 🚀', 'success');
+        } else {
+            showAlert(result.message || 'Erreur lors de la publication', 'error');
+            if (result.error) {
+                console.error('Détails:', result.error);
+            }
+        }
+    } catch (error) {
+        showAlert('Erreur de connexion au serveur', 'error');
+        console.error(error);
+    }
+}
+
 // Alert function
 function showAlert(message, type = 'info') {
     const container = document.getElementById('alert-container');
