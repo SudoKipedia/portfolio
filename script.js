@@ -1147,7 +1147,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 // URL du serveur backend sur Oracle Cloud (HTTPS via Nginx + Let's Encrypt)
-                const response = await fetch('https://quentinpoisson.duckdns.org/api/contact', {
+                const response = await fetch('https://sudokipedia-portfolio.duckdns.org/api/contact', {
                     method: 'POST',
                     body: formData,
                 });
