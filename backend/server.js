@@ -287,37 +287,46 @@ app.post('/api/auth/login', async (req, res) => {
         return res.status(400).json({ error: 'Nom d\'utilisateur et mot de passe requis' });
     }
 
-    // Vérifier le nom d'utilisateur
+    // Définir les utilisateurs
     const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'Admin';
-    if (username !== ADMIN_USERNAME) {
-        recordFailedAttempt(clientIP);
-        return res.status(401).json({ error: 'Identifiants incorrects' });
-    }
+    const VIEWER_USERNAME = process.env.VIEWER_USERNAME || 'Viewer';
+    const VIEWER_PASSWORD_HASH = process.env.VIEWER_PASSWORD_HASH;
 
     // Délai artificiel pour ralentir les attaques (100-300ms)
     await new Promise(resolve => setTimeout(resolve, 100 + Math.random() * 200));
 
     try {
-        const isValid = await bcrypt.compare(password, ADMIN_PASSWORD_HASH);
-        
+        let isValid = false;
+        let role = null;
+
+        // Vérifier si c'est l'admin
+        if (username === ADMIN_USERNAME) {
+            isValid = await bcrypt.compare(password, ADMIN_PASSWORD_HASH);
+            role = 'admin';
+        }
+        // Vérifier si c'est le viewer
+        else if (username === VIEWER_USERNAME && VIEWER_PASSWORD_HASH) {
+            isValid = await bcrypt.compare(password, VIEWER_PASSWORD_HASH);
+            role = 'viewer';
+        }
+
         if (!isValid) {
             recordFailedAttempt(clientIP);
-            // Message générique pour ne pas révéler si le compte existe
             return res.status(401).json({ error: 'Identifiants incorrects' });
         }
 
         // Connexion réussie - reset les tentatives
         clearFailedAttempts(clientIP);
-        console.log(`✅ Connexion réussie depuis ${clientIP}`);
+        console.log(`✅ Connexion ${role} réussie depuis ${clientIP}`);
 
-        // Token avec expiration courte (4h au lieu de 24h)
+        // Token avec expiration courte (4h)
         const token = jwt.sign(
-            { role: 'admin', ip: clientIP }, 
+            { role, username, ip: clientIP }, 
             JWT_SECRET, 
             { expiresIn: '4h' }
         );
         
-        res.json({ token, expiresIn: 14400 }); // 4 heures
+        res.json({ token, role, expiresIn: 14400 }); // 4 heures
     } catch (error) {
         console.error('Erreur login:', error);
         res.status(500).json({ error: 'Erreur serveur' });
