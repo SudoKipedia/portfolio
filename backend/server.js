@@ -24,7 +24,7 @@ const discordClient = new Client({
 const DISCORD_USER_ID = process.env.DISCORD_USER_ID;
 let discordReady = false;
 
-discordClient.once('ready', () => {
+discordClient.once('clientReady', () => {
     console.log(`🤖 Discord bot connecté: ${discordClient.user.tag}`);
     discordReady = true;
 });
@@ -38,6 +38,9 @@ if (process.env.DISCORD_BOT_TOKEN) {
 // ===================================
 // SÉCURITÉ
 // ===================================
+
+// Trust proxy pour fonctionner derrière Nginx
+app.set('trust proxy', 1);
 
 // Helmet - Headers de sécurité (désactivé pour HTTP en dev, activer en HTTPS prod)
 app.use(helmet({
