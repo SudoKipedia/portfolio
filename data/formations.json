@@ -3,14 +3,14 @@
         "formations": [
             {
                 "id": "ipi-2024",
-                "year": "2024 - Présent",
-                "yearShort": "2024",
-                "title": "Bachelor Systèmes, Réseaux et Sécurité",
-                "school": "IPI Blagnac - Toulouse",
-                "description": "Formation en alternance spécialisée en infrastructure IT et sécurité",
+                "year": "2024 - 2027",
+                "yearShort": "2024-2027",
+                "title": "Administrateur - Systèmes, Réseaux & Sécurité",
+                "school": "IPI - Blagnac",
+                "description": "Spécialisation en Administration Système et Réseau",
                 "skills": [
-                    "Administration Windows Server et Active Directory",
-                    "Configuration réseaux avancée et sécurité",
+                    "Administration avancée Windows Server & Linux",
+                    "Architecture réseau d'entreprise et sécurité",
                     "Virtualisation Proxmox et conteneurisation",
                     "Automatisation avec PowerShell et scripts",
                     "Gestion de NFS, LDAP et services réseau"
@@ -51,14 +51,14 @@
         "formations": [
             {
                 "id": "ipi-2024",
-                "year": "2024 - Present",
-                "yearShort": "2024",
-                "title": "Bachelor in Systems, Networks & Security",
-                "school": "IPI Blagnac - Toulouse",
-                "description": "Work-study program specialized in IT infrastructure and security",
+                "year": "2024 - 2026",
+                "yearShort": "2024-2026",
+                "title": "Professional Certificate - Systems, Networks & Security",
+                "school": "IPI - Blagnac",
+                "description": "System and Network Administration specialization",
                 "skills": [
-                    "Windows Server and Active Directory administration",
-                    "Advanced network configuration and security",
+                    "Advanced Windows Server & Linux administration",
+                    "Enterprise network architecture and security",
                     "Proxmox virtualization and containerization",
                     "Automation with PowerShell and scripts",
                     "NFS, LDAP and network services management"
@@ -68,9 +68,9 @@
                 "id": "ups-2022",
                 "year": "2022 - 2024",
                 "yearShort": "2022-2024",
-                "title": "Computer Science Degree (2 years)",
+                "title": "Computer Science Bachelor's Degree (2 years)",
                 "school": "Paul Sabatier University - Toulouse",
-                "description": "Fundamentals in computer science and programming",
+                "description": "Computer science and programming fundamentals",
                 "skills": [
                     "Python programming and algorithms",
                     "Data structures and databases",
@@ -85,7 +85,7 @@
                 "yearShort": "2022",
                 "title": "High School Diploma",
                 "school": "Pierre Paul Riquet High School - Saint-Orens",
-                "description": "Physics-Chemistry and Engineering Sciences specializations",
+                "description": "Physics-Chemistry and Engineering Sciences specialties",
                 "skills": [
                     "Physics and chemistry fundamentals",
                     "Engineering sciences and modeling",
