@@ -10,27 +10,94 @@ const { exec } = require('child_process');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 
+const crypto = require('crypto');
+
 const app = express();
 const PORT = process.env.ADMIN_PORT || 3001;
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+
+// Fonction de log sécurisée (pas de données sensibles en prod)
+function secureLog(message, ...args) {
+    if (!IS_PRODUCTION) {
+        console.log(message, ...args);
+    }
+}
+
+// ===================================
+// PROTECTION CSRF
+// ===================================
+const csrfTokens = new Map();
+const CSRF_TOKEN_EXPIRY = 4 * 60 * 60 * 1000; // 4 heures
+
+function generateCsrfToken(sessionId) {
+    const token = crypto.randomBytes(32).toString('hex');
+    csrfTokens.set(token, { sessionId, createdAt: Date.now() });
+    
+    // Nettoyage des tokens expirés
+    for (const [t, data] of csrfTokens.entries()) {
+        if (Date.now() - data.createdAt > CSRF_TOKEN_EXPIRY) {
+            csrfTokens.delete(t);
+        }
+    }
+    
+    return token;
+}
+
+function validateCsrfToken(token, sessionId) {
+    const data = csrfTokens.get(token);
+    if (!data) return false;
+    if (data.sessionId !== sessionId) return false;
+    if (Date.now() - data.createdAt > CSRF_TOKEN_EXPIRY) {
+        csrfTokens.delete(token);
+        return false;
+    }
+    return true;
+}
+
+// Middleware CSRF pour les requêtes de modification
+function csrfProtection(req, res, next) {
+    // Skip pour les requêtes GET et le login initial
+    if (req.method === 'GET' || req.path === '/api/auth/login') {
+        return next();
+    }
+    
+    const csrfToken = req.headers['x-csrf-token'];
+    const sessionId = req.user?.username || req.ip;
+    
+    if (!csrfToken || !validateCsrfToken(csrfToken, sessionId)) {
+        return res.status(403).json({ error: 'Token CSRF invalide ou expiré' });
+    }
+    
+    next();
+}
 
 // ===================================
 // SÉCURITÉ
 // ===================================
 
-// Helmet - Headers de sécurité
+// Helmet - Headers de sécurité avec CSP
 app.use(helmet({
     contentSecurityPolicy: {
+        useDefaults: false, // Désactiver les defaults de Helmet
         directives: {
             defaultSrc: ["'self'"],
-            styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"],
-            fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
             scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-            scriptSrcAttr: ["'unsafe-inline'"], // Autoriser onclick inline
-            imgSrc: ["'self'", "data:", "blob:", "http://localhost:3001", "https:"],
-            connectSrc: ["'self'", "http://localhost:3001", "https:"],
+            scriptSrcAttr: ["'unsafe-inline'"], // Autoriser onclick, onchange, etc.
+            styleSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://fonts.googleapis.com"],
+            fontSrc: ["'self'", "https://cdnjs.cloudflare.com", "https://fonts.gstatic.com"],
+            imgSrc: ["'self'", "data:", "blob:", "https:"],
+            connectSrc: ["'self'"],
+            frameSrc: ["'none'"],
+            frameAncestors: ["'self'"],
+            objectSrc: ["'none'"],
+            baseUri: ["'self'"],
+            formAction: ["'self'"],
         },
     },
     crossOriginEmbedderPolicy: false,
+    crossOriginOpenerPolicy: false,
+    crossOriginResourcePolicy: false,
+    originAgentCluster: false,
 }));
 
 // Rate limiting global
@@ -91,26 +158,35 @@ function recordFailedAttempt(ip) {
     attempts.count++;
     attempts.lastAttempt = Date.now();
     failedAttempts.set(ip, attempts);
-    console.log(`⚠️ Tentative échouée depuis ${ip} (${attempts.count}/${MAX_FAILED_ATTEMPTS})`);
+    // Log sécurisé - masquer partiellement l'IP en prod
+    const maskedIP = IS_PRODUCTION ? ip.replace(/\d+$/, 'xxx') : ip;
+    console.log(`⚠️ Tentative échouée depuis ${maskedIP} (${attempts.count}/${MAX_FAILED_ATTEMPTS})`);
 }
 
 function clearFailedAttempts(ip) {
     failedAttempts.delete(ip);
 }
 
-// CORS - Configuration simple pour dev, sécurisée pour prod
+// CORS - Configuration sécurisée
 const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS 
     ? process.env.ALLOWED_ORIGINS.split(',') 
-    : ['http://localhost:3001', 'http://127.0.0.1:3001'];
+    : [
+        'http://localhost:3001', 
+        'http://127.0.0.1:3001',
+        'https://sudokipedia-portfolio.duckdns.org'
+    ];
 
 app.use(cors({
     origin: (origin, callback) => {
-        // En développement, autoriser toutes les requêtes
-        if (process.env.NODE_ENV !== 'production') {
+        // Autoriser les requêtes sans origin (same-origin, curl, Postman, etc.)
+        if (!origin) {
             return callback(null, true);
         }
-        // En production, vérifier l'origine
-        if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+        // Vérifier si l'origine est autorisée
+        if (ALLOWED_ORIGINS.includes(origin)) {
+            callback(null, true);
+        } else if (!IS_PRODUCTION) {
+            // En dev, tout autoriser
             callback(null, true);
         } else {
             callback(new Error('CORS non autorisé'));
@@ -119,7 +195,7 @@ app.use(cors({
     credentials: true
 }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../admin')));
+app.use('/admin', express.static(path.join(__dirname, '../admin')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Configuration multer pour upload de fichiers
@@ -198,6 +274,7 @@ async function compressAndConvertImage(inputPath) {
 // ===================================
 const JWT_SECRET = process.env.JWT_SECRET;
 const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH;
+const VIEWER_PASSWORD_HASH = process.env.VIEWER_PASSWORD_HASH;
 
 // Vérification des variables d'environnement critiques
 if (!JWT_SECRET || JWT_SECRET === 'votre_secret_jwt_super_securise_changez_moi') {
@@ -214,6 +291,15 @@ if (!ADMIN_PASSWORD_HASH) {
     if (process.env.NODE_ENV === 'production') {
         process.exit(1);
     }
+}
+
+if (!VIEWER_PASSWORD_HASH) {
+    console.warn('⚠️ VIEWER_PASSWORD_HASH non configuré - utilisateur Viewer désactivé');
+}
+
+// Log de configuration (sans détails sensibles)
+if (!IS_PRODUCTION) {
+    console.log('🔐 Auth config: Admin=' + (ADMIN_PASSWORD_HASH ? 'OK' : 'MISSING') + ', Viewer=' + (VIEWER_PASSWORD_HASH ? 'OK' : 'MISSING'));
 }
 
 // Middleware d'authentification
@@ -239,8 +325,10 @@ function authenticateToken(req, res, next) {
 
 // Route de login sécurisée
 app.post('/api/auth/login', async (req, res) => {
+    console.log('📥 Tentative de login reçue');
     const clientIP = req.ip || req.connection.remoteAddress;
-    const { password } = req.body;
+    const { username, password } = req.body;
+    console.log(`📧 Username: ${username}, IP: ${clientIP}`);
 
     // Vérifier si l'IP est bloquée
     if (checkBruteForce(clientIP)) {
@@ -250,15 +338,32 @@ app.post('/api/auth/login', async (req, res) => {
         });
     }
 
-    if (!password) {
-        return res.status(400).json({ error: 'Mot de passe requis' });
+    if (!username || !password) {
+        secureLog('❌ Username ou password manquant');
+        return res.status(400).json({ error: 'Nom d\'utilisateur et mot de passe requis' });
+    }
+
+    // Configuration des utilisateurs
+    const USERS = {
+        'Admin': { passwordHash: ADMIN_PASSWORD_HASH, role: 'admin' },
+        'Viewer': { passwordHash: VIEWER_PASSWORD_HASH, role: 'viewer' }
+    };
+
+    secureLog(`🔍 Recherche user: ${username}, trouvé: ${!!USERS[username]}`);
+    const user = USERS[username];
+    if (!user || !user.passwordHash) {
+        secureLog(`❌ User non trouvé ou hash manquant`);
+        recordFailedAttempt(clientIP);
+        return res.status(401).json({ error: 'Identifiants incorrects' });
     }
 
     // Délai artificiel pour ralentir les attaques (100-300ms)
     await new Promise(resolve => setTimeout(resolve, 100 + Math.random() * 200));
 
     try {
-        const isValid = await bcrypt.compare(password, ADMIN_PASSWORD_HASH);
+        secureLog(`🔐 Comparaison bcrypt en cours...`);
+        const isValid = await bcrypt.compare(password, user.passwordHash);
+        secureLog(`🔐 Résultat bcrypt: ${isValid}`);
         
         if (!isValid) {
             recordFailedAttempt(clientIP);
@@ -268,16 +373,19 @@ app.post('/api/auth/login', async (req, res) => {
 
         // Connexion réussie - reset les tentatives
         clearFailedAttempts(clientIP);
-        console.log(`✅ Connexion réussie depuis ${clientIP}`);
+        console.log(`✅ Connexion ${user.role} réussie depuis ${IS_PRODUCTION ? clientIP.replace(/\d+$/, 'xxx') : clientIP}`);
 
         // Token avec expiration courte (4h au lieu de 24h)
         const token = jwt.sign(
-            { role: 'admin', ip: clientIP }, 
+            { role: user.role, username: username, ip: clientIP }, 
             JWT_SECRET, 
             { expiresIn: '4h' }
         );
         
-        res.json({ token, expiresIn: 14400 }); // 4 heures
+        // Générer un token CSRF pour cette session
+        const csrfToken = generateCsrfToken(username);
+        
+        res.json({ token, role: user.role, expiresIn: 14400, csrfToken }); // 4 heures
     } catch (error) {
         console.error('Erreur login:', error);
         res.status(500).json({ error: 'Erreur serveur' });
@@ -288,6 +396,14 @@ app.post('/api/auth/login', async (req, res) => {
 app.get('/api/auth/verify', authenticateToken, (req, res) => {
     res.json({ valid: true, user: req.user });
 });
+
+// Middleware pour vérifier le rôle admin (pour les actions de modification)
+function requireAdmin(req, res, next) {
+    if (req.user.role !== 'admin') {
+        return res.status(403).json({ error: 'Action réservée aux administrateurs' });
+    }
+    next();
+}
 
 // ===================================
 // ROUTES API PUBLIQUES (lecture seule)
@@ -330,11 +446,11 @@ app.get('/api/documents', (req, res) => {
 });
 
 // ===================================
-// ROUTES API ADMIN (protégées)
+// ROUTES API ADMIN (protégées - admin seulement)
 // ===================================
 
 // Stats - Update
-app.put('/api/admin/stats', authenticateToken, (req, res) => {
+app.put('/api/admin/stats', authenticateToken, requireAdmin, (req, res) => {
     try {
         writeJsonFile('stats.json', req.body);
         res.json({ success: true, message: 'Stats mises à jour' });
@@ -344,7 +460,7 @@ app.put('/api/admin/stats', authenticateToken, (req, res) => {
 });
 
 // Formations - Update
-app.put('/api/admin/formations', authenticateToken, (req, res) => {
+app.put('/api/admin/formations', authenticateToken, requireAdmin, (req, res) => {
     try {
         writeJsonFile('formations.json', req.body);
         res.json({ success: true, message: 'Formations mises à jour' });
@@ -354,7 +470,7 @@ app.put('/api/admin/formations', authenticateToken, (req, res) => {
 });
 
 // Skills - Update
-app.put('/api/admin/skills', authenticateToken, (req, res) => {
+app.put('/api/admin/skills', authenticateToken, requireAdmin, (req, res) => {
     try {
         writeJsonFile('skills.json', req.body);
         res.json({ success: true, message: 'Compétences mises à jour' });
@@ -364,7 +480,7 @@ app.put('/api/admin/skills', authenticateToken, (req, res) => {
 });
 
 // Projects - Update
-app.put('/api/admin/projects', authenticateToken, (req, res) => {
+app.put('/api/admin/projects', authenticateToken, requireAdmin, (req, res) => {
     try {
         writeJsonFile('projects.json', req.body);
         res.json({ success: true, message: 'Projets mis à jour' });
@@ -374,7 +490,7 @@ app.put('/api/admin/projects', authenticateToken, (req, res) => {
 });
 
 // Recommendations - Update
-app.put('/api/admin/recommendations', authenticateToken, (req, res) => {
+app.put('/api/admin/recommendations', authenticateToken, requireAdmin, (req, res) => {
     try {
         writeJsonFile('recommendations.json', req.body);
         res.json({ success: true, message: 'Recommandations mises à jour' });
@@ -384,7 +500,7 @@ app.put('/api/admin/recommendations', authenticateToken, (req, res) => {
 });
 
 // Documents - Update
-app.put('/api/admin/documents', authenticateToken, (req, res) => {
+app.put('/api/admin/documents', authenticateToken, requireAdmin, (req, res) => {
     try {
         writeJsonFile('documents.json', req.body);
         res.json({ success: true, message: 'Documents mis à jour' });
@@ -394,7 +510,7 @@ app.put('/api/admin/documents', authenticateToken, (req, res) => {
 });
 
 // Upload de fichiers (PDF, images) avec compression automatique
-app.post('/api/admin/upload', authenticateToken, upload.single('file'), async (req, res) => {
+app.post('/api/admin/upload', authenticateToken, requireAdmin, upload.single('file'), async (req, res) => {
     if (!req.file) {
         return res.status(400).json({ error: 'Aucun fichier uploadé' });
     }
@@ -428,7 +544,8 @@ app.post('/api/admin/upload', authenticateToken, upload.single('file'), async (r
 // ===================================
 // PUBLICATION - Export des données et Git Push
 // ===================================
-const PORTFOLIO_ROOT = path.join(__dirname, '..');
+// En production, utiliser la variable d'env PORTFOLIO_ROOT, sinon parent du backend
+const PORTFOLIO_ROOT = process.env.PORTFOLIO_ROOT || path.join(__dirname, '..');
 const STATIC_DATA_DIR = path.join(PORTFOLIO_ROOT, 'data');
 
 // Copier les fichiers JSON vers le dossier data/ à la racine
@@ -465,8 +582,8 @@ function runGitCommand(command, cwd) {
     });
 }
 
-// Endpoint pour publier (export + git push)
-app.post('/api/publish', authenticateToken, async (req, res) => {
+// Endpoint pour publier (export + git push) - admin seulement
+app.post('/api/publish', authenticateToken, requireAdmin, async (req, res) => {
     try {
         const commitMessage = req.body.message || `Mise à jour du portfolio - ${new Date().toLocaleString('fr-FR')}`;
         
@@ -509,7 +626,11 @@ app.post('/api/publish', authenticateToken, async (req, res) => {
 // ROUTE ADMIN PAGE
 // ===================================
 app.get('/admin', (req, res) => {
-    res.sendFile(path.join(__dirname, '../admin/index.html'));
+    res.redirect('/admin/login.html');
+});
+
+app.get('/admin/', (req, res) => {
+    res.redirect('/admin/login.html');
 });
 
 app.get('/admin/login', (req, res) => {

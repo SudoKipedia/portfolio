@@ -1,9 +1,30 @@
-// Configuration
-const API_URL = 'http://localhost:3001/api';
+﻿// Configuration
+const API_URL = '/api';
 
 // État global
 let currentSection = 'stats';
 let currentLang = 'fr';
+let userRole = 'viewer'; // Par défaut, rôle restreint
+let csrfToken = null; // Token CSRF pour les requêtes sécurisées
+let inactivityTimer = null;
+const INACTIVITY_TIMEOUT = 10 * 60 * 1000; // 10 minutes en ms
+
+// Helper pour les requêtes sécurisées avec CSRF
+async function securedFetch(url, options = {}) {
+    const token = localStorage.getItem('adminToken');
+    const headers = {
+        ...options.headers,
+        'Authorization': `Bearer ${token}`
+    };
+    
+    // Ajouter le token CSRF pour les requêtes de modification
+    if (options.method && options.method !== 'GET' && csrfToken) {
+        headers['X-CSRF-Token'] = csrfToken;
+    }
+    
+    return fetch(url, { ...options, headers });
+}
+
 let data = {
     stats: null,
     formations: null,
@@ -13,6 +34,23 @@ let data = {
     documents: null
 };
 
+// Gestion de l'inactivité
+function resetInactivityTimer() {
+    if (inactivityTimer) clearTimeout(inactivityTimer);
+    inactivityTimer = setTimeout(() => {
+        alert('Session expirée pour cause d\'inactivité');
+        logout();
+    }, INACTIVITY_TIMEOUT);
+}
+
+function setupInactivityDetection() {
+    const events = ['mousedown', 'mousemove', 'keydown', 'scroll', 'touchstart', 'click'];
+    events.forEach(event => {
+        document.addEventListener(event, resetInactivityTimer, { passive: true });
+    });
+    resetInactivityTimer(); // Démarrer le timer
+}
+
 // Vérification de l'authentification au chargement
 document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('adminToken');
@@ -21,15 +59,57 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
     
+    // Récupérer le rôle et le token CSRF stockés
+    userRole = localStorage.getItem('adminRole') || 'viewer';
+    csrfToken = localStorage.getItem('csrfToken') || null;
+    
     verifyToken(token).then(valid => {
         if (!valid) {
             localStorage.removeItem('adminToken');
+            localStorage.removeItem('adminRole');
+            localStorage.removeItem('csrfToken');
             window.location.href = 'login.html';
         } else {
+            // Afficher le layout et cacher le loading
+            document.getElementById('auth-loading').style.display = 'none';
+            document.getElementById('admin-layout').style.display = 'flex';
+            
+            // Afficher le badge viewer si ce n'est pas un admin
+            if (userRole !== 'admin') {
+                showViewerBadge();
+            }
+            
+            // Démarrer la détection d'inactivité
+            setupInactivityDetection();
+            
             init();
         }
     });
 });
+
+// Affiche un badge "Mode lecture seule" pour les viewers
+function showViewerBadge() {
+    const badge = document.createElement('div');
+    badge.id = 'viewer-badge';
+    badge.innerHTML = '<i class="fas fa-eye"></i> Mode lecture seule';
+    badge.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #f39c12, #e67e22);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 14px;
+        box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    `;
+    document.body.appendChild(badge);
+}
 
 async function verifyToken(token) {
     try {
@@ -184,7 +264,7 @@ function createCurrentAttachment(url, onRemove) {
             </div>
             <div class="current-attachment-info">
                 <div class="current-attachment-label">Fichier actuel</div>
-                <a href="http://localhost:3001${url}" target="_blank" class="current-attachment-link">${filename}</a>
+                <a href="${url}" target="_blank" class="current-attachment-link">${filename}</a>
             </div>
             <button type="button" class="current-attachment-remove" onclick="${onRemove}">
                 <i class="fas fa-trash"></i>
@@ -504,7 +584,7 @@ function renderRecommendations() {
                     <p class="text-muted">${rec.role} - ${rec.company}</p>
                 </div>
                 <div class="item-actions">
-                    ${rec.attachment ? `<a href="http://localhost:3001${rec.attachment}" target="_blank" class="btn btn-icon" title="Voir le document"><i class="fas fa-file-alt"></i></a>` : ''}
+                    ${rec.attachment ? `<a href="${rec.attachment}" target="_blank" class="btn btn-icon" title="Voir le document"><i class="fas fa-file-alt"></i></a>` : ''}
                     <button class="btn btn-icon" onclick="editRecommendation(${index})">
                         <i class="fas fa-edit"></i>
                     </button>
@@ -556,10 +636,27 @@ function openModal(title, content, saveCallback) {
     document.getElementById('modal-body').innerHTML = content;
     document.getElementById('modal-overlay').classList.add('active');
     
-    document.getElementById('modal-save-btn').onclick = () => {
-        saveCallback();
-        closeModal();
-    };
+    const saveBtn = document.getElementById('modal-save-btn');
+    
+    // Désactiver le bouton de sauvegarde pour les viewers
+    if (userRole !== 'admin') {
+        saveBtn.disabled = true;
+        saveBtn.style.opacity = '0.5';
+        saveBtn.style.cursor = 'not-allowed';
+        saveBtn.title = 'Mode lecture seule';
+        saveBtn.onclick = () => {
+            showAlert('Mode lecture seule - sauvegarde non autorisée', 'error');
+        };
+    } else {
+        saveBtn.disabled = false;
+        saveBtn.style.opacity = '1';
+        saveBtn.style.cursor = 'pointer';
+        saveBtn.title = '';
+        saveBtn.onclick = () => {
+            saveCallback();
+            closeModal();
+        };
+    }
     
     // Fermer le modal en cliquant sur l'overlay (en dehors du contenu)
     document.getElementById('modal-overlay').onclick = (e) => {
@@ -656,6 +753,10 @@ function editFormation(index) {
 }
 
 function deleteFormation(index) {
+    if (userRole !== 'admin') {
+        showAlert('Mode lecture seule - suppression non autorisée', 'error');
+        return;
+    }
     if (confirm('Êtes-vous sûr de vouloir supprimer cette formation ?')) {
         data.formations[currentLang].formations.splice(index, 1);
         renderFormations();
@@ -733,6 +834,10 @@ function editSkill(index) {
 }
 
 function deleteSkill(index) {
+    if (userRole !== 'admin') {
+        showAlert('Mode lecture seule - suppression non autorisée', 'error');
+        return;
+    }
     if (confirm('Êtes-vous sûr de vouloir supprimer cette compétence ?')) {
         data.skills[currentLang].skills.splice(index, 1);
         renderSkills();
@@ -778,11 +883,8 @@ function addProject() {
             formData.append('file', fileInput.files[0]);
             
             try {
-                const response = await fetch('/api/upload', {
+                const response = await securedFetch('/api/upload', {
                     method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
-                    },
                     body: formData
                 });
                 
@@ -828,7 +930,7 @@ function editProject(index) {
             </div>
             <div class="current-attachment-info">
                 <div class="current-attachment-label">Image actuelle</div>
-                <a href="http://localhost:3001${project.image}" target="_blank" class="current-attachment-link">${project.image.split('/').pop()}</a>
+                <a href="${project.image}" target="_blank" class="current-attachment-link">${project.image.split('/').pop()}</a>
             </div>
             <button type="button" class="current-attachment-remove" onclick="document.getElementById('current-project-image').remove(); document.getElementById('remove-project-image').value='true';">
                 <i class="fas fa-trash"></i>
@@ -881,11 +983,8 @@ function editProject(index) {
             formData.append('file', fileInput.files[0]);
             
             try {
-                const response = await fetch('/api/upload', {
+                const response = await securedFetch('/api/upload', {
                     method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
-                    },
                     body: formData
                 });
                 
@@ -916,6 +1015,10 @@ function editProject(index) {
 }
 
 function deleteProject(index) {
+    if (userRole !== 'admin') {
+        showAlert('Mode lecture seule - suppression non autorisée', 'error');
+        return;
+    }
     if (confirm('Êtes-vous sûr de vouloir supprimer ce projet ?')) {
         data.projects[currentLang].projects.splice(index, 1);
         renderProjects();
@@ -965,12 +1068,8 @@ function addRecommendation() {
             formData.append('file', file);
             
             try {
-                const token = localStorage.getItem('adminToken');
-                const uploadResponse = await fetch('http://localhost:3001/api/admin/upload', {
+                const uploadResponse = await securedFetch('/api/admin/upload', {
                     method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    },
                     body: formData
                 });
                 
@@ -1051,12 +1150,8 @@ function editRecommendation(index) {
             formData.append('file', file);
             
             try {
-                const token = localStorage.getItem('adminToken');
-                const uploadResponse = await fetch('http://localhost:3001/api/admin/upload', {
+                const uploadResponse = await securedFetch('/api/admin/upload', {
                     method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    },
                     body: formData
                 });
                 
@@ -1087,6 +1182,10 @@ function editRecommendation(index) {
 }
 
 function deleteRecommendation(index) {
+    if (userRole !== 'admin') {
+        showAlert('Mode lecture seule - suppression non autorisée', 'error');
+        return;
+    }
     if (confirm('Êtes-vous sûr de vouloir supprimer cette recommandation ?')) {
         data.recommendations[currentLang].recommendations.splice(index, 1);
         renderRecommendations();
@@ -1127,10 +1226,8 @@ function addDocument() {
             formData.append('file', fileInput.files[0]);
             
             try {
-                const token = localStorage.getItem('adminToken');
-                const response = await fetch(`${API_URL}/admin/upload`, {
+                const response = await securedFetch(`${API_URL}/admin/upload`, {
                     method: 'POST',
-                    headers: { 'Authorization': `Bearer ${token}` },
                     body: formData
                 });
                 
@@ -1199,10 +1296,8 @@ function editDocument(index) {
             formData.append('file', fileInput.files[0]);
             
             try {
-                const token = localStorage.getItem('adminToken');
-                const response = await fetch(`${API_URL}/admin/upload`, {
+                const response = await securedFetch(`${API_URL}/admin/upload`, {
                     method: 'POST',
-                    headers: { 'Authorization': `Bearer ${token}` },
                     body: formData
                 });
                 
@@ -1227,6 +1322,10 @@ function editDocument(index) {
 }
 
 function deleteDocument(index) {
+    if (userRole !== 'admin') {
+        showAlert('Mode lecture seule - suppression non autorisée', 'error');
+        return;
+    }
     if (confirm('Êtes-vous sûr de vouloir supprimer ce document ?')) {
         data.documents[currentLang].documents.splice(index, 1);
         renderDocuments();
@@ -1235,14 +1334,17 @@ function deleteDocument(index) {
 
 // Save function
 async function saveCurrentSection() {
-    const token = localStorage.getItem('adminToken');
+    // Vérifier si l'utilisateur est admin
+    if (userRole !== 'admin') {
+        showAlert('Mode lecture seule - modifications non autorisées', 'error');
+        return;
+    }
     
     try {
-        const response = await fetch(`${API_URL}/admin/${currentSection}`, {
+        const response = await securedFetch(`${API_URL}/admin/${currentSection}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data[currentSection])
         });
@@ -1261,7 +1363,11 @@ async function saveCurrentSection() {
 
 // Publish to GitHub function
 async function publishToGitHub() {
-    const token = localStorage.getItem('adminToken');
+    // Vérifier si l'utilisateur est admin
+    if (userRole !== 'admin') {
+        showAlert('Mode lecture seule - publication non autorisée', 'error');
+        return;
+    }
     
     if (!confirm('Publier les modifications sur GitHub Pages ?\n\nCela va exporter les données et faire un git push.')) {
         return;
@@ -1271,11 +1377,10 @@ async function publishToGitHub() {
     showAlert('Publication en cours...', 'info');
     
     try {
-        const response = await fetch(`${API_URL}/publish`, {
+        const response = await securedFetch(`${API_URL}/publish`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 message: `Mise à jour depuis le panel admin - ${new Date().toLocaleString('fr-FR')}`
@@ -1327,6 +1432,9 @@ function showAlert(message, type = 'info') {
 
 // Logout function
 function logout() {
+    if (inactivityTimer) clearTimeout(inactivityTimer);
     localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminRole');
+    localStorage.removeItem('csrfToken');
     window.location.href = 'login.html';
 }

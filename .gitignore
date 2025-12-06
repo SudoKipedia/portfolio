@@ -11,7 +11,24 @@ desktop.ini
 
 # Logs
 *.log
+logs/
 
 # Notes personnelles
 notes.txt
 TODO.md
+
+# Environnement - NE JAMAIS COMMITER
+.env
+.env.local
+.env.production
+.env*.local
+backend/.env
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Données sensibles
+backend/data/
+*.bak
+*.backup

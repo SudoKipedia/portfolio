@@ -85,14 +85,42 @@ function updateStats(stats) {
             const numberEl = statItems[index].querySelector('.stat-number');
             const labelEl = statItems[index].querySelector('.stat-label');
             if (numberEl) {
-                numberEl.setAttribute('data-target', stat.value);
-                numberEl.textContent = '0';
+                const target = parseInt(stat.value) || 0;
+                numberEl.setAttribute('data-target', target);
+                // Animer directement vers la valeur cible
+                animateNumber(numberEl, target);
             }
             if (labelEl) {
                 labelEl.textContent = stat.label;
             }
         }
     });
+}
+
+// Animation d'un compteur vers une valeur cible
+function animateNumber(element, target) {
+    const duration = 1500; // 1.5 secondes
+    const start = parseInt(element.textContent) || 0;
+    const startTime = performance.now();
+    
+    const update = (currentTime) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Easing function (ease-out)
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(start + (target - start) * easeOut);
+        
+        element.textContent = current;
+        
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        } else {
+            element.textContent = target;
+        }
+    };
+    
+    requestAnimationFrame(update);
 }
 
 function updateFormations(formations) {
