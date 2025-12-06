@@ -845,44 +845,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ===================================
-    // ANIMATED COUNTERS
+    // ANIMATED COUNTERS - Désactivé car géré par updateStats() dans loadDynamicData()
     // ===================================
-    const counters = document.querySelectorAll('.stat-number');
-    const speed = 200;
-    let hasAnimated = false;
-
-    const animateCounters = () => {
-        if (hasAnimated) return;
-
-        const heroStats = document.querySelector('.hero-stats');
-        if (!heroStats) return;
-
-        const rect = heroStats.getBoundingClientRect();
-        const isVisible = rect.top < window.innerHeight && rect.bottom >= 0;
-
-        if (isVisible) {
-            hasAnimated = true;
-            counters.forEach(counter => {
-                const target = +counter.getAttribute('data-target');
-                const increment = target / speed;
-
-                const updateCount = () => {
-                    const count = +counter.innerText;
-                    if (count < target) {
-                        counter.innerText = Math.ceil(count + increment);
-                        setTimeout(updateCount, 10);
-                    } else {
-                        counter.innerText = target;
-                    }
-                };
-
-                updateCount();
-            });
-        }
-    };
-
-    window.addEventListener('scroll', animateCounters);
-    animateCounters();
+    // L'animation des compteurs est maintenant gérée directement dans updateStats()
+    // après le chargement des données JSON pour éviter les conflits de timing
 
     // ===================================
     // SCROLL REVEAL ANIMATIONS
