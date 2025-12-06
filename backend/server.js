@@ -90,13 +90,6 @@ const contactLimiter = rateLimit({
     validate: { xForwardedForHeader: false }, // Désactiver la validation pour proxy
 });
 
-// Appliquer le rate limiting
-app.use('/api/', globalLimiter);
-app.use('/api/auth/login', loginLimiter);
-app.use('/api/publish', sensitiveLimiter);
-app.use('/api/upload', sensitiveLimiter);
-app.use('/api/contact', contactLimiter);
-
 // Stockage des tentatives échouées (anti brute-force avancé)
 const failedAttempts = new Map();
 const LOCKOUT_TIME = 30 * 60 * 1000; // 30 minutes de blocage
@@ -150,6 +143,14 @@ app.use(cors({
     },
     credentials: true
 }));
+
+// Appliquer le rate limiting APRÈS le CORS
+app.use('/api/', globalLimiter);
+app.use('/api/auth/login', loginLimiter);
+app.use('/api/publish', sensitiveLimiter);
+app.use('/api/upload', sensitiveLimiter);
+app.use('/api/contact', contactLimiter);
+
 app.use(express.json());
 app.use('/admin', express.static(path.join(__dirname, '../admin')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
