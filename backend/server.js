@@ -470,6 +470,14 @@ app.post('/api/publish', authenticateToken, async (req, res) => {
     try {
         const commitMessage = req.body.message || `Mise à jour du portfolio - ${new Date().toLocaleString('fr-FR')}`;
         
+        // 0. Git pull pour synchroniser avec remote
+        try {
+            await runGitCommand('git pull --rebase', PORTFOLIO_ROOT);
+            console.log('✅ Git pull');
+        } catch (pullError) {
+            console.warn('⚠️ Git pull échoué (ignoré):', pullError.stderr || pullError.message);
+        }
+        
         // 1. Exporter les données statiques
         exportStaticData();
         console.log('✅ Données exportées vers /data');
