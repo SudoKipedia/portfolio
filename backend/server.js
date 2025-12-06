@@ -58,6 +58,7 @@ const globalLimiter = rateLimit({
     message: { error: 'Trop de requêtes, réessayez plus tard' },
     standardHeaders: true,
     legacyHeaders: false,
+    validate: { xForwardedForHeader: false },
 });
 
 // Rate limiting strict pour le login (anti brute-force)
@@ -68,6 +69,7 @@ const loginLimiter = rateLimit({
     standardHeaders: true,
     legacyHeaders: false,
     skipSuccessfulRequests: true, // Ne compte pas les succès
+    validate: { xForwardedForHeader: false },
 });
 
 // Rate limiting pour les actions sensibles (publish, upload)
@@ -75,6 +77,7 @@ const sensitiveLimiter = rateLimit({
     windowMs: 60 * 1000, // 1 minute
     max: 10, // Max 10 actions par minute
     message: { error: 'Trop d\'actions, patientez un moment' },
+    validate: { xForwardedForHeader: false },
 });
 
 // Rate limiting pour le formulaire contact (anti-spam)
@@ -84,6 +87,7 @@ const contactLimiter = rateLimit({
     message: { success: false, error: 'Trop de messages envoyés. Veuillez réessayer dans 10 minutes.' },
     standardHeaders: true,
     legacyHeaders: false,
+    validate: { xForwardedForHeader: false }, // Désactiver la validation pour proxy
 });
 
 // Appliquer le rate limiting
@@ -358,7 +362,7 @@ app.post('/api/contact', contactUpload.array('attachments', 5), async (req, res)
         
         // Créer l'embed Discord
         const embed = new EmbedBuilder()
-            .setColor(0x3b82f6)
+            .setColor(0xdc2626)
             .setTitle('📬 Nouveau message de contact')
             .addFields(
                 { name: '👤 Nom', value: name, inline: true },
