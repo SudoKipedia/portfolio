@@ -9,9 +9,31 @@ const multer = require('multer');
 const { exec } = require('child_process');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
+const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
 
 const app = express();
 const PORT = process.env.ADMIN_PORT || 3001;
+
+// ===================================
+// DISCORD BOT POUR FORMULAIRE CONTACT
+// ===================================
+const discordClient = new Client({
+    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.DirectMessages]
+});
+
+const DISCORD_USER_ID = process.env.DISCORD_USER_ID;
+let discordReady = false;
+
+discordClient.once('ready', () => {
+    console.log(`🤖 Discord bot connecté: ${discordClient.user.tag}`);
+    discordReady = true;
+});
+
+if (process.env.DISCORD_BOT_TOKEN) {
+    discordClient.login(process.env.DISCORD_BOT_TOKEN).catch(err => {
+        console.error('❌ Erreur connexion Discord:', err.message);
+    });
+}
 
 // ===================================
 // SÉCURITÉ
@@ -52,11 +74,21 @@ const sensitiveLimiter = rateLimit({
     message: { error: 'Trop d\'actions, patientez un moment' },
 });
 
+// Rate limiting pour le formulaire contact (anti-spam)
+const contactLimiter = rateLimit({
+    windowMs: 10 * 60 * 1000, // 10 minutes
+    max: 3, // Max 3 messages par 10 minutes
+    message: { success: false, error: 'Trop de messages envoyés. Veuillez réessayer dans 10 minutes.' },
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
 // Appliquer le rate limiting
 app.use('/api/', globalLimiter);
 app.use('/api/auth/login', loginLimiter);
 app.use('/api/publish', sensitiveLimiter);
 app.use('/api/upload', sensitiveLimiter);
+app.use('/api/contact', contactLimiter);
 
 // Stockage des tentatives échouées (anti brute-force avancé)
 const failedAttempts = new Map();
@@ -287,6 +319,70 @@ app.post('/api/auth/login', async (req, res) => {
 // Vérifier le token
 app.get('/api/auth/verify', authenticateToken, (req, res) => {
     res.json({ valid: true, user: req.user });
+});
+
+// ===================================
+// FORMULAIRE DE CONTACT (Discord DM)
+// ===================================
+
+// Configuration multer pour les pièces jointes du formulaire contact
+const contactUpload = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 8 * 1024 * 1024 }, // 8MB max par fichier
+    fileFilter: (req, file, cb) => {
+        const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain', 'image/jpeg', 'image/png'];
+        if (allowedTypes.includes(file.mimetype)) {
+            cb(null, true);
+        } else {
+            cb(new Error('Type de fichier non autorisé'), false);
+        }
+    }
+});
+
+app.post('/api/contact', contactUpload.array('attachments', 5), async (req, res) => {
+    try {
+        const { name, email, message } = req.body;
+        
+        // Validation
+        if (!name || !email || !message) {
+            return res.status(400).json({ success: false, error: 'Tous les champs sont requis' });
+        }
+        
+        if (!discordReady || !DISCORD_USER_ID) {
+            console.error('Discord non prêt ou USER_ID manquant');
+            return res.status(500).json({ success: false, error: 'Service de contact temporairement indisponible' });
+        }
+        
+        // Créer l'embed Discord
+        const embed = new EmbedBuilder()
+            .setColor(0x3b82f6)
+            .setTitle('📬 Nouveau message de contact')
+            .addFields(
+                { name: '👤 Nom', value: name, inline: true },
+                { name: '📧 Email', value: email, inline: true },
+                { name: '💬 Message', value: message.substring(0, 1024) }
+            )
+            .setTimestamp()
+            .setFooter({ text: 'Portfolio Contact Form' });
+        
+        // Envoyer le DM
+        const user = await discordClient.users.fetch(DISCORD_USER_ID);
+        
+        // Préparer les fichiers attachés
+        const files = req.files ? req.files.map(file => ({
+            attachment: file.buffer,
+            name: file.originalname
+        })) : [];
+        
+        await user.send({ embeds: [embed], files });
+        
+        console.log(`✅ Message de contact envoyé: ${name} <${email}>`);
+        res.json({ success: true, message: 'Message envoyé avec succès !' });
+        
+    } catch (error) {
+        console.error('❌ Erreur formulaire contact:', error);
+        res.status(500).json({ success: false, error: 'Erreur lors de l\'envoi du message' });
+    }
 });
 
 // ===================================
