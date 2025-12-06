@@ -83,7 +83,7 @@ const sensitiveLimiter = rateLimit({
 // Rate limiting pour le formulaire contact (anti-spam)
 const contactLimiter = rateLimit({
     windowMs: 10 * 60 * 1000, // 10 minutes
-    max: 3, // Max 3 messages par 10 minutes
+    max: 1, // Max 1 message par 10 minutes
     message: { success: false, error: 'Trop de messages envoyés. Veuillez réessayer dans 10 minutes.' },
     standardHeaders: true,
     legacyHeaders: false,
